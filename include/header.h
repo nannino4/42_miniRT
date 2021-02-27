@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 10:33:46 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/26 16:08:25 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/02/27 17:31:07 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,38 @@
 
 # include "mlx.h"
 # include <math.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <fcntl.h>
+
+# define BUFFER_SIZE 10
+
+/*
+ * essential structures
+ */
+
+typedef struct		s_data
+{
+	int		w;
+	int		h;
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_l;
+	int		endian;
+}					t_data;
+
+typedef struct		s_scene
+{
+	char	*id;
+	void	*data;
+	void	*next;
+}					t_scene;
 
 /*
  * basic structures
@@ -129,5 +161,27 @@ int		get_t(int trgb);
 int		get_r(int trgb);
 int		get_g(int trgb);
 int		get_b(int trgb);
+
+/*
+ * libft
+ */
+
+int			ft_strncmp(const char *s1, const char *s2, int n);
+int			get_next_line(int fd, char **line);
+size_t		ft_strlen(const char *s);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t		ft_strlcat(char *dst, const char *src, size_t size);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strjoin(char const *s1, char const *s2);
+int			find_ch(char const *s, char c);
+char		*ft_strdup(const char *s1);
+
+/*
+ * read_input
+ */
+
+int		read_int(char **line);
+double	read_double(char **line);
+int		read_color(char **line);
 
 #endif

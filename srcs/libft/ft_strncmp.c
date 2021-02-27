@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test1.c                                            :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 09:56:18 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/27 10:19:22 by gcefalo          ###   ########.fr       */
+/*   Created: 2021/01/12 15:15:05 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/02/27 10:43:42 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		main(void)
+int			ft_strncmp(const char *s1, const char *s2, int n)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	data;
+	int		i;
 
-	data.x = WIDTH / 2;
-	data.y = HEIGHT / 2;
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "JohnnyBoy");
-	data.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_length, \
-			&data.endian);
-	mlx_put_image_to_window(mlx, mlx_win, data.img, 0, 0);
-	mlx_loop(mlx);
+	i = 0;
+	while (i < n)
+	{
+		if (s1[i] != s2[i] || !s1[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
 }

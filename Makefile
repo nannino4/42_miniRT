@@ -6,13 +6,14 @@
 #    By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 13:12:36 by gcefalo           #+#    #+#              #
-#    Updated: 2021/02/26 11:35:12 by gcefalo          ###   ########.fr        #
+#    Updated: 2021/02/27 10:42:48 by gcefalo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 
-SRCS	= $(wildcard srcs/*)
+SRCS	= $(wildcard srcs/*) \
+		  $(wildcard srcs/libft/*)
 
 OBJS	= $(SRCS:.c=.o)
 

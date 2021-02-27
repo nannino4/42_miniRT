@@ -6,13 +6,118 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:32:12 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/26 16:05:16 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/02/27 17:45:54 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		main(void)
+void	init_data(t_data *data)
 {
+}
+
+void	create_res(char **line, t_scene *scene, t_data *data)
+{
+	(*line)++;
+	data->w = read_int(line);
+	data->h = read_int(line);
+	if (**line)
+	{
+		//TODO error: "the line should be finished but is not"
+	}
+}
+
+void	create_amb_l(char **line, t_scene *scene)
+{
+	t_amb_l		*amb_l;
+
+	(*line)++;
+	if ((amb_l = malloc(sizeof(t_amb_l))) == 0)
+	{
+		//TODO error: "allocazione di amb_l fallita"
+	}
+	amb_l->t = read_double(line);
+	amb_l->trgb = read_color(line);
+	if (**line)
+	{
+		//TODO error: "the line should be finished but is not"
+	}
+	//TODO add amb_l to scene
+}
+
+void	add_element_to_scene(char **line, t_scene *scene, t_data *data)
+{
+	if (ft_strncmp(*line, "R", 1) == 0)
+		create_res(line, scene, data);
+	else if (ft_strncmp(*line, "A", 1) == 0)
+		create_amb_l(line, scene);
+	else if (ft_strncmp(*line, "c", 1) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "l", 1) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "pl", 2) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "sp", 2) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "sq", 2) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "cy", 2) == 0)
+	{
+	}
+	else if (ft_strncmp(*line, "tr", 2) == 0)
+	{
+	}
+	else
+	{
+		//TODO error: "unrecognized element"
+	}
+}
+
+t_scene	read_input(t_data *data, char *file)
+{
+	t_scene		scene;
+	int			fd;
+	char		*line;
+
+	fd = open(file, O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (*line)
+			add_element_to_scene(&line, &scene, data);
+	}
+	return (scene);
+}
+
+void	manage_scene(t_data data, t_scene scene)
+{
+	//TODO
+}
+
+int		main(int argc, char **argv)
+{
+	t_data		data;
+	t_scene		scene;
+
+	init_data(&data);
+	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
+	{
+		//TODO --save
+	}
+	else if (argc == 2 && argv[1])
+	{
+		data.mlx = mlx_init();
+		scene = read_input(&data, argv[1]);
+		manage_scene(data, scene);
+	}
+	else
+	{
+		//TODO error
+	}
+	return (0);
 }
 
