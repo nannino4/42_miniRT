@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:32:12 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/27 17:45:54 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/01 17:28:59 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,6 @@ void	init_data(t_data *data)
 {
 }
 
-void	create_res(char **line, t_scene *scene, t_data *data)
-{
-	(*line)++;
-	data->w = read_int(line);
-	data->h = read_int(line);
-	if (**line)
-	{
-		//TODO error: "the line should be finished but is not"
-	}
-}
-
-void	create_amb_l(char **line, t_scene *scene)
-{
-	t_amb_l		*amb_l;
-
-	(*line)++;
-	if ((amb_l = malloc(sizeof(t_amb_l))) == 0)
-	{
-		//TODO error: "allocazione di amb_l fallita"
-	}
-	amb_l->t = read_double(line);
-	amb_l->trgb = read_color(line);
-	if (**line)
-	{
-		//TODO error: "the line should be finished but is not"
-	}
-	//TODO add amb_l to scene
-}
-
 void	add_element_to_scene(char **line, t_scene *scene, t_data *data)
 {
 	if (ft_strncmp(*line, "R", 1) == 0)
@@ -52,23 +23,17 @@ void	add_element_to_scene(char **line, t_scene *scene, t_data *data)
 	else if (ft_strncmp(*line, "A", 1) == 0)
 		create_amb_l(line, scene);
 	else if (ft_strncmp(*line, "c", 1) == 0)
-	{
-	}
+		create_cam(line, scene);
 	else if (ft_strncmp(*line, "l", 1) == 0)
-	{
-	}
+		create_light(line, scene);
 	else if (ft_strncmp(*line, "pl", 2) == 0)
-	{
-	}
+		create_plane(line, scene);
 	else if (ft_strncmp(*line, "sp", 2) == 0)
-	{
-	}
+		create_sph(line, scene);
 	else if (ft_strncmp(*line, "sq", 2) == 0)
-	{
-	}
+		create_square(line, scene);
 	else if (ft_strncmp(*line, "cy", 2) == 0)
-	{
-	}
+		create_cyl(line, scene);
 	else if (ft_strncmp(*line, "tr", 2) == 0)
 	{
 	}
@@ -120,4 +85,3 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 10:33:46 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/27 17:31:07 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/01 17:29:22 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct		s_square
 	t_p			c;
 	t_v			n;
 	double		l;
+	int			trgb;
 }					t_square;
 
 typedef struct		s_cyl
@@ -180,8 +181,19 @@ char		*ft_strdup(const char *s1);
  * read_input
  */
 
+void	skip_spaces(char **line);
 int		read_int(char **line);
 double	read_double(char **line);
 int		read_color(char **line);
+t_p		read_p(char **line);
+t_v		read_norm_v(char **line);
+void	create_res(char **line, t_scene *scene, t_data *data);
+void	create_amb_l(char **line, t_scene *scene);
+void	create_cam(char **line, t_scene *scene);
+void	create_light(char **line, t_scene *scene);
+void	create_sph(char **line, t_scene *scene);
+void	create_plane(char **line, t_scene *scene);
+void	create_square(char **line, t_scene *scene);
+void	create_cyl(char **line, t_scene *scene);
 
 #endif
