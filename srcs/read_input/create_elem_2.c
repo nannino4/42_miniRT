@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:03:09 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/01 17:32:10 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 13:34:53 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	create_sph(char **line, t_scene *scene)
 	{
 		//TODO error: "shpere format is incorrect"
 	}
-	//TODO add sphere to scene
+	append_obj(scene, (void *)sph, 0);
 }
 
 void	create_plane(char **line, t_scene *scene)
@@ -53,7 +53,7 @@ void	create_plane(char **line, t_scene *scene)
 	{
 		//TODO error: "plane format is incorrect"
 	}
-	//TODO add plane to scene
+	append_obj(scene, (void *)plane, 1);
 }
 
 void	create_square(char **line, t_scene *scene)
@@ -77,7 +77,7 @@ void	create_square(char **line, t_scene *scene)
 	{
 		//TODO error: "square format is incorrect"
 	}
-	//TODO add square to scene
+	append_obj(scene, (void *)square, 2);
 }
 
 void	create_cyl(char **line, t_scene *scene)
@@ -103,7 +103,7 @@ void	create_cyl(char **line, t_scene *scene)
 	{
 		//TODO error: "cyl format is incorrect"
 	}
-	//TODO add cyl to scene
+	append_obj(scene, (void *)cyl, 3);
 }
 
 void	create_triangle(char **line, t_scene *scene)
@@ -127,5 +127,5 @@ void	create_triangle(char **line, t_scene *scene)
 	{
 		//TODO error: "triangle format is incorrect"
 	}
-	//TODO add triangle to scene
+	append_obj(scene, (void *)triangle, 4);
 }

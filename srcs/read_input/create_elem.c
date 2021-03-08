@@ -6,20 +6,20 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 16:00:14 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/01 16:01:11 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 13:31:32 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	create_res(char **line, t_scene *scene, t_data *data)
+void	create_res(char **line, t_scene *scene)
 {
 	(*line)++;
 	skip_spaces(line);
-	data->w = read_int(line);
+	scene->w = read_int(line);
 	skip_spaces(line);
-	data->h = read_int(line);
-	if (**line || data->w < 0 || data->h < 0)
+	scene->h = read_int(line);
+	if (**line || scene->w < 0 || scene->h < 0)
 	{
 		//TODO error: "resolution format is incorrect"
 	}
@@ -27,22 +27,22 @@ void	create_res(char **line, t_scene *scene, t_data *data)
 
 void	create_amb_l(char **line, t_scene *scene)
 {
-	t_amb_l		*amb_l;
+	t_amb_l		*new_amb_l;
 
 	(*line)++;
-	if ((amb_l = malloc(sizeof(t_amb_l))) == 0)
+	if ((new_amb_l = malloc(sizeof(t_amb_l))) == 0)
 	{
 		//TODO error: "allocazione di amb_l fallita"
 	}
 	skip_spaces(line);
-	amb_l->t = read_double(line);
+	new_amb_l->t = read_double(line);
 	skip_spaces(line);
-	amb_l->trgb = read_color(line);
-	if (**line || amb_l->t < 0)
+	new_amb_l->trgb = read_color(line);
+	if (**line || new_amb_l->t < 0)
 	{
 		//TODO error: "ambient light format is incorrect"
 	}
-	//TODO add amb_l to scene
+	scene->amb_l = new_amb_l;
 }
 
 
@@ -61,11 +61,12 @@ void	create_cam(char **line, t_scene *scene)
 	cam->v = read_norm_v(line);
 	skip_spaces(line);
 	cam->fov = read_int(line);
+	cam->next = 0;
 	if (**line || cam->fov < 0)
 	{
 		//TODO error: "camera format is incorrect"
 	}
-	//TODO add cam to scene
+	append_cam(scene, cam);
 }
 
 void	create_light(char **line, t_scene *scene)
@@ -83,9 +84,10 @@ void	create_light(char **line, t_scene *scene)
 	light->t = read_double(line);
 	skip_spaces(line);
 	light->trgb = read_color(line);
+	light->next = 0;
 	if (**line || light->t < 0 || light->t > 1)
 	{
 		//TODO error: "light format is incorrect"
 	}
-	//TODO add light to scene
+	append_light(scene, light);
 }

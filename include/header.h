@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 10:33:46 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/01 17:29:22 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 13:34:49 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,8 @@
 # define BUFFER_SIZE 10
 
 /*
- * essential structures
- */
-
-typedef struct		s_data
-{
-	int		w;
-	int		h;
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_l;
-	int		endian;
-}					t_data;
-
-typedef struct		s_scene
-{
-	char	*id;
-	void	*data;
-	void	*next;
-}					t_scene;
-
-/*
  * basic structures
  */
-
-typedef struct		s_res
-{
-	int		x;
-	int		y;
-}					t_res;
 
 typedef struct		s_p
 {
@@ -78,6 +48,10 @@ typedef struct		s_ray
 	t_v		v;
 }					t_ray;
 
+/*
+ * essential structures
+ */
+
 typedef struct		s_amb_l
 {
 	double	t;
@@ -89,6 +63,7 @@ typedef struct		s_cam
 	t_p		p0;
 	t_v		v;
 	int		fov;
+	s_cam	*next;
 }					t_cam;
 
 typedef struct		s_light
@@ -96,7 +71,32 @@ typedef struct		s_light
 	double	t;
 	int		trgb;
 	t_p		p;
+	s_light	*next;
 }					t_light;
+
+typedef struct		s_obj
+{
+	int		id;
+	void	*obj;
+	void	*next;
+}					t_obj;
+
+typedef struct		s_scene
+{
+	int		w;
+	int		h;
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_l;
+	int		endian;
+	t_amb_l	*amb_l;
+	t_light	*light;
+	t_cam	*cam;
+	t_obj	*obj;
+}					t_scene;
 
 /*
  * geometrical objects
@@ -187,7 +187,7 @@ double	read_double(char **line);
 int		read_color(char **line);
 t_p		read_p(char **line);
 t_v		read_norm_v(char **line);
-void	create_res(char **line, t_scene *scene, t_data *data);
+void	create_res(char **line, t_scene *scene);
 void	create_amb_l(char **line, t_scene *scene);
 void	create_cam(char **line, t_scene *scene);
 void	create_light(char **line, t_scene *scene);
@@ -195,5 +195,9 @@ void	create_sph(char **line, t_scene *scene);
 void	create_plane(char **line, t_scene *scene);
 void	create_square(char **line, t_scene *scene);
 void	create_cyl(char **line, t_scene *scene);
+void	create_triangle(char **line, t_scene *scene);
+void	append_cam(t_scene *scene, t_cam *cam);
+void	append_light(t_scene *scene, t_light *light);
+void	append_obj(t_scene *scene, void *light, int id);
 
 #endif

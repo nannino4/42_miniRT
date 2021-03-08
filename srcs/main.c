@@ -6,20 +6,33 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:32:12 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/01 17:28:59 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 13:18:31 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	init_data(t_data *data)
+void	init_scene(t_scene *scene)
 {
+	scene->w = 0;
+	scene->h = 0;
+	scene->mlx = 0;
+	scene->win = 0;
+	scene->img = 0;
+	scene->addr = 0;
+	scene->bpp = 0;
+	scene->line_l = 0;
+	scene->endian = 0;
+	scene->amb_l = 0;
+	scene->light = 0;
+	scene->cam = 0;
+	scene->obj = 0;
 }
 
-void	add_element_to_scene(char **line, t_scene *scene, t_data *data)
+void	add_element_to_scene(char **line, t_scene *scene)
 {
 	if (ft_strncmp(*line, "R", 1) == 0)
-		create_res(line, scene, data);
+		create_res(line, scene);
 	else if (ft_strncmp(*line, "A", 1) == 0)
 		create_amb_l(line, scene);
 	else if (ft_strncmp(*line, "c", 1) == 0)
@@ -35,17 +48,15 @@ void	add_element_to_scene(char **line, t_scene *scene, t_data *data)
 	else if (ft_strncmp(*line, "cy", 2) == 0)
 		create_cyl(line, scene);
 	else if (ft_strncmp(*line, "tr", 2) == 0)
-	{
-	}
+		create_triangle(line, scene);
 	else
 	{
 		//TODO error: "unrecognized element"
 	}
 }
 
-t_scene	read_input(t_data *data, char *file)
+void	read_input(t_scene *scene, char *file)
 {
-	t_scene		scene;
 	int			fd;
 	char		*line;
 
@@ -53,31 +64,29 @@ t_scene	read_input(t_data *data, char *file)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (*line)
-			add_element_to_scene(&line, &scene, data);
+			add_element_to_scene(&line, scene);
 	}
-	return (scene);
 }
 
-void	manage_scene(t_data data, t_scene scene)
+void	manage_scene(t_scene scene)
 {
 	//TODO
 }
 
 int		main(int argc, char **argv)
 {
-	t_data		data;
 	t_scene		scene;
 
-	init_data(&data);
+	init_scene(&scene);
 	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
 	{
 		//TODO --save
 	}
 	else if (argc == 2 && argv[1])
 	{
-		data.mlx = mlx_init();
-		scene = read_input(&data, argv[1]);
-		manage_scene(data, scene);
+		scene.mlx = mlx_init();
+		read_input(&scene, argv[1]);
+		manage_scene(scene);
 	}
 	else
 	{
