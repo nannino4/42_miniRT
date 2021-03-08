@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 15:32:12 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 13:18:31 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 18:12:23 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,56 @@ void	read_input(t_scene *scene, char *file)
 	}
 }
 
+/*
 void	manage_scene(t_scene scene)
 {
 	//TODO
+}
+*/
+
+void	print_status(t_scene scene)
+{
+	t_light	*l_elem;
+	t_cam	*c_elem;
+//	t_obj	*o_elem;
+
+	printf("\
+			w: %d\n \
+			h: %d\n \
+			amb_l.t: %lf\n \
+			amb_l.trgb: %x\n"
+			, scene.w, scene.h, scene.amb_l->t, scene.amb_l->trgb);
+	l_elem = scene.light;
+	while (l_elem)
+	{
+		printf("\
+				light.t: %lf\n \
+				light.trgb: %x\n \
+				light.p.x: %lf\n \
+				light.p.y: %lf\n \
+				light.p.z: %lf\n \
+				light.next: %p\n \
+				", scene.light->t, scene.light->trgb, scene.light->p.x, \
+				scene.light->p.y, scene.light->p.z, scene.light->next);
+		l_elem = l_elem->next;
+	}
+	c_elem = scene.cam;
+	while (c_elem)
+	{
+		printf("\
+				cam.p.x: %lf\n \
+				cam.p.y: %lf\n \
+				cam.p.z: %lf\n \
+				cam.v.x: %lf\n \
+				cam.v.y: %lf\n \
+				cam.v.z: %lf\n \
+				cam.fov: %d\n \
+				cam.next: %p\n \
+				", scene.cam->p0.x, scene.cam->p0.y, scene.cam->p0.z, \
+				scene.cam->v.x, scene.cam->v.y, scene.cam->v.z, \
+				scene.cam->fov, scene.cam->next);
+		l_elem = l_elem->next;
+	}
 }
 
 int		main(int argc, char **argv)
@@ -86,7 +133,8 @@ int		main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-		manage_scene(scene);
+//		manage_scene(scene);
+		print_status(scene);
 	}
 	else
 	{

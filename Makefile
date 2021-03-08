@@ -6,14 +6,16 @@
 #    By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/13 13:12:36 by gcefalo           #+#    #+#              #
-#    Updated: 2021/02/27 10:42:48 by gcefalo          ###   ########.fr        #
+#    Updated: 2021/03/08 18:03:03 by gcefalo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 
-SRCS	= $(wildcard srcs/*) \
-		  $(wildcard srcs/libft/*)
+SRCS	= $(wildcard srcs/main.c) \
+		  $(wildcard srcs/libft/*) \
+		  $(wildcard srcs/math/*) \
+		  $(wildcard srcs/read_input/*) \
 
 OBJS	= $(SRCS:.c=.o)
 

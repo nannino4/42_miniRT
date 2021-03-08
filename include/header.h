@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 10:33:46 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 13:34:49 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/08 17:59:39 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,25 @@ typedef struct		s_amb_l
 
 typedef struct		s_cam
 {
-	t_p		p0;
-	t_v		v;
-	int		fov;
-	s_cam	*next;
+	t_p				p0;
+	t_v				v;
+	int				fov;
+	struct s_cam	*next;
 }					t_cam;
 
 typedef struct		s_light
 {
-	double	t;
-	int		trgb;
-	t_p		p;
-	s_light	*next;
+	double			t;
+	int				trgb;
+	t_p				p;
+	struct s_light	*next;
 }					t_light;
 
 typedef struct		s_obj
 {
-	int		id;
-	void	*obj;
-	void	*next;
+	int				id;
+	void			*obj;
+	struct s_obj	*next;
 }					t_obj;
 
 typedef struct		s_scene
@@ -198,6 +198,11 @@ void	create_cyl(char **line, t_scene *scene);
 void	create_triangle(char **line, t_scene *scene);
 void	append_cam(t_scene *scene, t_cam *cam);
 void	append_light(t_scene *scene, t_light *light);
-void	append_obj(t_scene *scene, void *light, int id);
+void	create_obj(t_scene *scene);
+void	append_sph(t_scene *scene, t_sph *sph);
+void	append_plane(t_scene *scene, t_plane *plane);
+void	append_square(t_scene *scene, t_square *square);
+void	append_cyl(t_scene *scene, t_cyl *cyl);
+void	append_triangle(t_scene *scene, t_triangle *triangle);
 
 #endif
