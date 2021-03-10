@@ -24,10 +24,10 @@ CFLAGS	= -Wall -Wextra -Werror -I /usr/local/include -I ./include
 LFLAGS	= -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 
 %.o :		%.c
-			gcc -c $(CFLAGS) $< -o $@
+			gcc -c -g $(CFLAGS) $< -o $@
 
 $(NAME):	$(OBJS)
-			gcc $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+			gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 all:		$(NAME)
 

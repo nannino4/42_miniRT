@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 16:57:31 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 18:01:24 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/03/10 11:11:01 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ double	read_double(char **line)
 		if (**line >= '0' && **line <= '9')
 		{
 			d = positive_atoi(line);
-			while (d > 0)
+			while ((int)d > 0)
 				d /= 10.;
 			i += d;
 		}
@@ -94,11 +94,15 @@ int		read_color(char **line)
 
 	r = read_int(line);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
+	{
 		//TODO error: "wrong format for color"
+	}
 	(*line)++;
 	g = read_int(line);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
+	{
 		//TODO error: "wrong format for color"
+	}
 	(*line)++;
 	b = read_int(line);
 	if (r < 0 || g < 0 || b < 0)
