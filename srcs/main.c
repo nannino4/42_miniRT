@@ -88,33 +88,16 @@ void	print_status(t_scene scene)
 	l_elem = scene.light;
 	while (l_elem)
 	{
-		printf(" Light %d _.::._ \
-				t: %lf\t \
-				rgb: %x\t \
-				p.x: %lf\t \
-				p.y: %lf\t \
-				p.z: %lf\t \
-				next: %p\n \
-				", i++,  scene.light->t, scene.light->trgb, scene.light->p.x, \
-				scene.light->p.y, scene.light->p.z, scene.light->next);
+		printf(" Light %d _.::._ t: %lf\t rgb: %x\t p.x: %lf\t p.y: %lf\t p.z: %lf\t next: %p\n " \
+			, i++, l_elem->t, l_elem->trgb, l_elem->p.x, l_elem->p.y, l_elem->p.z, l_elem->next);
 		l_elem = l_elem->next;
 	}
 	c_elem = scene.cam;
 	i = 1;
 	while (c_elem)
 	{
-		printf(" Camera %d _.::._ \
-				p.x: %lf\t \
-				p.y: %lf\t \
-				p.z: %lf\t \
-				v.x: %lf\t \
-				v.y: %lf\t \
-				v.z: %lf\t \
-				fov: %d\t \
-				next: %p\n \
-				", i++, scene.cam->p0.x, scene.cam->p0.y, scene.cam->p0.z, \
-				scene.cam->v.x, scene.cam->v.y, scene.cam->v.z, \
-				scene.cam->fov, scene.cam->next);
+		printf(" Camera %d _.::._ p.x: %lf\t p.y: %lf\t p.z: %lf\t v.x: %lf\t v.y: %lf\t v.z: %lf\t fov: %d\t next: %p\n" \
+			, i++, c_elem->p0.x, c_elem->p0.y, c_elem->p0.z, c_elem->v.x, c_elem->v.y, c_elem->v.z, c_elem->fov, c_elem->next);
 		c_elem = c_elem->next;
 	}
 	o_elem = scene.obj;
