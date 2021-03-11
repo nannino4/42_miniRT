@@ -94,11 +94,11 @@ void	create_cyl(char **line, t_scene *scene)
 	skip_spaces(line);
 	cyl->n = read_norm_v(line);
 	skip_spaces(line);
-	cyl->trgb = read_color(line);
-	skip_spaces(line);
 	cyl->d = read_int(line);
 	skip_spaces(line);
 	cyl->h = read_int(line);
+	skip_spaces(line);
+	cyl->trgb = read_color(line);
 	if (**line)
 	{
 		//TODO error: "cyl format is incorrect"

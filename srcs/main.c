@@ -75,51 +75,6 @@ void	manage_scene(t_scene scene)
 }
 */
 
-void	print_status(t_scene scene)
-{
-	t_light	*l_elem;
-	t_cam	*c_elem;
-//	t_obj	*o_elem;
-
-	printf("\
-w: %d\n\
-h: %d\n\
-amb_l.t: %lf\n\
-amb_l.trgb: %x\n"
-, scene.w, scene.h, scene.amb_l->t, scene.amb_l->trgb);
-	l_elem = scene.light;
-	while (l_elem)
-	{
-		printf("\
-light.t: %lf\n\
-light.trgb: %x\n\
-light.p.x: %lf\n\
-light.p.y: %lf\n\
-light.p.z: %lf\n\
-light.next: %p\n" \
-, l_elem->t, l_elem->trgb, l_elem->p.x, \
-				l_elem->p.y, l_elem->p.z, l_elem->next);
-		l_elem = l_elem->next;
-	}
-	c_elem = scene.cam;
-	while (c_elem)
-	{
-		printf("\
-cam.p.x: %lf\n\
-cam.p.y: %lf\n\
-cam.p.z: %lf\n\
-cam.v.x: %lf\n\
-cam.v.y: %lf\n\
-cam.v.z: %lf\n\
-cam.fov: %d\n\
-cam.next: %p\n" \
-, c_elem->p0.x, c_elem->p0.y, c_elem->p0.z, \
-				c_elem->v.x, c_elem->v.y, c_elem->v.z, \
-				c_elem->fov, c_elem->next);
-		c_elem = c_elem->next;
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	t_scene		scene;
@@ -134,11 +89,10 @@ int		main(int argc, char **argv)
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
 //		manage_scene(scene);
-		print_status(scene);
 	}
 	else
 	{
-		//TODO error
+		//TODO error: "invalid input format"
 	}
 	return (0);
 }
