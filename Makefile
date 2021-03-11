@@ -12,10 +12,19 @@
 
 NAME	= miniRT
 
-SRCS	= $(wildcard srcs/main.c) \
-		  $(wildcard srcs/libft/*) \
-		  $(wildcard srcs/math/*) \
-		  $(wildcard srcs/read_input/*) \
+SRCS	= srcs/main.c \
+		  srcs/libft/ft_color.c \
+		  srcs/libft/ft_strncmp.c \
+		  srcs/libft/get_next_line.c \
+		  srcs/libft/get_next_line_utils.c \
+		  srcs/math/ft_intersections.c \
+		  srcs/math/ft_vectors.c \
+		  srcs/read_input/append_to_list.c \
+		  srcs/read_input/append_to_list_2.c \
+		  srcs/read_input/create_elem.c \
+		  srcs/read_input/create_elem_2.c \
+		  srcs/read_input/ft_read.c \
+		  srcs/read_input/ft_read_2.c \
 
 OBJS	= $(SRCS:.c=.o)
 

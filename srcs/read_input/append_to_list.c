@@ -15,25 +15,23 @@
 void	create_obj(t_scene *scene)
 {
 	t_obj	*element;
+	t_obj	*to_be_added;
 
-	element = scene->obj;
-	if (!element)
+	if (!(to_be_added = malloc(sizeof(t_obj))))
 	{
-		if (!(element = malloc(sizeof(t_obj))))
-		{
-			//TODO error: "allocation failed"
-		}
+		//TODO error: "allocation failed"
 	}
+	element = to_be_added;
+	if (!scene->obj)
+		scene->obj = to_be_added;
 	else
 	{
+		element = scene->obj;
 		while (element->next)
 		{
 			element = element->next;
 		}
-		if (!(element->next = malloc(sizeof(t_obj))))
-		{
-			//TODO error: "allocation failed"
-		}
+		element->next = to_be_added;
 		element = element->next;
 	}
 	element->next = 0;
