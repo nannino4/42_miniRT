@@ -35,12 +35,7 @@ typedef struct		s_p
 	double	z;
 }					t_p;
 
-typedef struct		s_v
-{
-	double	x;
-	double	y;
-	double	z;
-}					t_v;
+typedef t_p t_v;
 
 typedef struct		s_ray
 {
