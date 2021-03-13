@@ -68,12 +68,12 @@ void	read_input(t_scene *scene, char *file)
 	}
 }
 
-/*
-void	manage_scene(t_scene scene)
+void	manage_scene(t_scene *scene)
 {
-	//TODO
+	crete_img(scene);
+	mlx_put_image_to_window(scene->mlx, scene->win, scene->img, 0, 0);
+    mlx_loop(scene->mlx);
 }
-*/
 
 int		main(int argc, char **argv)
 {
@@ -88,7 +88,9 @@ int		main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-//		manage_scene(scene);
+		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h, "John's_miniRT");
+		scene.img = mlx_new_image(scene.mlx, scene.w, scene.h);
+		manage_scene(&scene);
 	}
 	else
 	{
