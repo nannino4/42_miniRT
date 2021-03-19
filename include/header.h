@@ -188,6 +188,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
+void        my_mlx_pixel_put(t_scene *scene, int x, int y, int trgb);
 
 /*
  * read_input

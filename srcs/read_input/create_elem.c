@@ -19,6 +19,10 @@ void	create_res(char **line, t_scene *scene)
 	scene->w = read_int(line);
 	skip_spaces(line);
 	scene->h = read_int(line);
+	if (scene->w > MAX_W)
+		scene->w = MAX_W;
+	if (scene->h > MAX_H)
+		scene->h = MAX_H;
 	if (**line || scene->w < 0 || scene->h < 0)
 	{
 		//TODO error: "resolution format is incorrect"
