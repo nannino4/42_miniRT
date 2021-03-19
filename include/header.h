@@ -23,6 +23,14 @@
 # include <fcntl.h>
 
 # define BUFFER_SIZE 10
+# define MAX_DISTANCE 1000
+# define EPSILON 0.05
+
+# define SPHERE 0
+# define PLANE 1
+# define SQUARE 2
+# define CYLINDER 3
+# define TRIANGLE 4
 
 /*
  * basic structures
@@ -35,17 +43,14 @@ typedef struct		s_p
 	double	z;
 }					t_p;
 
-typedef struct		s_v
-{
-	double	x;
-	double	y;
-	double	z;
-}					t_v;
+typedef t_p			t_v;
 
 typedef struct		s_ray
 {
 	t_p		p0;
 	t_v		v;
+	double	distance;
+	t_obj	*closest_obj;
 }					t_ray;
 
 /*
@@ -68,7 +73,7 @@ typedef struct		s_cam
 
 typedef struct		s_light
 {
-	double			t;
+	double			brightness;
 	int				trgb;
 	t_p				p;
 	struct s_light	*next;
@@ -81,17 +86,24 @@ typedef struct		s_obj
 	struct s_obj	*next;
 }					t_obj;
 
+typedef struct		s_image
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_l;
+	int		endian;
+}					t_image;
+
 typedef struct		s_scene
 {
 	int		w;
 	int		h;
 	void	*mlx;
 	void	*win;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_l;
-	int		endian;
+	int		img_n;
+	t_image	img1;
+	t_image	img2;
 	t_amb_l	*amb_l;
 	t_light	*light;
 	t_cam	*cam;
@@ -164,7 +176,7 @@ int		get_g(int trgb);
 int		get_b(int trgb);
 
 /*
- * libft
+ * utils
  */
 
 int			ft_strncmp(const char *s1, const char *s2, int n);

@@ -18,11 +18,7 @@ void	init_scene(t_scene *scene)
 	scene->h = 0;
 	scene->mlx = 0;
 	scene->win = 0;
-	scene->img = 0;
-	scene->addr = 0;
-	scene->bpp = 0;
-	scene->line_l = 0;
-	scene->endian = 0;
+	scene->img_n = 1;
 	scene->amb_l = 0;
 	scene->light = 0;
 	scene->cam = 0;
@@ -68,12 +64,16 @@ void	read_input(t_scene *scene, char *file)
 	}
 }
 
-/*
-void	manage_scene(t_scene scene)
+
+void	manage_scene(t_scene *scene)
 {
-	//TODO
+	create_img(scene);
+//	mlx_key_hook(scene->win, key_hook, scene);
+//	mlx_hook(scene->win, 17, 1L << 2, close_window, scene);
+//	mlx_hook(scene->win, 4, 0, mouse_click, scene);
+	mlx_loop(scene->mlx);
 }
-*/
+
 
 int		main(int argc, char **argv)
 {
@@ -88,7 +88,11 @@ int		main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-//		manage_scene(scene);
+		if (!(scene.win = mlx_new_window(scene.mlx, scene.w, scene.h, "JohnnyBoy's miniRT")))
+		{
+			//TODO error: "couldn't create window or image"
+		}
+		manage_scene(&scene);
 	}
 	else
 	{

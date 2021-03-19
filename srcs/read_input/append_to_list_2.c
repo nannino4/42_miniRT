@@ -20,7 +20,7 @@ void	append_sph(t_scene *scene, t_sph *sph)
 	element = scene->obj;
 	while (element->next)
 		element = element->next;
-	element->id = 0;
+	element->id = SPHERE;
 	element->obj = (void*)sph;
 }
 
@@ -32,7 +32,7 @@ void	append_plane(t_scene *scene, t_plane *plane)
 	element = scene->obj;
 	while (element->next)
 		element = element->next;
-	element->id = 1;
+	element->id = PLANE;
 	element->obj = (void*)plane;
 }
 
@@ -44,7 +44,7 @@ void	append_square(t_scene *scene, t_square *square)
 	element = scene->obj;
 	while (element->next)
 		element = element->next;
-	element->id = 2;
+	element->id = SQUARE;
 	element->obj = (void*)square;
 }
 
@@ -56,7 +56,7 @@ void	append_cyl(t_scene *scene, t_cyl *cyl)
 	element = scene->obj;
 	while (element->next)
 		element = element->next;
-	element->id = 3;
+	element->id = CYLINDER;
 	element->obj = (void*)cyl;
 }
 
@@ -68,6 +68,6 @@ void	append_triangle(t_scene *scene, t_triangle *triangle)
 	element = scene->obj;
 	while (element->next)
 		element = element->next;
-	element->id = 4;
+	element->id = TRIANGLE;
 	element->obj = (void*)triangle;
 }

@@ -13,10 +13,10 @@
 NAME	= miniRT
 
 SRCS	= srcs/main.c \
-		  srcs/libft/ft_color.c \
-		  srcs/libft/ft_strncmp.c \
-		  srcs/libft/get_next_line.c \
-		  srcs/libft/get_next_line_utils.c \
+		  srcs/utils/ft_color.c \
+		  srcs/utils/ft_strncmp.c \
+		  srcs/utils/get_next_line.c \
+		  srcs/utils/get_next_line_utils.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_vectors.c \
 		  srcs/read_input/append_to_list.c \
