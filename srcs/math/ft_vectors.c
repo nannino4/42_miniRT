@@ -12,6 +12,32 @@
 
 #include "header.h"
 
+int		is_equal(double x, double y)
+{
+	if (x - y > -1 * EPSILON && x - y < EPSILON)
+		return (1);
+	else
+		return (0);
+}
+
+int		is_greater(double x, double y)
+{
+	if (x - y > EPSILON)
+		return (1);
+	else
+		return (0);
+}
+
+t_v		create_v(double x, double y, double z)
+{
+	t_v		v;
+	
+	v.x = x;
+	v.y = y;
+	v.z = z;
+	return (v);
+}
+
 t_v		v_sum(t_v v1, t_v v2)
 {
 	t_v		sum;
@@ -30,7 +56,7 @@ t_v		v_sub(t_v v1, t_v v2)
 	return (sub);
 }
 
-t_v		v_scal_mul(t_v v, double a)
+t_v		v_scalar_mul(t_v v, double a)
 {
 	v.x *= a;
 	v.y *= a;
@@ -66,4 +92,10 @@ t_v		v_cross_prod(t_v v1, t_v v2)
 	vec.y = v1.z * v2.x - v1.x * v2.z;
 	vec.z = v1.x * v2.y - v1.y * v2.x;
 	return (vec);
+}
+
+t_p		project_p_to_plane(t_p p, t_plane plane)
+{
+	return (v_sum(p, v_scalar_mul(plane.n, -1 * v_dot_prod(v_sub(p, plane.p0), plane.n))));
+//	return (v_sum(p, v_scalar_mul(plane.n, dot_prod(plane.p0, plane.n) - dot_prod(p, plane.n))));
 }

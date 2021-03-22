@@ -45,28 +45,40 @@ typedef struct		s_p
 
 typedef t_p			t_v;
 
-typedef struct		s_ray
+typedef struct		s_color
 {
-	t_p		p0;
-	t_v		v;
-	double	distance;
-	t_obj	*closest_obj;
-}					t_ray;
+	int	t;
+	int	r;
+	int	g;
+	int	b;
+}					t_color;
 
-/*
- * essential structures
- */
+typedef struct		s_inters
+{
+	double	distance;
+	int		obj_trgb;
+	t_v		norm;
+	t_p		hit_point;
+}					t_inters;
 
 typedef struct		s_amb_l
 {
-	double	t;
+	double	brightness;
 	int		trgb;
 }					t_amb_l;
 
+typedef struct		s_ray
+{
+	t_p			origin;
+	t_v			direction;
+	t_inters	intersection;
+	t_amb_l		light;
+}					t_ray;
+
 typedef struct		s_cam
 {
-	t_p				p0;
-	t_v				v;
+	t_p				origin;
+	t_v				direction;
 	int				fov;
 	struct s_cam	*next;
 }					t_cam;
@@ -75,7 +87,7 @@ typedef struct		s_light
 {
 	double			brightness;
 	int				trgb;
-	t_p				p;
+	t_p				origin;
 	struct s_light	*next;
 }					t_light;
 
@@ -157,13 +169,17 @@ typedef struct		s_triangle
  * ft_math.c
  */
 
+int		is_equal(double x, double y);
+int		is_greater(double x, double y);
+t_v		create_v(double x, double y, double z);
 t_v		v_sum(t_v v1, t_v v2);
 t_v		v_sub(t_v v1, t_v v2);
-t_v		v_scal_mul(t_v v, double a);
+t_v		v_scalar_mul(t_v v, double a);
 double	v_dot_prod(t_v v1, t_v v2);
 double	v_norm(t_v v);
 t_v		v_normalize(t_v v);
 t_v		v_cross_prod(t_v v1, t_v v2);
+t_p		project_p_to_plane(t_p p, t_plane plane);
 
 /*
  * get_trgb.c
