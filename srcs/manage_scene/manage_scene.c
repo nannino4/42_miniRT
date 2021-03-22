@@ -3,14 +3,14 @@
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
 {
 	t_v		up;
+	t_v		sx;
 	t_plane	screen;
 	t_p		p1;
-
-	screen.p0 = v_sum(scene->cam->origin, scene->cam->direction);
-	screen.n = scene->cam->direction;
+	double	theta;
 
 	ray->origin = scene->cam->origin;
-
+	screen.p0 = v_sum(scene->cam->origin, scene->cam->direction);
+	screen.n = scene->cam->direction;
 	if (is_equal(v_dot_prod(scene->cam->direction, create_v(0, 1, 0)), 0))
 		up = create_v(0, 1, 0);
 	else if(is_equal(v_norm(v_cross_prod(scene->cam->direction, create_v(0, 1, 0))), 0))
@@ -22,6 +22,17 @@ void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
 		if(is_greater(0, dot_prod(up, create_v(0, 1, 0))))
 			up = v_scalar_mul(up, -1);
 	}
+	theta = scene->cam->fov * M_PI / 360.;
+	sx = v_normalize(v_cross_prod(up, scene->cam->direction));
+
+/*	P1 = v_sum(v_sum(sqpl.P0, v_scala(Up, tan(theta) * R.h / R.w)), v_scala(Rt, -1.0 * tan(theta)));
+	P2 = v_sum(P1, v_scala(Rt, 2 * d * tan(theta)));
+	P3 = v_sum(P2, v_scala(Up, -1.0 * 2 * d * tan(theta) * R.h / R.w));
+	P4 = v_sum(P3, v_scala(Rt, -1.0 * 2 * d * tan(theta)));
+	P = v_sum(v_sum(P1, v_scala(Rt, v_dist(P1, P2) * (i + 0.5) / R.w)), v_scala(Up, -1.0 * v_dist(P1, P4) * (j + 0.5) / R.h));
+	
+	ray.V = norm_vec(P, ray.P0);
+*/
 }
 
 double	intersect_obj(t_obj *obj, t_ray *ray)

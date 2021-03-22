@@ -96,6 +96,8 @@ t_v		v_cross_prod(t_v v1, t_v v2)
 
 t_p		project_p_to_plane(t_p p, t_plane plane)
 {
-	return (v_sum(p, v_scalar_mul(plane.n, -1 * v_dot_prod(v_sub(p, plane.p0), plane.n))));
-//	return (v_sum(p, v_scalar_mul(plane.n, dot_prod(plane.p0, plane.n) - dot_prod(p, plane.n))));
+	t_v		v;
+
+	v = v_sub(p, plane.p0);
+	return (v_sum(p, v_scalar_mul(plane.n, -1 * v_dot_prod(v, plane.n))));
 }
