@@ -107,19 +107,32 @@ typedef struct		s_image
 	int		endian;
 }					t_image;
 
+typedef struct		s_screen
+{
+	t_p		p1;
+	t_p		p2;
+	t_p		p3;
+	t_p		p4;
+	t_plane	plane;
+	t_v		up;
+	t_v		dx;
+	double	theta;
+}					t_screen;
+
 typedef struct		s_scene
 {
-	int		w;
-	int		h;
-	void	*mlx;
-	void	*win;
-	int		img_n;
-	t_image	img1;
-	t_image	img2;
-	t_amb_l	*amb_l;
-	t_light	*light;
-	t_cam	*cam;
-	t_obj	*obj;
+	int			w;
+	int			h;
+	void		*mlx;
+	void		*win;
+	int			img_n;
+	t_image		img1;
+	t_image		img2;
+	t_screen	screen;
+	t_amb_l		*amb_l;
+	t_light		*light;
+	t_cam		*cam;
+	t_obj		*obj;
 }					t_scene;
 
 /*

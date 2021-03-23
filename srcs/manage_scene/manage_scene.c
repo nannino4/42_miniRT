@@ -1,52 +1,49 @@
 #include "header.h"
 
-void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
+void	create_screen(t_scene *scene)
 {
-	t_v		up;
-	t_v		sx;
-	t_plane	screen;
-	t_p		p1;
-	double	theta;
-
-	ray->origin = scene->cam->origin;
-	screen.p0 = v_sum(scene->cam->origin, scene->cam->direction);
-	screen.n = scene->cam->direction;
+	scene->screen.plane.p0 = v_sum(scene->cam->origin, scene->cam->direction);
+	scene->screen.plane.n = scene->cam->direction;
 	if (is_equal(v_dot_prod(scene->cam->direction, create_v(0, 1, 0)), 0))
-		up = create_v(0, 1, 0);
+		scene->screen.up = create_v(0, 1, 0);
 	else if(is_equal(v_norm(v_cross_prod(scene->cam->direction, create_v(0, 1, 0))), 0))
-		up = create_v(1, 0, 0);
+		scene->screen.up = create_v(1, 0, 0);
 	else
 	{
-		p1 = project_p_to_plane(create_v(0, 1, 0), screen);
-		up = v_normalize(v_sub(p1, screen.p0));
-		if(is_greater(0, dot_prod(up, create_v(0, 1, 0))))
-			up = v_scalar_mul(up, -1);
+		scene->screen.p1 = project_p_to_plane(create_v(0, 1, 0), scene->screen.plane);
+		scene->screen.up = v_normalize(v_sub(scene->screen.p1, scene->screen.plane.p0));
+		if(is_greater(0, dot_prod(scene->screen.up, create_v(0, 1, 0))))
+			scene->screen.up = v_scalar_mul(scene->screen.up, -1);
 	}
-	theta = scene->cam->fov * M_PI / 360.;
-	sx = v_normalize(v_cross_prod(up, scene->cam->direction));
+	scene->screen.theta = scene->cam->fov * M_PI / 360.;
+	scene->screen.dx = v_normalize(v_cross_prod(scene->cam->direction, scene->screen.up));
+	scene->screen.p1 = v_sum(v_sum(scene->screen.plane.p0, v_scalar_mul(scene->screen.up, tan(scene->screen.theta) * scene->h / scene->w)), v_scalar_mul(scene->screen.dx, -1. * tan(scene->screen.theta)));
+	scene->screen.p2 = v_sum(scene->screen.p1, v_scalar_mul(scene->screen.dx, 2. * tan(scene->screen.theta)));
+	scene->screen.p3 = v_sum(scene->screen.p2, v_scalar_mul(scene->screen.up, -2. * tan(scene->screen.theta) * scene->h / scene->w));
+	scene->screen.p4 = v_sum(scene->screen.p3, v_scalar_mul(scene->screen.dx, -2. * tan(scene->screen.theta)));
+}
 
-/*	P1 = v_sum(v_sum(sqpl.P0, v_scala(Up, tan(theta) * R.h / R.w)), v_scala(Rt, -1.0 * tan(theta)));
-	P2 = v_sum(P1, v_scala(Rt, 2 * d * tan(theta)));
-	P3 = v_sum(P2, v_scala(Up, -1.0 * 2 * d * tan(theta) * R.h / R.w));
-	P4 = v_sum(P3, v_scala(Rt, -1.0 * 2 * d * tan(theta)));
-	P = v_sum(v_sum(P1, v_scala(Rt, v_dist(P1, P2) * (i + 0.5) / R.w)), v_scala(Up, -1.0 * v_dist(P1, P4) * (j + 0.5) / R.h));
-	
-	ray.V = norm_vec(P, ray.P0);
-*/
+void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
+{
+	t_p		p;
+
+	ray->origin = scene->cam->origin;
+	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->screen.dx, v_norm(v_sub(scene->screen.p1, scene->screen.p2)) * (x + 0.5) / scene->w)), v_scalar_mul(scene->screen.up, -1. * v_dist(scene->screen.p1, scene->screen.p4) * (y + 0.5) / scene->h));
+	ray->direction = v_normalize(v_sub(p, ray->origin));
 }
 
 double	intersect_obj(t_obj *obj, t_ray *ray)
 {
 	if (obj->id == SPHERE)
-		intercept_sphere((t_sph *)obj->obj, ray);
+		intercept_sphere((t_sph*)obj->obj, ray);
 	if (obj->id == PLANE)
-		intercept_plane((t_plane *)obj->obj, ray);
+		intercept_plane((t_plane*)obj->obj, ray);
 	if (obj->id == SQUARE)
-		intercept_square((t_square *)obj->obj, ray);
+		intercept_square((t_square*)obj->obj, ray);
 	if (obj->id == CYLINDER)
-		intercept_cylinder((t_cyl *)obj->obj, ray);
+		intercept_cylinder((t_cyl*)obj->obj, ray);
 	if (obj->id == TRIANGLE)
-		intercept_triangle((t_triangle *)obj->obj, ray);
+		intercept_triangle((t_triangle*)obj->obj, ray);
 }
 
 void	find_intersection(t_ray *ray, t_scene *scene)
@@ -120,6 +117,7 @@ void	create_img(t_scene *scene)
 	double	y;
 	t_image	current_img;
 
+	create_screen(scene);
 	if (scene->img_n == 1)
 	{
 		current_img = scene->img1;
@@ -132,13 +130,12 @@ void	create_img(t_scene *scene)
 	}
 	current_img.img = mlx_new_image(scene->mlx, scene->w, scene->h);
 	current_img.addr = mlx_get_data_addr(current_img.img, current_img.bpp, current_img.line_l, current_img.endian);
-	y = 0;
-	while (y < scene->h)
+	y = -1;
+	while (++y < scene->h)
 	{
 		x = 0;
 		while (x < scene->w)
 			my_mlx_pixel_put(current_img.img, x++, y, get_pixel_color(scene, x, y));
-		y++;
 	}
 	mlx_put_image_to_window(scene->mlx, scene->win, current_img.img, 0, 0);
 }
