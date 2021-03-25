@@ -10,27 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "header.h"
+
 int		create_trgb(int t, int r, int g, int b)
 {
 	return(t << 24 | r << 16 | g << 8 | b);
 }
 
-int		get_t(int trgb)
+t_color	get_trgb(int trgb)
 {
-	return ((trgb & (0xFF << 24)) >> 24);
+	t_color		color;
+
+	color.t = (trgb & (0xFF << 24)) >> 24;
+	color.r = (trgb & (0xFF << 16)) >> 16;
+	color.g = (trgb & (0xFF << 8)) >> 8;
+	color.b = trgb & 0xFF;
+	return (color);
 }
 
-int		get_r(int trgb)
+int		get_light_color(int trgb, double brightness)
 {
-	return ((trgb & (0xFF << 16)) >> 16);
+	t_color	color;
+
+	color = get_trgb(trgb);
+	color.r *= brightness;
+	color.g *= brightness;
+	color.b *= brightness;
+	return (create_trgb(0, color.r, color.g, color.b));
 }
 
-int		get_g(int trgb)
+int		illuminate(t_ray ray)
 {
-	return ((trgb & (0xFF << 8)) >> 8);
-}
+	t_color	final_color;
+	t_color	light;
+	t_color	object;
 
-int		get_b(int trgb)
-{
-	return (trgb & 0xFF);
+	light = get_trgb(ray.light_trgb);
+	object = get_trgb(ray.intersection.obj_trgb);
+	final_color.r = object.r * light.r / 255;
+	final_color.g = object.g * light.g / 255;
+	final_color.b = object.b * light.b / 255;
+	return (create_trgb(0, final_color.r, final_color.g, final_color.b));
 }

@@ -72,7 +72,7 @@ typedef struct		s_ray
 	t_p			origin;
 	t_v			direction;
 	t_inters	intersection;
-	t_amb_l		light;
+	int			light_trgb;
 }					t_ray;
 
 typedef struct		s_cam
@@ -126,8 +126,8 @@ typedef struct		s_scene
 	void		*mlx;
 	void		*win;
 	int			img_n;
-	t_image		img1;
-	t_image		img2;
+	t_image		img;
+	t_image		img_tmp;
 	t_screen	screen;
 	t_amb_l		*amb_l;
 	t_light		*light;
@@ -179,7 +179,7 @@ typedef struct		s_triangle
 }					t_triangle;
 
 /*
- * ft_math.c
+ * math
  */
 
 int		is_equal(double x, double y);
@@ -193,16 +193,11 @@ double	v_norm(t_v v);
 t_v		v_normalize(t_v v);
 t_v		v_cross_prod(t_v v1, t_v v2);
 t_p		project_p_to_plane(t_p p, t_plane plane);
-
-/*
- * get_trgb.c
- */
-
-int		create_trgb(int t, int r, int g, int b);
-int		get_t(int trgb);
-int		get_r(int trgb);
-int		get_g(int trgb);
-int		get_b(int trgb);
+void    intercept_sphere(t_sph *sphere, t_ray *ray);
+void    intercept_plane(t_plane *plane, t_ray *ray);
+void    intercept_square(t_square *square, t_ray *ray);
+void    intercept_cylinder(t_cyl *cylinder, t_ray *ray);
+void    intercept_triangle(t_triangle *triangle, t_ray *ray);
 
 /*
  * utils
@@ -218,6 +213,10 @@ char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
 void        my_mlx_pixel_put(t_scene *scene, int x, int y, int trgb);
+int			get_light_color(int trgb, double brightness);
+int			create_trgb(int t, int r, int g, int b);
+t_color		get_trgb(int trgb);
+int			illuminate(t_ray ray);
 
 /*
  * read_input
@@ -246,5 +245,14 @@ void	append_plane(t_scene *scene, t_plane *plane);
 void	append_square(t_scene *scene, t_square *square);
 void	append_cyl(t_scene *scene, t_cyl *cyl);
 void	append_triangle(t_scene *scene, t_triangle *triangle);
+
+/*
+ * manage_scene
+ */
+
+void	create_img(t_scene *scene);
+void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
+void	find_intersection(t_ray *ray, t_scene *scene);
+void	find_shadows(t_ray *ray, t_scene *scene);
 
 #endif
