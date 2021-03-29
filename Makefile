@@ -24,6 +24,7 @@ SRCS	= srcs/main.c \
 		  srcs/read_input/append_to_list_2.c \
 		  srcs/read_input/create_elem.c \
 		  srcs/read_input/create_elem_2.c \
+		  srcs/read_input/create_elem_2_utils.c \
 		  srcs/read_input/ft_read.c \
 		  srcs/read_input/ft_read_2.c \
 		  srcs/manage_scene/get_pixel_color.c \
