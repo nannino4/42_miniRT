@@ -18,7 +18,6 @@ void	init_scene(t_scene *scene)
 	scene->h = 0;
 	scene->mlx = 0;
 	scene->win = 0;
-	scene->img_n = 1;
 	scene->amb_l = 0;
 	scene->light = 0;
 	scene->cam = 0;

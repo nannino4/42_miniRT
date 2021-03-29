@@ -129,9 +129,7 @@ typedef struct		s_scene
 	int			h;
 	void		*mlx;
 	void		*win;
-	int			img_n;
 	t_image		img;
-	t_image		img_tmp;
 	t_screen	screen;
 	t_amb_l		*amb_l;
 	t_light		*light;
@@ -160,8 +158,9 @@ typedef struct		s_plane
 typedef struct		s_square
 {
 	t_p			c;
-	t_v			v_n;
-	t_v			v_up;
+	t_v			n;
+	t_v			up;
+	t_v			dx;
 	double		l;
 	t_color		color;
 }					t_square;
@@ -180,6 +179,11 @@ typedef struct		s_triangle
 	t_p		p1;
 	t_p		p2;
 	t_p		p3;
+	t_v		n;
+	t_v		e1;
+	t_v		e2;
+	double	u;
+	double	v;
 	t_color	color;
 }					t_triangle;
 
@@ -251,6 +255,7 @@ void	append_plane(t_scene *scene, t_plane *plane);
 void	append_square(t_scene *scene, t_square *square);
 void	append_cyl(t_scene *scene, t_cyl *cyl);
 void	append_triangle(t_scene *scene, t_triangle *triangle);
+void	set_square_orientation(t_square *square);
 
 /*
  * manage_scene

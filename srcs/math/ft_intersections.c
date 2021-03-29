@@ -62,19 +62,53 @@ void    intercept_plane(t_plane *plane, t_ray *ray)
         ray->intersection.obj_color = plane->color;
     }
 }
-/*
+
 void    intercept_square(t_square *square, t_ray *ray)
 {
-
+    t_triangle  triangle_1;
+    t_triangle  triangle_2;
+    
+    triangle_1.color = square->color;
+    triangle_1.n = square->n;
+    triangle_1.p1 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / 2.)), v_scalar_mul(square->dx, square->l / -2.));
+    triangle_1.p2 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / 2.)), v_scalar_mul(square->dx, square->l / 2.));
+    triangle_1.p3 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / -2.)), v_scalar_mul(square->dx, square->l / -2.));
+    triangle_2.color = square->color;
+    triangle_2.n = square->n;
+    triangle_2.p1 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / -2.)), v_scalar_mul(square->dx, square->l / 2.));
+    triangle_2.p2 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / 2.)), v_scalar_mul(square->dx, square->l / 2.));
+    triangle_2.p3 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l / -2.)), v_scalar_mul(square->dx, square->l / -2.));
+    intercept_triangle(&triangle_1, ray);
+    intercept_triangle(&triangle_2, ray);
 }
 
+/*
 void    intercept_cylinder(t_cyl *cylinder, t_ray *ray)
 {
 
 }
+*/
 
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
 {
+    t_v     a;
+    t_v     direction;
+    double  distance;
+    double  tmp;
 
+    triangle->e1 = v_sub(triangle->p2, triangle->p1);
+    triangle->e2 = v_sub(triangle->p3, triangle->p1);
+    a = v_sub(ray->origin, triangle->p1);
+    direction = v_scalar_mul(ray->direction, -1);
+    tmp = v_dot_prod(triangle->e1, v_cross_prod(triangle->e2, direction));
+    distance = v_dot_prod(triangle->e1, v_cross_prod(triangle->e2, a)) / tmp;
+    triangle->u= v_dot_prod(a, v_cross_prod(triangle->e2, direction)) / tmp;
+    triangle->v = v_dot_prod(triangle->e1, v_cross_prod(a, direction)) / tmp;
+    if (!is_equal(v_dot_prod(ray->direction, triangle->n), EPSILON) && distance > 0. && triangle->u> 0. && triangle->v > 0. && (triangle->u + triangle->v) < 1.)
+    {
+        ray->intersection.distance = distance;
+        ray->intersection.norm = triangle->n;
+        ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, distance - EPSILON));
+        ray->intersection.obj_color = triangle->color;
+    }
 }
-*/

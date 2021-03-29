@@ -68,11 +68,12 @@ void	create_square(char **line, t_scene *scene)
 	skip_spaces(line);
 	square->c = read_p(line);
 	skip_spaces(line);
-	square->v_n = read_norm_v(line);
+	square->n = read_norm_v(line);
 	skip_spaces(line);
 	square->l = read_int(line);
 	skip_spaces(line);
 	square->color = read_color(line);
+	set_square_orientation(square);
 	if (**line)
 	{
 		//TODO error: "square format is incorrect"

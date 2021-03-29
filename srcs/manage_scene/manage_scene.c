@@ -40,18 +40,16 @@ void	create_img(t_scene *scene)
 	double	y;
 
 	create_screen(scene);
-	scene->img_tmp.img = mlx_new_image(scene->mlx, scene->w, scene->h);
-	scene->img_tmp.addr = mlx_get_data_addr(scene->img_tmp.img, &scene->img_tmp.bpp, &scene->img_tmp.line_l, &scene->img_tmp.endian);
+	scene->img.img = mlx_new_image(scene->mlx, scene->w, scene->h);
+	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bpp, &scene->img.line_l, &scene->img.endian);
 	y = 0;
 	while (y < scene->h)
 	{
 		x = -1;
 		while (++x < scene->w)
-			my_mlx_pixel_put(&scene->img_tmp, x, y, get_pixel_color(scene, x, y));
+			my_mlx_pixel_put(&scene->img, x, y, get_pixel_color(scene, x, y));
 		y++;
 	}
-	if (scene->img.img)
-		mlx_destroy_image(scene->mlx, scene->img.img);
-	scene->img = scene->img_tmp;
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
+	mlx_destroy_image(scene->mlx, scene->img.img);
 }
