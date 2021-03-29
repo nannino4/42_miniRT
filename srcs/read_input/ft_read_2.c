@@ -49,9 +49,5 @@ t_v		read_norm_v(char **line)
 	}
 	(*line)++;
 	v.z = read_double(line);
-	if (v_norm(v) != 1)
-	{
-		//TODO error: "v is not normalized"
-	}
-	return (v);
+	return (v_normalize(v));
 }

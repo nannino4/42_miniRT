@@ -26,7 +26,7 @@ void	create_sph(char **line, t_scene *scene)
 	skip_spaces(line);
 	sph->d = read_double(line);
 	skip_spaces(line);
-	sph->trgb = read_color(line);
+	sph->color = read_color(line);
 	if (**line)
 	{
 		//TODO error: "shpere format is incorrect"
@@ -48,7 +48,7 @@ void	create_plane(char **line, t_scene *scene)
 	skip_spaces(line);
 	plane->n = read_norm_v(line);
 	skip_spaces(line);
-	plane->trgb = read_color(line);
+	plane->color = read_color(line);
 	if (**line)
 	{
 		//TODO error: "plane format is incorrect"
@@ -68,11 +68,11 @@ void	create_square(char **line, t_scene *scene)
 	skip_spaces(line);
 	square->c = read_p(line);
 	skip_spaces(line);
-	square->n = read_norm_v(line);
+	square->v_n = read_norm_v(line);
 	skip_spaces(line);
 	square->l = read_int(line);
 	skip_spaces(line);
-	square->trgb = read_color(line);
+	square->color = read_color(line);
 	if (**line)
 	{
 		//TODO error: "square format is incorrect"
@@ -98,7 +98,7 @@ void	create_cyl(char **line, t_scene *scene)
 	skip_spaces(line);
 	cyl->h = read_int(line);
 	skip_spaces(line);
-	cyl->trgb = read_color(line);
+	cyl->color = read_color(line);
 	if (**line)
 	{
 		//TODO error: "cyl format is incorrect"
@@ -122,7 +122,7 @@ void	create_triangle(char **line, t_scene *scene)
 	skip_spaces(line);
 	triangle->p3 = read_p(line);
 	skip_spaces(line);
-	triangle->trgb = read_color(line);
+	triangle->color = read_color(line);
 	if (**line)
 	{
 		//TODO error: "triangle format is incorrect"

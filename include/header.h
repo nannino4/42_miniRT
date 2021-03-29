@@ -21,10 +21,13 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <float.h>
 
 # define BUFFER_SIZE 10
-# define MAX_DISTANCE 1000
-# define EPSILON 0.05
+# define MAX_DISTANCE DBL_MAX
+# define EPSILON 0.0000000005
+# define MAX_W 1920
+# define MAX_H 1080
 
 # define SPHERE 0
 # define PLANE 1
@@ -56,7 +59,7 @@ typedef struct		s_color
 typedef struct		s_inters
 {
 	double	distance;
-	int		obj_trgb;
+	t_color	obj_color;
 	t_v		norm;
 	t_p		hit_point;
 }					t_inters;
@@ -64,7 +67,7 @@ typedef struct		s_inters
 typedef struct		s_amb_l
 {
 	double	brightness;
-	int		trgb;
+	t_color	color;
 }					t_amb_l;
 
 typedef struct		s_ray
@@ -72,7 +75,7 @@ typedef struct		s_ray
 	t_p			origin;
 	t_v			direction;
 	t_inters	intersection;
-	int			light_trgb;
+	t_color		light_color;
 }					t_ray;
 
 typedef struct		s_cam
@@ -86,7 +89,7 @@ typedef struct		s_cam
 typedef struct		s_light
 {
 	double			brightness;
-	int				trgb;
+	t_color			color;
 	t_p				origin;
 	struct s_light	*next;
 }					t_light;
@@ -113,7 +116,8 @@ typedef struct		s_screen
 	t_p		p2;
 	t_p		p3;
 	t_p		p4;
-	t_plane	plane;
+	t_p		p0;
+	t_v		n;
 	t_v		up;
 	t_v		dx;
 	double	theta;
@@ -143,22 +147,23 @@ typedef struct		s_sph
 {
 	t_p			c;
 	double		d;
-	int			trgb;
+	t_color		color;
 }					t_sph;
 
 typedef struct		s_plane
 {
 	t_p			p0;
 	t_v			n;
-	int			trgb;
+	t_color		color;
 }					t_plane;
 
 typedef struct		s_square
 {
 	t_p			c;
-	t_v			n;
+	t_v			v_n;
+	t_v			v_up;
 	double		l;
-	int			trgb;
+	t_color		color;
 }					t_square;
 
 typedef struct		s_cyl
@@ -167,7 +172,7 @@ typedef struct		s_cyl
 	t_v			n;
 	double		d;
 	double		h;
-	int			trgb;
+	t_color		color;
 }					t_cyl;
 
 typedef struct		s_triangle
@@ -175,7 +180,7 @@ typedef struct		s_triangle
 	t_p		p1;
 	t_p		p2;
 	t_p		p3;
-	int		trgb;
+	t_color	color;
 }					t_triangle;
 
 /*
@@ -192,7 +197,7 @@ double	v_dot_prod(t_v v1, t_v v2);
 double	v_norm(t_v v);
 t_v		v_normalize(t_v v);
 t_v		v_cross_prod(t_v v1, t_v v2);
-t_p		project_p_to_plane(t_p p, t_plane plane);
+t_p		project_p_to_plane(t_p p, t_p p0, t_v n);
 void    intercept_sphere(t_sph *sphere, t_ray *ray);
 void    intercept_plane(t_plane *plane, t_ray *ray);
 void    intercept_square(t_square *square, t_ray *ray);
@@ -212,11 +217,12 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
-void        my_mlx_pixel_put(t_scene *scene, int x, int y, int trgb);
-int			get_light_color(int trgb, double brightness);
+void        my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
+t_color		get_light_color(t_color color, double brightness);
 int			create_trgb(int t, int r, int g, int b);
-t_color		get_trgb(int trgb);
+t_color		from_trgb_to_color(int trgb);
 int			illuminate(t_ray ray);
+void		mix_colors(t_ray *ray, t_color color);
 
 /*
  * read_input
@@ -225,7 +231,7 @@ int			illuminate(t_ray ray);
 void	skip_spaces(char **line);
 int		read_int(char **line);
 double	read_double(char **line);
-int		read_color(char **line);
+t_color	read_color(char **line);
 t_p		read_p(char **line);
 t_v		read_norm_v(char **line);
 void	create_res(char **line, t_scene *scene);

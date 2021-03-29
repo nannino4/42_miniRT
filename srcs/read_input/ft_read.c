@@ -86,28 +86,27 @@ double	read_double(char **line)
 	return (i);
 }
 
-int		read_color(char **line)
+t_color	read_color(char **line)
 {
-	int		r;
-	int		g;
-	int		b;
+	t_color	color;
 
-	r = read_int(line);
+	color.t = 0;
+	color.r = read_int(line);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
 		//TODO error: "wrong format for color"
 	}
 	(*line)++;
-	g = read_int(line);
+	color.g = read_int(line);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
 		//TODO error: "wrong format for color"
 	}
 	(*line)++;
-	b = read_int(line);
-	if (r < 0 || g < 0 || b < 0)
+	color.b = read_int(line);
+	if (color.r < 0 || color.g < 0 || color.b < 0)
 	{
 		//TODO error: "color format is incorrect"
 	}
-	return (create_trgb(0, r, g, b));
+	return (color);
 }

@@ -39,10 +39,10 @@ void	create_amb_l(char **line, t_scene *scene)
 		//TODO error: "allocazione di amb_l fallita"
 	}
 	skip_spaces(line);
-	new_amb_l->t = read_double(line);
+	new_amb_l->brightness = read_double(line);
 	skip_spaces(line);
-	new_amb_l->trgb = read_color(line);
-	if (**line || new_amb_l->t < 0)
+	new_amb_l->color = read_color(line);
+	if (**line || new_amb_l->brightness < 0)
 	{
 		//TODO error: "ambient light format is incorrect"
 	}
@@ -60,9 +60,9 @@ void	create_cam(char **line, t_scene *scene)
 		//TODO error: "allocazione di t_cam fallita"
 	}
 	skip_spaces(line);
-	cam->p0 = read_p(line);
+	cam->origin = read_p(line);
 	skip_spaces(line);
-	cam->v = read_norm_v(line);
+	cam->direction = read_norm_v(line);
 	skip_spaces(line);
 	cam->fov = read_int(line);
 	cam->next = 0;
@@ -83,13 +83,13 @@ void	create_light(char **line, t_scene *scene)
 		//TODO error: "allocazione di t_light fallita"
 	}
 	skip_spaces(line);
-	light->p = read_p(line);
+	light->origin = read_p(line);
 	skip_spaces(line);
-	light->t = read_double(line);
+	light->brightness = read_double(line);
 	skip_spaces(line);
-	light->trgb = read_color(line);
+	light->color = read_color(line);
 	light->next = 0;
-	if (**line || light->t < 0 || light->t > 1)
+	if (**line || light->brightness < 0 || light->brightness > 1)
 	{
 		//TODO error: "light format is incorrect"
 	}

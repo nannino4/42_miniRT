@@ -17,6 +17,7 @@ SRCS	= srcs/main.c \
 		  srcs/utils/ft_strncmp.c \
 		  srcs/utils/get_next_line.c \
 		  srcs/utils/get_next_line_utils.c \
+		  srcs/utils/mlx_utils.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_vectors.c \
 		  srcs/read_input/append_to_list.c \
@@ -25,6 +26,8 @@ SRCS	= srcs/main.c \
 		  srcs/read_input/create_elem_2.c \
 		  srcs/read_input/ft_read.c \
 		  srcs/read_input/ft_read_2.c \
+		  srcs/manage_scene/get_pixel_color.c \
+		  srcs/manage_scene/manage_scene.c \
 
 OBJS	= $(SRCS:.c=.o)
 

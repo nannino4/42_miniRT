@@ -17,7 +17,7 @@ int		create_trgb(int t, int r, int g, int b)
 	return(t << 24 | r << 16 | g << 8 | b);
 }
 
-t_color	get_trgb(int trgb)
+t_color	from_trgb_to_color(int trgb)
 {
 	t_color		color;
 
@@ -28,27 +28,27 @@ t_color	get_trgb(int trgb)
 	return (color);
 }
 
-int		get_light_color(int trgb, double brightness)
+t_color	get_light_color(t_color color, double brightness)
 {
-	t_color	color;
-
-	color = get_trgb(trgb);
 	color.r *= brightness;
 	color.g *= brightness;
 	color.b *= brightness;
-	return (create_trgb(0, color.r, color.g, color.b));
+	return (color);
 }
 
 int		illuminate(t_ray ray)
 {
 	t_color	final_color;
-	t_color	light;
-	t_color	object;
 
-	light = get_trgb(ray.light_trgb);
-	object = get_trgb(ray.intersection.obj_trgb);
-	final_color.r = object.r * light.r / 255;
-	final_color.g = object.g * light.g / 255;
-	final_color.b = object.b * light.b / 255;
+	final_color.r = ray.intersection.obj_color.r * ray.light_color.r / 255;
+	final_color.g = ray.intersection.obj_color.g * ray.light_color.g / 255;
+	final_color.b = ray.intersection.obj_color.b * ray.light_color.b / 255;
 	return (create_trgb(0, final_color.r, final_color.g, final_color.b));
+}
+
+void	mix_colors(t_ray *ray, t_color color)
+{
+	ray->light_color.r = (ray->light_color.r + color.r) > 255 ? 255 : (ray->light_color.r + color.r);
+	ray->light_color.g = (ray->light_color.g + color.g) > 255 ? 255 : (ray->light_color.g + color.g);
+	ray->light_color.b = (ray->light_color.b + color.b) > 255 ? 255 : (ray->light_color.b + color.b);
 }
