@@ -131,7 +131,7 @@ typedef struct		s_scene
 	void		*win;
 	t_image		img;
 	t_screen	screen;
-	t_amb_l		*amb_l;
+	t_amb_l		amb_l;
 	t_light		*light;
 	t_cam		*cam;
 	t_obj		*obj;

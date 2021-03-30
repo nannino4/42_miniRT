@@ -104,6 +104,7 @@ void    intercept_triangle(t_triangle *triangle, t_ray *ray)
     distance = v_dot_prod(triangle->e1, v_cross_prod(triangle->e2, a)) / tmp;
     triangle->u= v_dot_prod(a, v_cross_prod(triangle->e2, direction)) / tmp;
     triangle->v = v_dot_prod(triangle->e1, v_cross_prod(a, direction)) / tmp;
+    triangle->n = v_normalize(v_cross_prod(triangle->e1, triangle->e2));
     if (!is_equal(v_dot_prod(ray->direction, triangle->n), EPSILON) && distance > 0. && triangle->u> 0. && triangle->v > 0. && (triangle->u + triangle->v) < 1.)
     {
         ray->intersection.distance = distance;

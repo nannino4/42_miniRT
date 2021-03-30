@@ -6,20 +6,36 @@ void	intersect_obj(t_obj *obj, t_ray *ray)
 		intercept_sphere((t_sph*)obj->obj, ray);
 	if (obj->id == PLANE)
 		intercept_plane((t_plane*)obj->obj, ray);
-/*
 	if (obj->id == SQUARE)
 		intercept_square((t_square*)obj->obj, ray);
+/*
 	if (obj->id == CYLINDER)
 		intercept_cylinder((t_cyl*)obj->obj, ray);
+*/
 	if (obj->id == TRIANGLE)
 		intercept_triangle((t_triangle*)obj->obj, ray);
-*/
+}
+
+void	find_shadows_2(t_ray *shadow, t_scene *scene, t_light *light_list)
+{
+	t_obj	*obj_list;
+
+	obj_list = scene->obj;
+	while (obj_list)
+	{
+		intersect_obj(obj_list, shadow);
+		if (shadow->intersection.distance < v_norm(v_sub(light_list->origin, shadow->origin)))
+		{
+			shadow->light_color = from_trgb_to_color(0);
+			break ;
+		}
+		obj_list = obj_list->next;
+	}	
 }
 
 void	find_shadows(t_ray *ray, t_scene *scene)
 {
 	t_light		*light_list;
-	t_obj		*obj_list;
 	t_ray		shadow;
 
 	shadow.origin = ray->intersection.hit_point;
@@ -28,21 +44,12 @@ void	find_shadows(t_ray *ray, t_scene *scene)
 	{
 		shadow.direction = v_normalize(v_sub(light_list->origin, shadow.origin));
 		shadow.light_color = get_light_color(light_list->color, light_list->brightness * fabs(v_dot_prod(shadow.direction, ray->intersection.norm)));
-		obj_list = scene->obj;
-		while (obj_list)
-		{
-			intersect_obj(obj_list, &shadow);
-			if (shadow.intersection.distance < v_norm(v_sub(light_list->origin, shadow.origin)))
-			{
-				shadow.light_color = from_trgb_to_color(0);
-				break ;
-			}
-			obj_list = obj_list->next;
-		}
+		shadow.intersection.distance = DBL_MAX;
+		find_shadows_2(&shadow, scene, light_list);
 		mix_colors(ray, shadow.light_color);
 		light_list = light_list->next;
 	}
-	mix_colors(ray, get_light_color(scene->amb_l->color, scene->amb_l->brightness));
+	mix_colors(ray, get_light_color(scene->amb_l.color, scene->amb_l.brightness));
 }
 
 void	find_intersection(t_ray *ray, t_scene *scene)

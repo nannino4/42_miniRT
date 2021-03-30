@@ -31,22 +31,15 @@ void	create_res(char **line, t_scene *scene)
 
 void	create_amb_l(char **line, t_scene *scene)
 {
-	t_amb_l		*new_amb_l;
-
 	(*line)++;
-	if ((new_amb_l = malloc(sizeof(t_amb_l))) == 0)
-	{
-		//TODO error: "allocazione di amb_l fallita"
-	}
 	skip_spaces(line);
-	new_amb_l->brightness = read_double(line);
+	scene->amb_l.brightness = read_double(line);
 	skip_spaces(line);
-	new_amb_l->color = read_color(line);
-	if (**line || new_amb_l->brightness < 0)
+	scene->amb_l.color = read_color(line);
+	if (**line || scene->amb_l.brightness < 0)
 	{
 		//TODO error: "ambient light format is incorrect"
 	}
-	scene->amb_l = new_amb_l;
 }
 
 
