@@ -32,9 +32,9 @@ void    intercept_sphere(t_sph *sphere, t_ray *ray)
             v_sub(ray->origin, sphere->c)) - (sphere->d * sphere->d) / 4;
 	if (b * b - a * c < 0)
         ray->intersection.distance = MAX_DISTANCE;
-	else if ((-b - sqrt(b * b - a * c)) / a < 0 /*EPSILON*/)
+	else if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
-        if ((-b + sqrt(b * b - a * c)) / a < 0 /*EPSILON*/)
+        if ((-b + sqrt(b * b - a * c)) / a < 0)
             ray->intersection.distance = MAX_DISTANCE;
         else
             sphere_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, sphere);
@@ -82,12 +82,10 @@ void    intercept_square(t_square *square, t_ray *ray)
     intercept_triangle(&triangle_2, ray);
 }
 
-/*
 void    intercept_cylinder(t_cyl *cylinder, t_ray *ray)
 {
 
 }
-*/
 
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
 {

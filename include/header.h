@@ -169,6 +169,8 @@ typedef struct		s_cyl
 {
 	t_p			c;
 	t_v			n;
+	t_v			up;
+	t_v			dx;
 	double		d;
 	double		h;
 	t_color		color;
