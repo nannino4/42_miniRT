@@ -258,6 +258,7 @@ void	append_square(t_scene *scene, t_square *square);
 void	append_cyl(t_scene *scene, t_cyl *cyl);
 void	append_triangle(t_scene *scene, t_triangle *triangle);
 void	set_square_orientation(t_square *square);
+void	set_cylinder_orientation(t_cyl *cylinder);
 
 /*
  * manage_scene

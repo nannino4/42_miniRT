@@ -100,6 +100,7 @@ void	create_cyl(char **line, t_scene *scene)
 	cyl->h = read_int(line);
 	skip_spaces(line);
 	cyl->color = read_color(line);
+	set_cylinder_orientation(cyl);
 	if (**line)
 	{
 		//TODO error: "cyl format is incorrect"

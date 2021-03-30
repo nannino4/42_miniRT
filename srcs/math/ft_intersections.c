@@ -82,9 +82,31 @@ void    intercept_square(t_square *square, t_ray *ray)
     intercept_triangle(&triangle_2, ray);
 }
 
+void    cylinder_intercepted(t_ray *ray, double t, t_cyl *cylinder)
+{
+    //check if (hit_point, cylinder->n) is between 0 and cylinder->h
+}
+
 void    intercept_cylinder(t_cyl *cylinder, t_ray *ray)
 {
+    double  a;
+    double  b;
+    double  c;
 
+    a = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->direction, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->direction, cylinder->dx);
+    b = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx);
+    c = v_dot_prod(ray->origin, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->origin, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx) - (cylinder->d * cylinder->d / 4);
+    if ((b * b - a * c) < 0)
+        ray->intersection.distance = MAX_DISTANCE;
+    else if ((-b - sqrt(b * b - a * c)) / a < 0)
+    {
+        if ((-b + sqrt(b * b - a * c)) / a < 0)
+            ray->intersection.distance = MAX_DISTANCE;
+        else
+            cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cylinder);
+    }
+    else
+        cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cylinder);
 }
 
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
