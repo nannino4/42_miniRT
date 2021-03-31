@@ -25,7 +25,7 @@
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
-# define EPSILON 0.0000000005
+# define EPSILON 0.00000005
 # define MAX_W 1920
 # define MAX_H 1080
 
@@ -172,8 +172,14 @@ typedef struct		s_cyl
 	t_v			n;
 	t_v			up;
 	t_v			dx;
-	double		d;
+	double		r;
 	double		h;
+	double		c_up;
+	double		c_dx;
+	double		dir_up;
+	double		dir_dx;
+	double		p0_up;
+	double		p0_dx;
 	t_color		color;
 }					t_cyl;
 
@@ -210,6 +216,9 @@ void    intercept_plane(t_plane *plane, t_ray *ray);
 void    intercept_square(t_square *square, t_ray *ray);
 void    intercept_cylinder(t_cyl *cylinder, t_ray *ray);
 void    intercept_triangle(t_triangle *triangle, t_ray *ray);
+void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere);
+int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder);
+void    set_cylinder_variables(t_cyl *cyl, t_ray *ray);
 
 /*
  * utils

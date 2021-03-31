@@ -12,14 +12,6 @@
 
 #include "header.h"
 
-void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere)
-{
-    ray->intersection.distance = distance;
-    ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, distance - EPSILON));
-    ray->intersection.obj_color = sphere->color;
-    ray->intersection.norm = v_normalize(v_sub(ray->intersection.hit_point, sphere->c));
-}
-
 void    intercept_sphere(t_sph *sphere, t_ray *ray)
 {
 	double		a;
@@ -31,11 +23,11 @@ void    intercept_sphere(t_sph *sphere, t_ray *ray)
 	c = v_dot_prod(v_sub(ray->origin, sphere->c), \
             v_sub(ray->origin, sphere->c)) - (sphere->d * sphere->d) / 4;
 	if (b * b - a * c < 0)
-        ray->intersection.distance = MAX_DISTANCE;
+        return ;
 	else if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
         if ((-b + sqrt(b * b - a * c)) / a < 0)
-            ray->intersection.distance = MAX_DISTANCE;
+            return ;
         else
             sphere_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, sphere);
     }
@@ -46,18 +38,13 @@ void    intercept_sphere(t_sph *sphere, t_ray *ray)
 void    intercept_plane(t_plane *plane, t_ray *ray)
 {
     if (is_equal(v_dot_prod(ray->direction, plane->n), 0))
-    {
-        ray->intersection.distance = MAX_DISTANCE;
         return ;
-    }
     else
     {
-        if ((ray->intersection.distance = v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n)) < EPSILON)
-        {
-            ray->intersection.distance = MAX_DISTANCE;
+        if (v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n) < 0)
             return ;
-        }
-        ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, ray->intersection.distance/* - EPSILON*/));
+        ray->intersection.distance = v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n);
+        ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, ray->intersection.distance - EPSILON));
         ray->intersection.norm = plane->n;
         ray->intersection.obj_color = plane->color;
     }
@@ -81,32 +68,31 @@ void    intercept_square(t_square *square, t_ray *ray)
     intercept_triangle(&triangle_1, ray);
     intercept_triangle(&triangle_2, ray);
 }
-/*
-void    cylinder_intercepted(t_ray *ray, double t, t_cyl *cylinder)
-{
-    //check if (hit_point, cylinder->n) is between 0 and cylinder->h
-}
 
-void    intercept_cylinder(t_cyl *cylinder, t_ray *ray)
+void    intercept_cylinder(t_cyl *cyl, t_ray *ray)
 {
     double  a;
     double  b;
     double  c;
 
-    a = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->direction, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->direction, cylinder->dx);
-    b = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx);
-    c = v_dot_prod(ray->origin, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->origin, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx) - (cylinder->d * cylinder->d / 4);
+    if (is_equal(v_norm(v_cross_prod(ray->direction, cyl->n)), 0))
+        return ;
+    set_cylinder_variables(cyl, ray);
+    a = cyl->dir_up * cyl->dir_up + cyl->dir_dx * cyl->dir_dx;
+    b = cyl->p0_up * cyl->dir_up + cyl->p0_dx * cyl->dir_dx - cyl->dir_up * cyl->c_up - cyl->dir_dx * cyl->c_dx;
+    c = cyl->p0_up * cyl->p0_up + cyl->p0_dx * cyl->p0_dx - cyl->r * cyl->r + cyl->c_up * cyl->c_up + cyl->c_dx * cyl->c_dx - 2 * (cyl->p0_up * cyl->c_up + cyl->p0_dx * cyl->c_dx);
     if ((b * b - a * c) < 0)
-        ray->intersection.distance = MAX_DISTANCE;
-    else if ((-b - sqrt(b * b - a * c)) / a < 0)
+        return ;
+    if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
         if ((-b + sqrt(b * b - a * c)) / a < 0)
-            ray->intersection.distance = MAX_DISTANCE;
-        else
-            cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cylinder);
+            return ;
+        cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
+        return ;
     }
-    else
-        cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cylinder);
+    if (cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cyl))
+        return ;
+    cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
 }
 */
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
@@ -133,3 +119,107 @@ void    intercept_triangle(t_triangle *triangle, t_ray *ray)
         ray->intersection.obj_color = triangle->color;
     }
 }
+
+/*
+void	intercept_cylinder(t_ray *ray, t_cyl *cy, t_v *n, t_p *p)
+{
+	t_p         p0;
+	t_p         p1;
+	t_p         p2;
+	t_p         pr;
+	t_plane     plb;
+	t_plane     plt;
+	t_p         s;
+	t_p         q;
+	t_p         u;
+	t_ray		r1;
+	t_ray		r2;
+	t_sph	    sp;
+	t_v         temp;
+	double      dist;
+	double	    din;
+	double	    dout;
+	double	    dh;
+	double	    dl;
+	double	    dq;
+	double	    d1;
+	double	    d2;
+	double	    dt;
+	double	    t;
+
+	p1 = v_sum(cy->c, v_scalar_mul(cy->n, cy->h));
+	if (is_equal(v_dot_prod(ray->direction, cy->n), 0.))
+	{
+		plb.p0 = cy->c;
+		plb.n = cy->n;
+        pr = project_p_to_plane(ray->origin, plb.p0, plb.n);
+        d1 = v_norm(v_sub(ray->origin, pr));
+		plt.p0 = p1;
+		plt.n = cy->n;
+		pr = project_p_to_plane(ray->origin, plt.p0, plt.n);
+		d2 = v_norm(v_sub(ray->origin, pr));
+		if (is_equal(d1 + d2, cy->h))
+		{
+			p2 = v_sum(plb.p0, v_scalar_mul(plb.n, d1));
+			sp.c = p2;
+			sp.d = cy->d;
+			intercept_sphere(&sp, ray);
+            return ;
+		}
+		else
+			return ;
+	}
+	if (is_greater(0.0, dot_prod(ray->direction, cy->n)))
+	{
+		p0 = cy->c;
+		plb.n = cy->n;
+	}
+	else
+	{
+		p0 = p1;
+		p1 = cy->c;
+		plb.n = v_scalar_mul(cy->n, -1.0);
+	}
+	plb.p0 = p0;
+	pr = project_p_to_plane(ray->origin, plb.p0, plb.n);
+	dist = v_norm(v_sub(ray->origin, pr));
+	r1.origin = ray->origin;
+	r1.direction = ray->direction;
+	ray_plane(r1, plb, &temp, &q);
+	r2.origin = pr;
+	r2.direction = v_normalize(v_sub(q, pr));
+	sp.c = p0;
+	sp.d = cy->d;
+	din = intercept_sphere(r2, sp, &temp, &S);
+	if (is_equal(din, DBL_MAX))
+		return (DBL_MAX);
+	dout = v_norm(v_sub(q, pr));
+	dh = dist * (dout - din) / dout;
+	if(float_gr(0, dh))
+		return (DBL_MAX);
+	else if (float_gr(cy->h, dh))
+	{
+		ray->intersection.hit_point = v_sum(S, v_scalar_mul(plb.n, dh));
+		ray->intersection.norm = v_normalize(v_sub(S, p0));
+		ray->intersection.distance = sqrt(din * din + (dist - dh) * (dist - dh));
+	}
+	else
+	{
+		plt.p0 = p1;
+		plt.n = plb.n;
+		t = ray_plane(r1, plt, &temp, p);
+		dt = v_dist(*p, p1);
+		if (float_gr(cy->d / 2.0, dt))
+		{
+			dl = 2.0 * cy->h - dh;
+			dq = dout * dl / dist;
+			U = v_sum(pr, v_scalar_mul(r2.direction, dout - dq));
+			*p = v_sum(U, v_scalar_mul(plb.n, dl));
+			*n = v_norm(v_sub(U, p0);
+			return (sqrt((dout - dq) * (dout - dq) + (dist - dl) * (dist - dl)));
+		}
+		else
+			return (DBL_MAX);
+	}
+}
+*/

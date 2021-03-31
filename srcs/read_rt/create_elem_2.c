@@ -70,7 +70,7 @@ void	create_square(char **line, t_scene *scene)
 	skip_spaces(line);
 	square->n = read_norm_v(line);
 	skip_spaces(line);
-	square->l = read_int(line);
+	square->l = read_double(line);
 	skip_spaces(line);
 	square->color = read_color(line);
 	set_square_orientation(square);
@@ -95,9 +95,9 @@ void	create_cyl(char **line, t_scene *scene)
 	skip_spaces(line);
 	cyl->n = read_norm_v(line);
 	skip_spaces(line);
-	cyl->d = read_int(line);
+	cyl->r = read_double(line) / 2.;
 	skip_spaces(line);
-	cyl->h = read_int(line);
+	cyl->h = read_double(line) / 2.;
 	skip_spaces(line);
 	cyl->color = read_color(line);
 	set_cylinder_orientation(cyl);

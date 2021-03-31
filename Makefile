@@ -19,6 +19,7 @@ SRCS	= srcs/main.c \
 		  srcs/utils/get_next_line_utils.c \
 		  srcs/utils/mlx_utils.c \
 		  srcs/math/ft_intersections.c \
+		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \
 		  srcs/read_rt/append_to_list.c \
 		  srcs/read_rt/append_to_list_2.c \
