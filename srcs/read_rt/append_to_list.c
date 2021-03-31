@@ -42,17 +42,19 @@ void	append_cam(t_scene *scene, t_cam *cam)
 	t_cam	*element;
 
 	element = scene->cam;
-	if (element)
+	if (!element)
+	{
+		scene->cam = cam;
+		cam->prev = NULL;
+	}
+	else
 	{
 		while (element->next)
 		{
 			element = element->next;
 		}
+		cam->prev = element;
 		element->next = cam;
-	}
-	else
-	{
-		scene->cam = cam;
 	}
 }
 

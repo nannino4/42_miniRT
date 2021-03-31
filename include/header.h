@@ -84,6 +84,7 @@ typedef struct		s_cam
 	t_v				direction;
 	int				fov;
 	struct s_cam	*next;
+	struct s_cam	*prev;
 }					t_cam;
 
 typedef struct		s_light
@@ -231,7 +232,7 @@ int			illuminate(t_ray ray);
 void		mix_colors(t_ray *ray, t_color color);
 
 /*
- * read_input
+ * read_rt
  */
 
 void	skip_spaces(char **line);
@@ -268,5 +269,14 @@ void	create_img(t_scene *scene);
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
 void	find_intersection(t_ray *ray, t_scene *scene);
 void	find_shadows(t_ray *ray, t_scene *scene);
+
+/*
+ * inputs
+ */
+
+int 	keyboard_input(int keycode, void *param);
+int 	mouse_input(int button, int x, int y, void *param);
+int 	idle(void *param);
+void    terminal_info();
 
 #endif

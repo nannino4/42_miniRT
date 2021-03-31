@@ -67,7 +67,9 @@ void	read_input(t_scene *scene, char *file)
 void	manage_scene(t_scene *scene)
 {
 	create_img(scene);
-//	mlx_key_hook(scene->win, key_hook, scene);
+	mlx_key_hook(scene->win, keyboard_input, NULL);
+	mlx_mouse_hook(scene->win, mouse_input, scene);
+	mlx_loop_hook(scene->mlx, idle, scene);
 //	mlx_hook(scene->win, 17, 1L << 2, close_window, scene);
 //	mlx_hook(scene->win, 4, 0, mouse_click, scene);
 	mlx_loop(scene->mlx);
