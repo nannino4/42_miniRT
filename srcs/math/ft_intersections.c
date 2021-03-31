@@ -94,7 +94,7 @@ void    intercept_cylinder(t_cyl *cyl, t_ray *ray)
         return ;
     cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
 }
-*/
+
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
 {
     t_v     a;
