@@ -30,10 +30,6 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_res(line, scene);
 	else if (ft_strncmp(*line, "A", 1) == 0)
 		create_amb_l(line, scene);
-	else if (ft_strncmp(*line, "c", 1) == 0)
-		create_cam(line, scene);
-	else if (ft_strncmp(*line, "l", 1) == 0)
-		create_light(line, scene);
 	else if (ft_strncmp(*line, "pl", 2) == 0)
 		create_plane(line, scene);
 	else if (ft_strncmp(*line, "sp", 2) == 0)
@@ -44,6 +40,10 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_cyl(line, scene);
 	else if (ft_strncmp(*line, "tr", 2) == 0)
 		create_triangle(line, scene);
+	else if (ft_strncmp(*line, "c", 1) == 0)
+		create_cam(line, scene);
+	else if (ft_strncmp(*line, "l", 1) == 0)
+		create_light(line, scene);
 	else
 	{
 		//TODO error: "unrecognized element"

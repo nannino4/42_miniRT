@@ -97,7 +97,7 @@ void	create_cyl(char **line, t_scene *scene)
 	skip_spaces(line);
 	cyl->r = read_double(line) / 2.;
 	skip_spaces(line);
-	cyl->h = read_double(line);
+	cyl->h = read_double(line) / 2.;
 	skip_spaces(line);
 	cyl->color = read_color(line);
 	set_cylinder_orientation(cyl);

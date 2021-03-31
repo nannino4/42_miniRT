@@ -49,9 +49,10 @@ void    intercept_plane(t_plane *plane, t_ray *ray)
         return ;
     else
     {
-        if ((ray->intersection.distance = v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n)) < EPSILON)
+        if (v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n) < 0)
             return ;
-        ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, ray->intersection.distance/* - EPSILON*/));
+        ray->intersection.distance = v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n);
+        ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, ray->intersection.distance - EPSILON));
         ray->intersection.norm = plane->n;
         ray->intersection.obj_color = plane->color;
     }
@@ -82,15 +83,16 @@ int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
     t_p     p;
     double  h_test;
 
-    t = t1 / v_norm(v_cross_prod(ray->direction, cylinder->n));
+    t = t1/* / fabs(v_norm(v_cross_prod(ray->direction, cylinder->n)))*/;
     ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, t - EPSILON));
     p = project_p_to_plane(ray->intersection.hit_point, cylinder->c, cylinder->n);
     h_test = v_norm(v_sub(ray->intersection.hit_point, p));
     if (h_test > cylinder->h || h_test < 0)
-        return ;
+        return (0);
     ray->intersection.distance = t;
     ray->intersection.norm = v_normalize(v_sub(p, cylinder->c));
     ray->intersection.obj_color = cylinder->color;
+    return (1);
 }
 
 void    set_cylinder_variables(t_cyl *cyl, t_ray *ray)
@@ -151,3 +153,107 @@ void    intercept_triangle(t_triangle *triangle, t_ray *ray)
         ray->intersection.obj_color = triangle->color;
     }
 }
+
+/*
+void	intercept_cylinder(t_ray *ray, t_cyl *cy, t_v *n, t_p *p)
+{
+	t_p         p0;
+	t_p         p1;
+	t_p         p2;
+	t_p         pr;
+	t_plane     plb;
+	t_plane     plt;
+	t_p         s;
+	t_p         q;
+	t_p         u;
+	t_ray		r1;
+	t_ray		r2;
+	t_sph	    sp;
+	t_v         temp;
+	double      dist;
+	double	    din;
+	double	    dout;
+	double	    dh;
+	double	    dl;
+	double	    dq;
+	double	    d1;
+	double	    d2;
+	double	    dt;
+	double	    t;
+
+	p1 = v_sum(cy->c, v_scalar_mul(cy->n, cy->h));
+	if (is_equal(v_dot_prod(ray->direction, cy->n), 0.))
+	{
+		plb.p0 = cy->c;
+		plb.n = cy->n;
+        pr = project_p_to_plane(ray->origin, plb.p0, plb.n);
+        d1 = v_norm(v_sub(ray->origin, pr));
+		plt.p0 = p1;
+		plt.n = cy->n;
+		pr = project_p_to_plane(ray->origin, plt.p0, plt.n);
+		d2 = v_norm(v_sub(ray->origin, pr));
+		if (is_equal(d1 + d2, cy->h))
+		{
+			p2 = v_sum(plb.p0, v_scalar_mul(plb.n, d1));
+			sp.c = p2;
+			sp.d = cy->d;
+			intercept_sphere(&sp, ray);
+            return ;
+		}
+		else
+			return ;
+	}
+	if (is_greater(0.0, dot_prod(ray->direction, cy->n)))
+	{
+		p0 = cy->c;
+		plb.n = cy->n;
+	}
+	else
+	{
+		p0 = p1;
+		p1 = cy->c;
+		plb.n = v_scalar_mul(cy->n, -1.0);
+	}
+	plb.p0 = p0;
+	pr = project_p_to_plane(ray->origin, plb.p0, plb.n);
+	dist = v_norm(v_sub(ray->origin, pr));
+	r1.origin = ray->origin;
+	r1.direction = ray->direction;
+	ray_plane(r1, plb, &temp, &q);
+	r2.origin = pr;
+	r2.direction = v_normalize(v_sub(q, pr));
+	sp.c = p0;
+	sp.d = cy->d;
+	din = intercept_sphere(r2, sp, &temp, &S);
+	if (is_equal(din, DBL_MAX))
+		return (DBL_MAX);
+	dout = v_norm(v_sub(q, pr));
+	dh = dist * (dout - din) / dout;
+	if(float_gr(0, dh))
+		return (DBL_MAX);
+	else if (float_gr(cy->h, dh))
+	{
+		ray->intersection.hit_point = v_sum(S, v_scalar_mul(plb.n, dh));
+		ray->intersection.norm = v_normalize(v_sub(S, p0));
+		ray->intersection.distance = sqrt(din * din + (dist - dh) * (dist - dh));
+	}
+	else
+	{
+		plt.p0 = p1;
+		plt.n = plb.n;
+		t = ray_plane(r1, plt, &temp, p);
+		dt = v_dist(*p, p1);
+		if (float_gr(cy->d / 2.0, dt))
+		{
+			dl = 2.0 * cy->h - dh;
+			dq = dout * dl / dist;
+			U = v_sum(pr, v_scalar_mul(r2.direction, dout - dq));
+			*p = v_sum(U, v_scalar_mul(plb.n, dl));
+			*n = v_norm(v_sub(U, p0);
+			return (sqrt((dout - dq) * (dout - dq) + (dist - dl) * (dist - dl)));
+		}
+		else
+			return (DBL_MAX);
+	}
+}
+*/

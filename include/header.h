@@ -25,7 +25,7 @@
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
-# define EPSILON 0.0000000005
+# define EPSILON 0.00000005
 # define MAX_W 1920
 # define MAX_H 1080
 
