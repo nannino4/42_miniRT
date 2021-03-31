@@ -76,10 +76,29 @@ void    intercept_square(t_square *square, t_ray *ray)
     intercept_triangle(&triangle_2, ray);
 }
 
-void    cylinder_intercepted(t_ray *ray, double t, t_cyl *cylinder)
+int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
 {
+    double  t;
+    t_p     p;
+    double  h_test;
 
-    //check if (hit_point, cylinder->n) is between 0 and cylinder->h
+    t = t1 / v_norm(v_cross_prod(ray->direction, cylinder->n));
+    ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, t - EPSILON));
+    p = project_p_to_plane(ray->intersection.hit_point, cylinder->c, cylinder->n);
+    h_test = v_norm(v_sub(ray->intersection.hit_point, p));
+    if (h_test > cylinder->h || h_test < 0)
+        return ;
+    ray->intersection.distance = t;
+    ray->intersection.norm = v_normalize(v_sub(p, cylinder->c));
+    ray->intersection.obj_color = cylinder->color;
+}
+
+void    set_cylinder_variables(t_cyl *cyl, t_ray *ray)
+{
+    cyl->dir_up = v_dot_prod(ray->direction, cyl->up);
+    cyl->dir_dx = v_dot_prod(ray->direction, cyl->dx);
+    cyl->p0_up = v_dot_prod(ray->origin, cyl->up);
+    cyl->p0_dx = v_dot_prod(ray->origin, cyl->dx);
 }
 
 void    intercept_cylinder(t_cyl *cyl, t_ray *ray)
@@ -88,24 +107,24 @@ void    intercept_cylinder(t_cyl *cyl, t_ray *ray)
     double  b;
     double  c;
 
-    cyl->dir_up = v_dot_prod(ray->direction, cyl->up);
-    cyl->dir_dx = v_dot_prod(ray->direction, cyl->dx);
-    cyl->p0_up = v_dot_prod(ray->origin, cyl->up);
-    cyl->p0_dx = v_dot_prod(ray->origin, cyl->dx);
+    if (is_equal(v_norm(v_cross_prod(ray->direction, cyl->n)), 0))
+        return ;
+    set_cylinder_variables(cyl, ray);
     a = cyl->dir_up * cyl->dir_up + cyl->dir_dx * cyl->dir_dx;
     b = cyl->p0_up * cyl->dir_up + cyl->p0_dx * cyl->dir_dx - cyl->dir_up * cyl->c_up - cyl->dir_dx * cyl->c_dx;
     c = cyl->p0_up * cyl->p0_up + cyl->p0_dx * cyl->p0_dx - cyl->r * cyl->r + cyl->c_up * cyl->c_up + cyl->c_dx * cyl->c_dx - 2 * (cyl->p0_up * cyl->c_up + cyl->p0_dx * cyl->c_dx);
     if ((b * b - a * c) < 0)
         return ;
-    else if ((-b - sqrt(b * b - a * c)) / a < 0)
+    if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
         if ((-b + sqrt(b * b - a * c)) / a < 0)
             return ;
-        else
-            cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
+        cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
+        return ;
     }
-    else
-        cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cyl);
+    if (cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cyl))
+        return ;
+    cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
 }
 
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)
