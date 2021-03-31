@@ -42,7 +42,7 @@ void	find_shadows(t_ray *ray, t_scene *scene)
 	{
 		shadow.direction = v_normalize(v_sub(light_list->origin, shadow.origin));
 		shadow.light_color = get_light_color(light_list->color, light_list->brightness * fabs(v_dot_prod(shadow.direction, ray->intersection.norm)));
-		shadow.intersection.distance = DBL_MAX;
+		shadow.intersection.distance = MAX_DISTANCE;
 		find_shadows_2(&shadow, scene, light_list);
 		mix_colors(ray, shadow.light_color);
 		light_list = light_list->next;
@@ -61,6 +61,7 @@ void	find_intersection(t_ray *ray, t_scene *scene)
 	obj_list = scene->obj;
 	while (obj_list)
 	{
+		ray->intersection.distance = MAX_DISTANCE;
 		intersect_obj(obj_list, ray);
 		if (ray->intersection.distance < min_distance)
 		{

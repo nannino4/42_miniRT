@@ -31,11 +31,11 @@ void    intercept_sphere(t_sph *sphere, t_ray *ray)
 	c = v_dot_prod(v_sub(ray->origin, sphere->c), \
             v_sub(ray->origin, sphere->c)) - (sphere->d * sphere->d) / 4;
 	if (b * b - a * c < 0)
-        ray->intersection.distance = MAX_DISTANCE;
+        return ;
 	else if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
         if ((-b + sqrt(b * b - a * c)) / a < 0)
-            ray->intersection.distance = MAX_DISTANCE;
+            return ;
         else
             sphere_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, sphere);
     }
@@ -46,17 +46,11 @@ void    intercept_sphere(t_sph *sphere, t_ray *ray)
 void    intercept_plane(t_plane *plane, t_ray *ray)
 {
     if (is_equal(v_dot_prod(ray->direction, plane->n), 0))
-    {
-        ray->intersection.distance = MAX_DISTANCE;
         return ;
-    }
     else
     {
         if ((ray->intersection.distance = v_dot_prod(v_sub(plane->p0, ray->origin), plane->n) / v_dot_prod(ray->direction, plane->n)) < EPSILON)
-        {
-            ray->intersection.distance = MAX_DISTANCE;
             return ;
-        }
         ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, ray->intersection.distance/* - EPSILON*/));
         ray->intersection.norm = plane->n;
         ray->intersection.obj_color = plane->color;
@@ -84,29 +78,34 @@ void    intercept_square(t_square *square, t_ray *ray)
 
 void    cylinder_intercepted(t_ray *ray, double t, t_cyl *cylinder)
 {
+
     //check if (hit_point, cylinder->n) is between 0 and cylinder->h
 }
 
-void    intercept_cylinder(t_cyl *cylinder, t_ray *ray)
+void    intercept_cylinder(t_cyl *cyl, t_ray *ray)
 {
     double  a;
     double  b;
     double  c;
 
-    a = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->direction, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->direction, cylinder->dx);
-    b = v_dot_prod(ray->direction, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->direction, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx);
-    c = v_dot_prod(ray->origin, cylinder->up) * v_dot_prod(ray->origin, cylinder->up) + v_dot_prod(ray->origin, cylinder->dx) * v_dot_prod(ray->origin, cylinder->dx) - (cylinder->d * cylinder->d / 4);
+    cyl->dir_up = v_dot_prod(ray->direction, cyl->up);
+    cyl->dir_dx = v_dot_prod(ray->direction, cyl->dx);
+    cyl->p0_up = v_dot_prod(ray->origin, cyl->up);
+    cyl->p0_dx = v_dot_prod(ray->origin, cyl->dx);
+    a = cyl->dir_up * cyl->dir_up + cyl->dir_dx * cyl->dir_dx;
+    b = cyl->p0_up * cyl->dir_up + cyl->p0_dx * cyl->dir_dx - cyl->dir_up * cyl->c_up - cyl->dir_dx * cyl->c_dx;
+    c = cyl->p0_up * cyl->p0_up + cyl->p0_dx * cyl->p0_dx - cyl->r * cyl->r + cyl->c_up * cyl->c_up + cyl->c_dx * cyl->c_dx - 2 * (cyl->p0_up * cyl->c_up + cyl->p0_dx * cyl->c_dx);
     if ((b * b - a * c) < 0)
-        ray->intersection.distance = MAX_DISTANCE;
+        return ;
     else if ((-b - sqrt(b * b - a * c)) / a < 0)
     {
         if ((-b + sqrt(b * b - a * c)) / a < 0)
-            ray->intersection.distance = MAX_DISTANCE;
+            return ;
         else
-            cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cylinder);
+            cylinder_intercepted(ray, (-b + sqrt(b * b - a * c)) / a, cyl);
     }
     else
-        cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cylinder);
+        cylinder_intercepted(ray, (-b - sqrt(b * b - a * c)) / a, cyl);
 }
 
 void    intercept_triangle(t_triangle *triangle, t_ray *ray)

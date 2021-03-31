@@ -171,8 +171,14 @@ typedef struct		s_cyl
 	t_v			n;
 	t_v			up;
 	t_v			dx;
-	double		d;
+	double		r;
 	double		h;
+	double		c_up;
+	double		c_dx;
+	double		dir_up;
+	double		dir_dx;
+	double		p0_up;
+	double		p0_dx;
 	t_color		color;
 }					t_cyl;
 
