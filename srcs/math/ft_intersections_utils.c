@@ -1,6 +1,6 @@
 #include "header.h"
 
-void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere)
+void        sphere_intercepted(t_ray *ray, double distance, t_sph *sphere)
 {
     ray->intersection.distance = distance;
     ray->intersection.hit_point = v_sum(ray->origin, v_scalar_mul(ray->direction, distance - EPSILON));
@@ -8,7 +8,7 @@ void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere)
     ray->intersection.norm = v_normalize(v_sub(ray->intersection.hit_point, sphere->c));
 }
 
-int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
+int         cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
 {
     double  t;
     t_p     p;
@@ -26,10 +26,13 @@ int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
     return (1);
 }
 
-void    set_cylinder_variables(t_cyl *cyl, t_ray *ray)
+t_inters_cy set_cylinder_variables(t_cyl *cyl, t_ray *ray)
 {
-    cyl->dir_up = v_dot_prod(ray->direction, cyl->up);
-    cyl->dir_dx = v_dot_prod(ray->direction, cyl->dx);
-    cyl->p0_up = v_dot_prod(ray->origin, cyl->up);
-    cyl->p0_dx = v_dot_prod(ray->origin, cyl->dx);
+    t_inters_cy     cy;
+
+    cy.dir_up = v_dot_prod(ray->direction, cyl->up);
+    cy.dir_dx = v_dot_prod(ray->direction, cyl->dx);
+    cy.p0_up = v_dot_prod(ray->origin, cyl->up);
+    cy.p0_dx = v_dot_prod(ray->origin, cyl->dx);
+    return (cy);
 }

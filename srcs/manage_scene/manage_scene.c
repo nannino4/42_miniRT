@@ -36,18 +36,21 @@ int     get_pixel_color(t_scene *scene, double x, double y)
 
 void	*render_thread(void *arguments)
 {
-	double y;
-	double x_temp;
-	thr_arg args;
+	double		y;
+	double		x_temp;
+	t_thr_arg	args;
 
-	args = *(thr_arg*)arguments;
+	args = *(t_thr_arg*)arguments;
 	x_temp = args.x_start;
 	y = 0;
 	while (y < args.scene->h)
 	{
-		args.x_start = x_temp - 1;
-		while (++args.x_start < args.x_end)
+		args.x_start = x_temp;
+		while (args.x_start < args.x_end)
+		{
 			my_mlx_pixel_put(&args.scene->img, args.x_start, y, get_pixel_color(args.scene, args.x_start, y));		//create_trgb(0, 255, 0, 0));
+			args.x_start++;
+		}
 		y++;
 	}
 	return(NULL);
@@ -56,7 +59,7 @@ void	*render_thread(void *arguments)
 void	create_img(t_scene *scene)
 {
 	pthread_t	thread_id[thread_count];
-	thr_arg		args[thread_count];
+	t_thr_arg		args[thread_count];
 	int			i;
 
 	create_screen(scene);

@@ -17,7 +17,7 @@
 # define EPSILON 0.00000005
 # define MAX_W 1920
 # define MAX_H 1080
-# define thread_count 2
+# define thread_count 12
 
 # define SPHERE 0
 # define PLANE 1
@@ -156,42 +156,52 @@ typedef struct		s_square
 	t_color		color;
 }					t_square;
 
+typedef struct		s_inters_cy
+{
+	double		dir_up;
+	double		dir_dx;
+	double		p0_up;
+	double		p0_dx;
+}					t_inters_cy;
+
 typedef struct		s_cyl
 {
 	t_p			c;
 	t_v			n;
 	t_v			up;
 	t_v			dx;
-	double		r;
-	double		h;
 	double		c_up;
 	double		c_dx;
-	double		dir_up;
-	double		dir_dx;
-	double		p0_up;
-	double		p0_dx;
+	double		r;
+	double		h;
 	t_color		color;
 }					t_cyl;
+
+typedef struct		s_inters_tr
+{
+	t_v		a;
+	t_v		e1;
+	t_v		e2;
+	t_v		n;
+	double	u;
+	double	v;
+	double	det;
+}					t_inters_tr;
 
 typedef struct		s_triangle
 {
 	t_p		p1;
 	t_p		p2;
 	t_p		p3;
-	t_v		n;
-	t_v		e1;
-	t_v		e2;
-	double	u;
-	double	v;
 	t_color	color;
 }					t_triangle;
 
-typedef struct
+typedef struct		s_thr_arg
 {
 	double		x_start;
 	double		x_end;
 	t_scene		*scene;
-}	thr_arg;
+}					t_thr_arg;
 
 /*
  * math
@@ -215,7 +225,7 @@ void    intercept_cylinder(t_cyl *cylinder, t_ray *ray);
 void    intercept_triangle(t_triangle *triangle, t_ray *ray);
 void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere);
 int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder);
-void    set_cylinder_variables(t_cyl *cyl, t_ray *ray);
+t_inters_cy	set_cylinder_variables(t_cyl *cyl, t_ray *ray);
 
 /*
  * utils
