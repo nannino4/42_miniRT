@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 15:32:12 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 18:12:23 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.h"
 
 void	init_scene(t_scene *scene)
@@ -67,9 +55,10 @@ void	read_input(t_scene *scene, char *file)
 void	manage_scene(t_scene *scene)
 {
 	create_img(scene);
-	mlx_key_hook(scene->win, keyboard_input, NULL);
+	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
 	mlx_loop_hook(scene->mlx, idle, scene);
+	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
 //	mlx_hook(scene->win, 17, 1L << 2, close_window, scene);
 //	mlx_hook(scene->win, 4, 0, mouse_click, scene);
 	mlx_loop(scene->mlx);

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/13 13:12:36 by gcefalo           #+#    #+#              #
-#    Updated: 2021/03/08 18:03:03 by gcefalo          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME	= miniRT
 
 SRCS	= srcs/main.c \
@@ -31,6 +19,7 @@ SRCS	= srcs/main.c \
 		  srcs/manage_scene/get_pixel_color.c \
 		  srcs/manage_scene/manage_scene.c \
 		  srcs/inputs/input_manager.c \
+		  srcs/inputs/input_utils.c \
 
 OBJS	= $(SRCS:.c=.o)
 
