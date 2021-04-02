@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   header.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 10:33:46 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 17:59:39 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef HEADER_H
 # define HEADER_H
 
@@ -22,12 +10,14 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <float.h>
+# include <pthread.h>
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
 # define EPSILON 0.00000005
 # define MAX_W 1920
 # define MAX_H 1080
+# define thread_count 2
 
 # define SPHERE 0
 # define PLANE 1
@@ -196,6 +186,13 @@ typedef struct		s_triangle
 	t_color	color;
 }					t_triangle;
 
+typedef struct
+{
+	double		x_start;
+	double		x_end;
+	t_scene		*scene;
+}	thr_arg;
+
 /*
  * math
  */
@@ -280,7 +277,7 @@ void	find_intersection(t_ray *ray, t_scene *scene);
 void	find_shadows(t_ray *ray, t_scene *scene);
 
 /*
- * inputs
+ * input_manager
  */
 
 int 	keyboard_input(int keycode, void *param);
@@ -288,4 +285,10 @@ int 	mouse_input(int button, int x, int y, void *param);
 int 	idle(void *param);
 void    terminal_info();
 
+/*
+ * input_manager
+ */
+
+int     exit_func(void *param);
+void	camera_wheel(t_scene *scene);
 #endif

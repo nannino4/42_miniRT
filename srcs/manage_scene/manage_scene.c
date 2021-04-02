@@ -34,22 +34,49 @@ int     get_pixel_color(t_scene *scene, double x, double y)
 	return (illuminate(ray));
 }
 
+void	*render_thread(void *arguments)
+{
+	double y;
+	double x_temp;
+	thr_arg args;
+
+	args = *(thr_arg*)arguments;
+	x_temp = args.x_start;
+	y = 0;
+	while (y < args.scene->h)
+	{
+		args.x_start = x_temp - 1;
+		while (++args.x_start < args.x_end)
+			my_mlx_pixel_put(&args.scene->img, args.x_start, y, get_pixel_color(args.scene, args.x_start, y));		//create_trgb(0, 255, 0, 0));
+		y++;
+	}
+	return(NULL);
+}
+
 void	create_img(t_scene *scene)
 {
-	double	x;
-	double	y;
+	pthread_t	thread_id[thread_count];
+	thr_arg		args[thread_count];
+	int			i;
 
 	create_screen(scene);
 	scene->img.img = mlx_new_image(scene->mlx, scene->w, scene->h);
 	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bpp, &scene->img.line_l, &scene->img.endian);
-	y = 0;
-	while (y < scene->h)
+	i = 0;
+	while(i < thread_count)
 	{
-		x = -1;
-		while (++x < scene->w)
-			my_mlx_pixel_put(&scene->img, x, y, get_pixel_color(scene, x, y));
-		y++;
+		args[i].x_start = i * scene->w / thread_count;
+		args[i].x_end = (i + 1) * scene->w / thread_count;
+		//if(i > 1 && args[i].x_start <= args[1 - 1].x_end)
+		//	args[i].x_start = args[1 - 1].x_end + 1;
+		//if(args[i].x_start > scene->w)
+		//	args[i].x_start = scene->w;
+		args[i].scene = scene;
+		pthread_create(&thread_id[i], NULL, render_thread, &args[i]);
+		i++;
 	}
+	while(i-- > 0)
+		pthread_join(thread_id[i], NULL);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 	mlx_destroy_image(scene->mlx, scene->img.img);
 	terminal_info();
