@@ -8,8 +8,8 @@ void	intersect_obj(t_obj *obj, t_ray *ray)
 		intercept_plane((t_plane*)obj->obj, ray);
 	if (obj->id == SQUARE)
 		intercept_square((t_square*)obj->obj, ray);
-	//if (obj->id == CYLINDER)
-	//	intercept_cylinder((t_cyl*)obj->obj, ray);
+	if (obj->id == CYLINDER)
+		intercept_cylinder((t_cyl*)obj->obj, ray);
 	if (obj->id == TRIANGLE)
 		intercept_triangle((t_triangle*)obj->obj, ray);
 }
