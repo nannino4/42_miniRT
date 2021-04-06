@@ -57,11 +57,11 @@ void	manage_scene(t_scene *scene)
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
 	mlx_loop_hook(scene->mlx, idle, scene);
-	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
+	mlx_hook(scene->win, 17, 1L << 2, exit_func, NULL);
 	mlx_loop(scene->mlx);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_scene		scene;
 
@@ -74,10 +74,8 @@ int		main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-		if (!(scene.win = mlx_new_window(scene.mlx, scene.w, scene.h, "JohnnyBoy's miniRT")))
-		{
-			//TODO error: "couldn't create window or image"
-		}
+		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
+				"JohnnyBoy's miniRT");
 		manage_scene(&scene);
 	}
 	else

@@ -6,13 +6,13 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 17:25:01 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/27 10:57:03 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:54:07 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-size_t			ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t		i;
 
@@ -24,7 +24,7 @@ size_t			ft_strlen(const char *s)
 	return (i);
 }
 
-size_t			ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t			i;
 
@@ -42,7 +42,7 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size)
 	return (i);
 }
 
-size_t			ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t		i;
 	size_t		dst_len;
@@ -65,7 +65,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size)
 	return (dst_len + src_len);
 }
 
-char			*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 
@@ -81,14 +81,13 @@ char			*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char			*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char		*s;
 	size_t		len;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	if (!(s = malloc(len)))
-		return (0);
+	s = malloc(len);
 	ft_strlcpy(s, s1, len);
 	ft_strlcat(s, s2, len);
 	return (s);

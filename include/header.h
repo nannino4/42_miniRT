@@ -19,7 +19,6 @@
 # define ROT_EPSILON 0.1
 # define MAX_W 1920
 # define MAX_H 1080
-# define thread_count 12
 
 # define SPHERE 0
 # define PLANE 1

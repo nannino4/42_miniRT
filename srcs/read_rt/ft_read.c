@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 16:57:31 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/10 11:11:01 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 17:04:09 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	skip_spaces(char **line)
 	}
 }
 
-int		positive_atoi(char **line)
+int	positive_atoi(char **line)
 {
 	int	n;
 
@@ -39,7 +39,7 @@ int		positive_atoi(char **line)
 	return (n);
 }
 
-int		read_int(char **line)
+int	read_int(char **line)
 {
 	int		n;
 	int		minus;
