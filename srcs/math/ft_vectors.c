@@ -112,7 +112,7 @@ t_v     rotate_vector(t_v vector, t_v axis, double a)
     matrix[0][2] = (1 - cos(a)) * axis.x * axis.z + sin(a) * axis.y;
     matrix[1][0] = (1 - cos(a)) * axis.x * axis.y + sin(a) * axis.z;
     matrix[1][1] = axis.y * axis.y + (1 - axis.y * axis.y) * cos(a);
-    matrix[1][2] = (1 - cos(a) * axis.y * axis.z - sin(a) * axis.x);
+    matrix[1][2] = (1 - cos(a)) * axis.y * axis.z - sin(a) * axis.x;
     matrix[2][0] = (1 - cos(a)) * axis.x * axis.z - sin(a) * axis.y;
     matrix[2][1] = (1 - cos(a)) * axis.y * axis.z + sin(a) * axis.x;
     matrix[2][2] = axis.z * axis.z + (1 - axis.z * axis.z) * cos(a);

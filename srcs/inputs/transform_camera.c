@@ -8,15 +8,17 @@ void    move_camera(t_cam *cam, t_v axis)
 void    rot_camera(t_cam *cam, t_v axis)
 {
     cam->direction = v_normalize(rotate_vector(cam->direction, axis, ROT_EPSILON));
-    set_camera_orientation(cam);
-//    cam->up = v_normalize(rotate_vector(cam->up, axis, ROT_EPSILON));
-//    cam->dx = v_normalize(rotate_vector(cam->dx, axis, ROT_EPSILON));
+//    set_camera_orientation(cam);
+    cam->up = v_normalize(rotate_vector(cam->up, axis, ROT_EPSILON));
+    cam->dx = v_normalize(rotate_vector(cam->dx, axis, ROT_EPSILON));
 }
 
 void    transform_camera(t_cam *cam, int key)
 {
-    if (key == MOVE_UP)
-        move_camera(cam, cam->up);
+    if (key == MOVE_FORWARD)
+        move_camera(cam, cam->direction);
+    if (key == MOVE_BACK)
+        move_camera(cam, v_scalar_mul(cam->direction, -1));
     if (key == MOVE_DOWN)
         move_camera(cam, v_scalar_mul(cam->up, -1));
     if (key == MOVE_DX)

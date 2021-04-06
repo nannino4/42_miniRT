@@ -36,7 +36,7 @@ void	*render_thread(void *arguments)
 		args.x_start = x_temp;
 		while (args.x_start < args.x_end)
 		{
-			my_mlx_pixel_put(&args.scene->img, args.x_start, y, get_pixel_color(args.scene, args.x_start, y));		//create_trgb(0, 255, 0, 0));
+			my_mlx_pixel_put(&args.scene->img, args.x_start, y, get_pixel_color(args.scene, args.x_start, y));
 			args.x_start++;
 		}
 		y++;

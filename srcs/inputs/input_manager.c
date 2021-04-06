@@ -11,7 +11,7 @@ int     keyboard_input(int key, void *param)
         exit_func(NULL);
     else if (key == 8)
         camera_wheel(scene);
-    else if (key == MOVE_UP || key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+    else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
     {
         transform_camera(scene->cam, key);
         create_img(scene);
