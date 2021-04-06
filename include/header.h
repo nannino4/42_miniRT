@@ -19,11 +19,8 @@
 # define ROT_EPSILON 0.1
 # define MAX_W 1920
 # define MAX_H 1080
-<<<<<<< HEAD
 # define thread_count 12
 # define AAsamples 5
-=======
->>>>>>> 29a743034acd0bade544413a608d0c522c83b1a5
 
 # define SPHERE 0
 # define PLANE 1

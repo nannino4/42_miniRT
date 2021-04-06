@@ -82,7 +82,7 @@ void	find_intersection(t_ray *ray, t_scene *scene)
 
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
 {
-	t_p		p;
+	t_p	p;
 
 	ray->origin = scene->cam->origin;
 	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->cam->dx,
