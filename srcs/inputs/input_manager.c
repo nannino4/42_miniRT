@@ -1,32 +1,33 @@
 #include "header.h"
 #include "ANSI-color-codes.h"
 
-int     keyboard_input(int key, void *param)
+int	keyboard_input(int key, void *param)
 {
-    t_scene     *scene;
+	t_scene	*scene;
 
-    scene = (t_scene*)param;
-    printf("key pressed : %d\n", key);
-    if (key == 53)
-        exit_func(NULL);
-    else if (key == 8)
-        camera_wheel(scene);
-    else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
-    {
-        transform_camera(scene->cam, key);
-        create_img(scene);
-    }
-    return (key);
+	scene = (t_scene*)param;
+	printf("key pressed : %d\n", key);
+	if (key == 53)
+		exit_func(NULL);
+	else if (key == 8)
+		camera_wheel(scene);
+	else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || \
+			key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || \
+			key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+	{
+		transform_camera(scene->cam, key);
+		create_img(scene);
+	}
+	return (key);
 }
-int     mouse_input(int button, int x, int y, void *param)
+
+int	mouse_input(int button, int x, int y, void *param)
 {
     t_scene *scene;
     char    *line;
     t_ray   ray;
 
     scene = (t_scene*)param;
-    x = x + 1 - 1;
-    y = y + 1 - 1;
     //printf("pressed mouse button : %d at %d,%d\n", button, x, y);
     if(button == 1)
     {
@@ -71,7 +72,7 @@ int     terminal_input(void *param)
     return 1;
 }
 
-void    terminal_info()
+void	terminal_info(void)
 {
     system("clear");
     printf(BCYN"CAMERA MOVEMENT :\n\tW - Move Up\n\t");

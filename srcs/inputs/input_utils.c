@@ -1,15 +1,15 @@
 #include "header.h"
 #include "ANSI-color-codes.h"
 
-int     exit_func(void *param)
+int	exit_func(void *param)
 {
-    if(param == NULL)
-        printf("EXITING\n");
-    exit(0);
-    return (0);
+	if (param == NULL)
+		printf("EXITING\n");
+	exit(0);
+	return (0);
 }
 
-void    camera_wheel(t_scene *scene)
+void	camera_wheel(t_scene *scene)
 {
     if(scene->cam->next !=NULL || scene->cam->prev != NULL)
     {

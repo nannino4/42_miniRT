@@ -6,15 +6,15 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 13:59:20 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/02/15 10:32:15 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:33:17 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int		create_trgb(int t, int r, int g, int b)
+int	create_trgb(int t, int r, int g, int b)
 {
-	return(t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
 t_color	from_trgb_to_color(int trgb)
@@ -36,7 +36,7 @@ t_color	get_light_color(t_color color, double brightness)
 	return (color);
 }
 
-int		illuminate(t_ray ray)
+int	illuminate(t_ray ray)
 {
 	t_color	final_color;
 
@@ -48,7 +48,13 @@ int		illuminate(t_ray ray)
 
 void	mix_colors(t_ray *ray, t_color color)
 {
-	ray->light_color.r = (ray->light_color.r + color.r) > 255 ? 255 : (ray->light_color.r + color.r);
-	ray->light_color.g = (ray->light_color.g + color.g) > 255 ? 255 : (ray->light_color.g + color.g);
-	ray->light_color.b = (ray->light_color.b + color.b) > 255 ? 255 : (ray->light_color.b + color.b);
+	ray->light_color.r = ray->light_color.r + color.r;
+	ray->light_color.g = ray->light_color.g + color.g;
+	ray->light_color.b = ray->light_color.b + color.b;
+	if (ray->light_color.r > 255)
+		ray->light_color.r = 255;
+	if (ray->light_color.g > 255)
+		ray->light_color.g = 255;
+	if (ray->light_color.b > 255)
+		ray->light_color.b = 255;
 }

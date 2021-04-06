@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_vectors_3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 15:15:05 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/06 16:33:44 by gcefalo          ###   ########.fr       */
+/*   Created: 2021/04/06 16:26:08 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/06 16:26:57 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	ft_strncmp(const char *s1, const char *s2, int n)
+t_v	v_scalar_mul(t_v v, double a)
 {
-	int		i;
+	v.x *= a;
+	v.y *= a;
+	v.z *= a;
+	return (v);
+}
 
-	i = 0;
-	while (i < n)
-	{
-		if (s1[i] != s2[i] || !s1[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
+double	v_dot_prod(t_v v1, t_v v2)
+{
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }

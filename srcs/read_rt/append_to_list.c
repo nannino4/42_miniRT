@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 13:21:08 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 17:37:00 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:56:48 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void	create_obj(t_scene *scene)
 	t_obj	*element;
 	t_obj	*to_be_added;
 
-	if (!(to_be_added = malloc(sizeof(t_obj))))
-	{
-		//TODO error: "allocation failed"
-	}
+	to_be_added = malloc(sizeof(t_obj));
 	element = to_be_added;
 	if (!scene->obj)
 		scene->obj = to_be_added;

@@ -6,13 +6,13 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 15:46:21 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/01 15:48:30 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 17:04:45 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-t_p		read_p(char **line)
+t_p	read_p(char **line)
 {
 	t_p		p;
 
@@ -32,7 +32,7 @@ t_p		read_p(char **line)
 	return (p);
 }
 
-t_v		read_norm_v(char **line)
+t_v	read_norm_v(char **line)
 {
 	t_v		v;
 
