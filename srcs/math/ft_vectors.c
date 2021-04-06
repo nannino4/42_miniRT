@@ -101,3 +101,23 @@ t_p		project_p_to_plane(t_p p, t_p p0, t_v n)
 	v = v_sub(p, p0);
 	return (v_sum(p, v_scalar_mul(n, -1 * v_dot_prod(v, n))));
 }
+
+t_v     rotate_vector(t_v vector, t_v axis, double a)
+{
+    double  matrix[3][3];
+    t_v     ret;
+
+    matrix[0][0] = axis.x * axis.x + (1 - axis.x * axis.x) * cos(a);
+    matrix[0][1] = (1 - cos(a)) * axis.x * axis.y - sin(a) * axis.z;
+    matrix[0][2] = (1 - cos(a)) * axis.x * axis.z + sin(a) * axis.y;
+    matrix[1][0] = (1 - cos(a)) * axis.x * axis.y + sin(a) * axis.z;
+    matrix[1][1] = axis.y * axis.y + (1 - axis.y * axis.y) * cos(a);
+    matrix[1][2] = (1 - cos(a)) * axis.y * axis.z - sin(a) * axis.x;
+    matrix[2][0] = (1 - cos(a)) * axis.x * axis.z - sin(a) * axis.y;
+    matrix[2][1] = (1 - cos(a)) * axis.y * axis.z + sin(a) * axis.x;
+    matrix[2][2] = axis.z * axis.z + (1 - axis.z * axis.z) * cos(a);
+    ret.x = matrix[0][0] * vector.x + matrix[0][1] * vector.y + matrix[0][2] * vector.z;
+    ret.y = matrix[1][0] * vector.x + matrix[1][1] * vector.y + matrix[1][2] * vector.z;
+    ret.z = matrix[2][0] * vector.x + matrix[2][1] * vector.y + matrix[2][2] * vector.z;
+    return (ret);
+}

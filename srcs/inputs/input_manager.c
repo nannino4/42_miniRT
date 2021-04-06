@@ -1,22 +1,28 @@
 #include "header.h"
 #include "ANSI-color-codes.h"
 
-int     keyboard_input(int keycode, void *param)
+int     keyboard_input(int key, void *param)
 {
-    t_scene *scene;
+    t_scene     *scene;
 
     scene = (t_scene*)param;
-    printf("key pressed : %d\n", keycode);
-    if(keycode == 53)
+    printf("key pressed : %d\n", key);
+    if (key == 53)
         exit_func(NULL);
-    else if(keycode == 8)
+    else if (key == 8)
         camera_wheel(scene);
-    return keycode;
+    else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+    {
+        transform_camera(scene->cam, key);
+        create_img(scene);
+    }
+    return (key);
 }
 int     mouse_input(int button, int x, int y, void *param)
 {
     t_scene *scene;
     char    *line;
+    t_ray   ray;
 
     scene = (t_scene*)param;
     x = x + 1 - 1;
@@ -24,8 +30,23 @@ int     mouse_input(int button, int x, int y, void *param)
     //printf("pressed mouse button : %d at %d,%d\n", button, x, y);
     if(button == 1)
     {
-        // intersezione
-        get_next_line(0, &line);
+        create_ray(scene, &ray, (double)x + 0.5, (double)y + 0.5);
+        find_intersection(&ray, scene);
+        if(ray.intersection.distance < MAX_DISTANCE)
+        {
+            if(ray.intersection.intersected_obj->id == SPHERE)
+                sphere_manip(scene);
+            else if(ray.intersection.intersected_obj->id == PLANE)
+                plane_manip();
+            else if(ray.intersection.intersected_obj->id == CYLINDER)
+                cylinder_manip();
+            else if(ray.intersection.intersected_obj->id == TRIANGLE)
+                triangle_manip();
+            else if(ray.intersection.intersected_obj->id == SQUARE)
+                square_manip();
+        }
+        else
+            printf("No object where clicked\n");
     }
 
     // printi info su oggetto selezionato e istruzioni per interagirci
