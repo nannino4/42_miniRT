@@ -1,21 +1,26 @@
 #include "header.h"
 #include "ANSI-color-codes.h"
 
-int     keyboard_input(int keycode, void *param)
+int     keyboard_input(int key, void *param)
 {
-    t_scene *scene;
+    t_scene     *scene;
 
     scene = (t_scene*)param;
-    printf("key pressed : %d\n", keycode);
-    if(keycode == 53)
+    printf("key pressed : %d\n", key);
+    if (key == 53)
         exit_func(NULL);
-    else if(keycode == 8)
+    else if (key == 8)
         camera_wheel(scene);
-    return keycode;
+    else if (key == MOVE_UP || key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+    {
+        transform_camera(scene->cam, key);
+        create_img(scene);
+    }
+    return (key);
 }
 int     mouse_input(int button, int x, int y, void *param)
 {
-    t_scene *scene;
+    t_scene     *scene;
 
     scene = (t_scene*)param;
     x = x + 1 - 1;
@@ -25,15 +30,15 @@ int     mouse_input(int button, int x, int y, void *param)
     //else if (button == 3)
     //{
     //}
-    return 1;
+    return (1);
 }
 int     idle(void *param)
 {
-    t_scene *scene;
+    t_scene     *scene;
 
     scene = (t_scene*)param;
 
-    return 1;
+    return (1);
 }
 
 void    terminal_info()

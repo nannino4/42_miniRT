@@ -1,5 +1,20 @@
 #include "header.h"
 
+void	set_camera_orientation(t_cam *cam)
+{
+	if (is_equal(v_dot_prod(cam->direction, create_v(0, 1, 0)), 0))
+		cam->up = create_v(0, 1, 0);
+	else if(is_equal(v_norm(v_cross_prod(cam->direction, create_v(0, 1, 0))), 0))
+		cam->up = create_v(1, 0, 0);
+	else
+	{
+		cam->up = v_normalize(v_sub(project_p_to_plane(v_sum(cam->origin, create_v(0, 1, 0)), cam->origin, cam->direction), cam->origin));
+		if(is_greater(0, v_dot_prod(cam->up, create_v(0, 1, 0))))
+			cam->up = v_scalar_mul(cam->up, -1);
+	}
+	cam->dx = v_normalize(v_cross_prod(cam->direction, cam->up));
+}
+
 void	set_square_orientation(t_square *square)
 {
 	t_p	p1;

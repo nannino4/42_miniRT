@@ -12,6 +12,7 @@ void	intersect_obj(t_obj *obj, t_ray *ray)
 		intercept_cylinder((t_cyl*)obj->obj, ray);
 	if (obj->id == TRIANGLE)
 		intercept_triangle((t_triangle*)obj->obj, ray);
+	ray->intersection.intersected_obj = obj;
 }
 
 void	find_shadows_2(t_ray *shadow, t_scene *scene, t_light *light_list)
@@ -79,7 +80,7 @@ void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
 	t_p		p;
 
 	ray->origin = scene->cam->origin;
-	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->screen.dx, v_norm(v_sub(scene->screen.p1, scene->screen.p2)) * (x + 0.5) / scene->w)), v_scalar_mul(scene->screen.up, -1. * v_norm(v_sub(scene->screen.p1, scene->screen.p4)) * (y + 0.5) / scene->h));
+	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->cam->dx, v_norm(v_sub(scene->screen.p1, scene->screen.p2)) * (x + 0.5) / scene->w)), v_scalar_mul(scene->cam->up, -1. * v_norm(v_sub(scene->screen.p1, scene->screen.p4)) * (y + 0.5) / scene->h));
 	ray->direction = v_normalize(v_sub(p, ray->origin));
 	ray->light_color = from_trgb_to_color(0);
 	ray->intersection.distance = MAX_DISTANCE;

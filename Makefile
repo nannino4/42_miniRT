@@ -20,6 +20,7 @@ SRCS	= srcs/main.c \
 		  srcs/manage_scene/manage_scene.c \
 		  srcs/inputs/input_manager.c \
 		  srcs/inputs/input_utils.c \
+		  srcs/inputs/transform_camera.c \
 
 OBJS	= $(SRCS:.c=.o)
 

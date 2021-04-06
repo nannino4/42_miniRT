@@ -47,6 +47,7 @@ void	create_cam(char **line, t_scene *scene)
 	skip_spaces(line);
 	cam->fov = read_int(line);
 	cam->next = 0;
+	set_camera_orientation(cam);
 	if (**line || cam->fov < 0)
 	{
 		//TODO error: "camera format is incorrect"
