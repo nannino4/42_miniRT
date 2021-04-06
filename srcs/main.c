@@ -56,7 +56,7 @@ void	manage_scene(t_scene *scene)
 	create_img(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
-	mlx_loop_hook(scene->mlx, idle, scene);
+    //mlx_loop_hook(scene->mlx, idle, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
 	mlx_loop(scene->mlx);
 }
@@ -66,6 +66,7 @@ int		main(int argc, char **argv)
 	t_scene		scene;
 
 	init_scene(&scene);
+	srand(time(0));
 	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
 	{
 		//TODO --save

@@ -79,7 +79,7 @@ void	create_ray(t_scene *scene, t_ray *ray, double x, double y)
 	t_p		p;
 
 	ray->origin = scene->cam->origin;
-	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->screen.dx, v_norm(v_sub(scene->screen.p1, scene->screen.p2)) * (x + 0.5) / scene->w)), v_scalar_mul(scene->screen.up, -1. * v_norm(v_sub(scene->screen.p1, scene->screen.p4)) * (y + 0.5) / scene->h));
+	p = v_sum(v_sum(scene->screen.p1, v_scalar_mul(scene->screen.dx, v_norm(v_sub(scene->screen.p1, scene->screen.p2)) * x / scene->w)), v_scalar_mul(scene->screen.up, -1. * v_norm(v_sub(scene->screen.p1, scene->screen.p4)) * y / scene->h));
 	ray->direction = v_normalize(v_sub(p, ray->origin));
 	ray->light_color = from_trgb_to_color(0);
 	ray->intersection.distance = MAX_DISTANCE;

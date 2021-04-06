@@ -18,6 +18,7 @@
 # define MAX_W 1920
 # define MAX_H 1080
 # define thread_count 12
+# define AAsamples 5
 
 # define SPHERE 0
 # define PLANE 1
@@ -294,6 +295,7 @@ int 	keyboard_input(int keycode, void *param);
 int 	mouse_input(int button, int x, int y, void *param);
 int 	idle(void *param);
 void    terminal_info();
+int     terminal_input(void *param);
 
 /*
  * input_manager
