@@ -23,7 +23,8 @@ SRCS	= srcs/main.c \
 		  srcs/inputs/input_manager.c \
 		  srcs/inputs/input_utils.c \
 		  srcs/inputs/transform_camera.c \
-		  srcs/object_manipulation/sphere_mod.c\
+		  srcs/element_selection/select_sphere.c\
+		  srcs/element_selection/select_triangle.c\
 
 OBJS	= $(SRCS:.c=.o)
 

@@ -1,8 +1,8 @@
 #ifndef KEYCODES
 # define KEYCODES
 
-# define PG_DOWN_KEY 116
-# define PG_UP_KEY 121
+# define PG_DOWN_KEY 121
+# define PG_UP_KEY 116
 # define W_KEY 13
 # define S_KEY 1
 # define D_KEY 2

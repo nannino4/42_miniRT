@@ -40,8 +40,8 @@ int	mouse_input(int button, int x, int y, void *param)
             //    plane_manip();
             //else if(ray.intersection.intersected_obj->id == CYLINDER)
             //    cylinder_manip();
-            //else if(ray.intersection.intersected_obj->id == TRIANGLE)
-            //    triangle_manip();
+            else if(ray.intersection.intersected_obj->id == TRIANGLE)
+                select_triangle(scene, ray.intersection.intersected_obj);
             //else if(ray.intersection.intersected_obj->id == SQUARE)
             //    square_manip();
         }

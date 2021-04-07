@@ -1,6 +1,5 @@
 #include "header.h"
 #include "ANSI-color-codes.h"
-#include "keycodes.h"
 
 void    sphere_translation(void *param, t_v direction)
 {

@@ -311,6 +311,7 @@ void    main_info();
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
 void    transform_camera(t_cam *cam, int key);
+void    select_triangle(t_scene *scene, t_obj *obj);
 
 /*
  * sphere_mod
