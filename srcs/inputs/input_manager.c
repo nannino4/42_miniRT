@@ -1,11 +1,10 @@
 #include "header.h"
-#include "ANSI-color-codes.h"
 
-int	keyboard_input(int key, void *param)
+int keyboard_input(int key, void *param)
 {
 	t_scene	*scene;
 
-	scene = (t_scene*)param;
+	scene = (t_scene *)param;
 	printf("key pressed : %d\n", key);
 	if (key == ESC_KEY)
 		exit_func(NULL);
@@ -18,6 +17,8 @@ int	keyboard_input(int key, void *param)
 		transform_camera(scene->cam, key);
 		create_img(scene);
 	}
+    else if (key == L_KEY)
+        select_light(scene);
 	return (key);
 }
 
@@ -26,7 +27,7 @@ int	mouse_input(int button, int x, int y, void *param)
     t_scene *scene;
     t_ray   ray;
 
-    scene = (t_scene*)param;
+    scene = (t_scene *)param;
     //printf("pressed mouse button : %d at %d,%d\n", button, x, y);
     if(button == 1)
     {
@@ -37,13 +38,13 @@ int	mouse_input(int button, int x, int y, void *param)
             if(ray.intersection.intersected_obj->id == SPHERE)
                 select_sphere(scene, ray.intersection.intersected_obj);
             //else if(ray.intersection.intersected_obj->id == PLANE)
-            //    plane_manip();
+            //    select_plane();
             //else if(ray.intersection.intersected_obj->id == CYLINDER)
-            //    cylinder_manip();
+            //    select_cylinder();
             else if(ray.intersection.intersected_obj->id == TRIANGLE)
                 select_triangle(scene, ray.intersection.intersected_obj);
             //else if(ray.intersection.intersected_obj->id == SQUARE)
-            //    square_manip();
+            //    select_square();
         }
         else
             printf(YEL"No object where clicked\n"reset);
@@ -61,7 +62,7 @@ void	main_info(void)
     printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n");
     printf("CAMERA ROTATION\n\t◀- - Rotate Left\n\t");
     printf("-▶ - Rotate Right\n\t⬇ - Rotate down\n\t");
-    printf("⬆ - Rotate Up\n\n\tC - Cycle cameras\n\n");
+    printf("⬆ - Rotate Up\n\n\tC - Cycle cameras\n\tL - Cycle Lights\n\n");
     printf(BBLU"Press ESC or click the close button on the window to exit\n"reset);
     printf("Enter any commands through the terminal ...\n");
 }

@@ -9,6 +9,26 @@ int	exit_func(void *param)
 	return (0);
 }
 
+void	light_wheel(t_scene *scene)
+{
+    if(scene->selected_light->next != NULL || scene->selected_light->prev != NULL)
+    {
+        if(scene->selected_light->next != NULL)
+        {
+            printf("Switching selected Light\n");
+            scene->selected_light = scene->selected_light->next;
+        }
+        else
+        {
+            printf("Reached last Light. Rewinding...\n");
+            while(scene->selected_light->prev != NULL)
+                scene->selected_light = scene->selected_light->prev;
+        }
+    }
+    else
+        printf("Only one Light exists in the scene\n");
+}
+
 void	camera_wheel(t_scene *scene)
 {
     if(scene->cam->next !=NULL || scene->cam->prev != NULL)

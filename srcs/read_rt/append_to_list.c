@@ -42,7 +42,7 @@ void	append_cam(t_scene *scene, t_cam *cam)
 	if (!element)
 	{
 		scene->cam = cam;
-		cam->prev = NULL;
+		cam->prev = 0;
 	}
 	else
 	{
@@ -60,16 +60,18 @@ void	append_light(t_scene *scene, t_light *light)
 	t_light	*element;
 
 	element = scene->light;
-	if (element)
+	if (!element)
+	{
+		scene->light = light;
+		light->prev = 0;
+	}
+	else
 	{
 		while (element->next)
 		{
 			element = element->next;
 		}
+		light->prev = element;
 		element->next = light;
-	}
-	else
-	{
-		scene->light = light;
 	}
 }

@@ -24,6 +24,7 @@ SRCS	= srcs/main.c \
 		  srcs/inputs/input_utils.c \
 		  srcs/inputs/transform_camera.c \
 		  srcs/element_selection/select_sphere.c\
+		  srcs/element_selection/select_light.c\
 		  srcs/element_selection/select_triangle.c\
 
 OBJS	= $(SRCS:.c=.o)
