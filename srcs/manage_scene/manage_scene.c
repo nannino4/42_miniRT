@@ -23,7 +23,7 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 	t_color	final;
 	int		i;
 
-	i = AAsamples;
+	i = AA_SAMPLES;
 	final.r = 0;
 	final.g = 0;
 	final.b = 0;
@@ -37,9 +37,9 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 		final.b += ray.intersection.obj_color.b * ray.light_color.b / 255;
 		final.g += ray.intersection.obj_color.g * ray.light_color.g / 255;
 	}
-	final.r /= AAsamples;
-	final.g /= AAsamples;
-	final.b /= AAsamples;
+	final.r /= AA_SAMPLES;
+	final.g /= AA_SAMPLES;
+	final.b /= AA_SAMPLES;
 	return (create_trgb(0, final.r, final.g, final.b));
 }
 
@@ -68,8 +68,8 @@ void	*render_thread(void *arguments)
 
 void	create_img(t_scene *scene)
 {
-	pthread_t	thread_id[thread_count];
-	t_thr_arg	args[thread_count];
+	pthread_t	thread_id[12];
+	t_thr_arg	args[12];
 	int			i;
 
 	create_screen(scene);

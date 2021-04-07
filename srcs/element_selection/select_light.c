@@ -49,7 +49,7 @@ int light_case_input(int key, void *param)
     else if (key == L_KEY)
         light_wheel(scene);
 	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == W_KEY || \
-			key == S_KEY || key == D_KEY || key == A_KEY)
+			key == S_KEY || key == D_KEY || key == A_KEY || key == NUMPAD_PLUS || key == NUMPAD_MINUS)
 	{
 		transform_light(scene, scene->selected_light, key);
 		create_img(scene);

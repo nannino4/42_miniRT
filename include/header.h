@@ -23,8 +23,7 @@
 # define DIAMETER_DELTA 1
 # define MAX_W 1920
 # define MAX_H 1080
-# define thread_count 12
-# define AAsamples 4
+# define AA_SAMPLES 1
 
 # define SPHERE 0
 # define PLANE 1
