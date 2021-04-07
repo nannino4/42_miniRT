@@ -1,48 +1,60 @@
 #include "header.h"
 
-void	move_square(t_square *square, t_v axis)
+void	move_square(void *param, t_v axis)
 {
+    t_square *square;
+
+    square = (t_square *)param;
 	square->c = v_sum(square->c, v_scalar_mul(axis, MOVE_EPSILON));
 }
 
-void	rot_square(t_square *square, t_v axis)
+void	rot_square(void *param, t_v axis)
 {
+    t_square *square;
+
+    square = (t_square *)param;
 	square->n = v_normalize(rotate_vector(square->n, axis,
 				ROT_EPSILON));
 	square->up = v_normalize(rotate_vector(square->up, axis, ROT_EPSILON));
 	square->dx = v_normalize(rotate_vector(square->dx, axis, ROT_EPSILON));
 }
 
-void	transform_square(int key, t_square *square, t_cam *cam)
+void	square_l_mod(void *param, double delta)
+{
+    t_square *square;
+
+    square = (t_square *)param;
+	square->l += delta;
+    if (square->l < 0)
+        square->l = 0;
+}
+
+void	transform_square(int key, t_obj *obj, t_cam *cam)
 {
 	if (key == PG_UP_KEY)
-		move_square(square, cam->direction);
+		move_square(obj->obj, cam->direction);
 	else if (key == PG_DOWN_KEY)
-		move_square(square, v_scalar_mul(cam->direction, -1));
+		move_square(obj->obj, v_scalar_mul(cam->direction, -1));
 	else if (key == W_KEY)
-		move_square(square, cam->up);
+		move_square(obj->obj, cam->up);
 	else if (key == S_KEY)
-		move_square(square, v_scalar_mul(cam->up, -1));
+		move_square(obj->obj, v_scalar_mul(cam->up, -1));
 	else if (key == D_KEY)
-		move_square(square, cam->dx);
+		move_square(obj->obj, cam->dx);
 	else if (key == A_KEY)
-		move_square(square, v_scalar_mul(cam->dx, -1));
+		move_square(obj->obj, v_scalar_mul(cam->dx, -1));
 	else if (key == ARROW_UP_KEY)
-		rot_square(square, cam->dx);
+		rot_square(obj->obj, cam->dx);
 	else if (key == ARROW_DOWN_KEY)
-		rot_square(square, v_scalar_mul(cam->dx, -1));
+		rot_square(obj->obj, v_scalar_mul(cam->dx, -1));
 	else if (key == ARROW_DX_KEY)
-		rot_square(square, v_scalar_mul(cam->up, -1));
+		rot_square(obj->obj, v_scalar_mul(cam->up, -1));
 	else if (key == ARROW_SX_KEY)
-		rot_square(square, cam->up);
+		rot_square(obj->obj, cam->up);
     else if (key == NUMPAD_PLUS)
-        square->l += DIAMETER_DELTA;
+        square_l_mod(obj->obj, DIAMETER_DELTA);
     else
-    {
-        square->l -= DIAMETER_DELTA;
-        if (square->l < 0)
-            square->l = 0;
-    }
+        square_l_mod(obj->obj, -DIAMETER_DELTA);
 }
 
 int     square_case_input(int key, void *param)
@@ -81,6 +93,7 @@ void    select_square(t_scene *scene, t_obj *obj)
     printf("◀- - Rotate Left\n\t");
     printf("-▶ - Rotate Right\n\t⬇ - Rotate down\n\t");
     printf("⬆ - Rotate Up\n\n");
+    printf("+ (NumPad) - Increase Lenght\n\t- (NumPad) - Decrease Lenght");
     printf(BBLU"\nQ - Exit this mode\n");
     printf("Press ESC or click the close button on the window to exit\n"reset);
 }

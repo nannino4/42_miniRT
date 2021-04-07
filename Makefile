@@ -26,6 +26,7 @@ SRCS	= srcs/main.c \
 		  srcs/element_selection/select_sphere.c\
 		  srcs/element_selection/select_light.c\
 		  srcs/element_selection/select_triangle.c\
+		  srcs/element_selection/select_square.c\
 
 OBJS	= $(SRCS:.c=.o)
 
