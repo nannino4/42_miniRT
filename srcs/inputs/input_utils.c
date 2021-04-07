@@ -9,6 +9,26 @@ int	exit_func(void *param)
 	return (0);
 }
 
+void	light_wheel(t_scene *scene)
+{
+    if(scene->selected_light->next !=NULL || scene->selected_light->prev != NULL)
+    {
+        if(scene->selected_light->next != NULL)
+        {
+            printf("Switching selected Light\n");
+            scene->selected_light = scene->selected_light->next;
+        }
+        else
+        {
+            printf("Reached last Light. Rewinding...\n");
+            while(scene->selected_light->prev != NULL)
+                scene->selected_light = scene->selected_light->prev;
+        }
+    }
+    else
+        printf("Only one Light exists in the scene\n");
+}
+
 void	camera_wheel(t_scene *scene)
 {
     if(scene->cam->next !=NULL || scene->cam->prev != NULL)
@@ -28,20 +48,4 @@ void	camera_wheel(t_scene *scene)
     }
     else
         printf("Only one camera exists in the scene\n");
-}
-
-void    sphere_manip(t_scene *scene, t_obj *obj)
-{
-    t_manip_data    data;
-
-    data.obj = obj;
-    data.scene = scene;
-    mlx_key_hook(scene->win, sphere_case_input, &data);
-    system("clear");
-    printf(BCYN"SPHERE :\n\tW - Move Up\n\t");
-    printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-    printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
-    printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
-    printf("\nQ - Exit this mode");
-    printf(BBLU"\nPress ESC or click the close button on the window to exit\n"reset);
 }

@@ -11,12 +11,15 @@
 # include <fcntl.h>
 # include <float.h>
 # include <pthread.h>
+#include "ANSI-color-codes.h"
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
 # define EPSILON 0.00000005
 # define MOVE_EPSILON 1
 # define ROT_EPSILON 0.1
+# define BRIGHTNESS_DELTA 0.1
+# define DIAMETER_DELTA 1
 # define MAX_W 1920
 # define MAX_H 1080
 # define thread_count 12
@@ -40,6 +43,7 @@
 # define ROT_SX 123
 # define NUMPAD_PLUS 69
 # define NUMPAD_MINUS 78
+# define L 37
 
 /*
  * basic structures
@@ -109,6 +113,7 @@ typedef struct		s_light
 	t_color			color;
 	t_p				origin;
 	struct s_light	*next;
+	struct s_light	*prev;
 }					t_light;
 
 typedef struct		s_image
@@ -141,8 +146,10 @@ typedef struct		s_scene
 	t_screen	screen;
 	t_amb_l		amb_l;
 	t_light		*light;
+	t_light		*selected_light;
 	t_cam		*cam;
 	t_obj		*obj;
+	t_obj		*selected_obj;
 }					t_scene;
 
 /*
@@ -328,8 +335,9 @@ int     terminal_input(void *param);
 
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
+void	light_wheel(t_scene *scene);
 void    transform_camera(t_cam *cam, int key);
-void    sphere_manip(t_scene *scene, t_obj *obj);
+void    select_sphere(t_scene *scene, t_obj *obj);
 
 /*
  * sphere_mod

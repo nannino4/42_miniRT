@@ -8,8 +8,10 @@ void	init_scene(t_scene *scene)
 	scene->win = 0;
 	scene->amb_l.brightness = 0;
 	scene->light = 0;
+	scene->selected_light = 0;
 	scene->cam = 0;
 	scene->obj = 0;
+	scene->selected_obj = 0;
 }
 
 void	add_element_to_scene(char **line, t_scene *scene)
@@ -56,7 +58,6 @@ void	manage_scene(t_scene *scene)
 	create_img(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
-    //mlx_loop_hook(scene->mlx, idle, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
 	main_info();
 	mlx_loop(scene->mlx);

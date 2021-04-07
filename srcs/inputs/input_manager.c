@@ -1,11 +1,10 @@
 #include "header.h"
-#include "ANSI-color-codes.h"
 
-int	keyboard_input(int key, void *param)
+int keyboard_input(int key, void *param)
 {
 	t_scene	*scene;
 
-	scene = (t_scene*)param;
+	scene = (t_scene *)param;
 	printf("key pressed : %d\n", key);
 	if (key == 53)
 		exit_func(NULL);
@@ -18,6 +17,8 @@ int	keyboard_input(int key, void *param)
 		transform_camera(scene->cam, key);
 		create_img(scene);
 	}
+    else if (key = L)
+        select_light(scene);
 	return (key);
 }
 
@@ -26,7 +27,7 @@ int	mouse_input(int button, int x, int y, void *param)
     t_scene *scene;
     t_ray   ray;
 
-    scene = (t_scene*)param;
+    scene = (t_scene *)param;
     //printf("pressed mouse button : %d at %d,%d\n", button, x, y);
     if(button == 1)
     {
@@ -35,39 +36,21 @@ int	mouse_input(int button, int x, int y, void *param)
         if(ray.intersection.distance < MAX_DISTANCE)
         {
             if(ray.intersection.intersected_obj->id == SPHERE)
-                sphere_manip(scene, ray.intersection.intersected_obj);
+                select_sphere(scene, ray.intersection.intersected_obj);
             //else if(ray.intersection.intersected_obj->id == PLANE)
-            //    plane_manip();
+            //    select_plane();
             //else if(ray.intersection.intersected_obj->id == CYLINDER)
-            //    cylinder_manip();
+            //    select_cylinder();
             //else if(ray.intersection.intersected_obj->id == TRIANGLE)
-            //    triangle_manip();
+            //    select_triangle();
             //else if(ray.intersection.intersected_obj->id == SQUARE)
-            //    square_manip();
+            //    select_square();
         }
         else
             printf("No object where clicked\n");
     }
 
     // printi info su oggetto selezionato e istruzioni per interagirci
-    return 1;
-}
-int     terminal_input(void *param)
-{
-    t_scene *scene;
-    char    *temp="A.";
-    char    *line;
-
-    scene = (t_scene*)param;
-    usleep(100000);
-    if(get_next_line(0, &line) == 1)
-    {
-        //printf("%s", line);
-        write(1, temp, 2);
-	    mlx_loop_hook(scene->mlx, NULL, scene);
-    }
-    // controllo oggetto selezionato
-    // gnl legge input da terminale e lo usa in base all'oggetto selezionato
     return 1;
 }
 
