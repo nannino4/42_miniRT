@@ -43,8 +43,8 @@ int	mouse_input(int button, int x, int y, void *param)
             //    select_cylinder();
             else if(ray.intersection.intersected_obj->id == TRIANGLE)
                 select_triangle(scene, ray.intersection.intersected_obj);
-            //else if(ray.intersection.intersected_obj->id == SQUARE)
-            //    select_square();
+            else if(ray.intersection.intersected_obj->id == SQUARE)
+                select_square();
         }
         else
             printf(YEL"No object where clicked\n"reset);

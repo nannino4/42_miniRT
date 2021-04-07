@@ -1,5 +1,4 @@
 #include "header.h"
-#include "ANSI-color-codes.h"
 
 void    move_triangle(void *param, t_v direction)
 {
@@ -11,7 +10,7 @@ void    move_triangle(void *param, t_v direction)
     triangle->p3 = v_sum(triangle->p3, v_scalar_mul(direction, MOVE_EPSILON));
 }
 
-void    triangle_mod_key(int key, t_obj *obj, t_scene *scene)
+void    transform_triangle(int key, t_obj *obj, t_scene *scene)
 {
     if (key == PG_UP_KEY)
 		move_triangle(obj->obj, scene->cam->direction);
@@ -42,7 +41,7 @@ int     triangle_case_input(int key, void *param)
     else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == W_KEY || \
 			key == S_KEY || key == D_KEY || key == A_KEY)
         {
-            triangle_mod_key(key, scene->selected_obj, scene);
+            transform_triangle(key, scene->selected_obj, scene);
             create_img(scene);
         }
     else
