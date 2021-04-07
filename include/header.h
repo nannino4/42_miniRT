@@ -20,7 +20,7 @@
 # define MAX_W 1920
 # define MAX_H 1080
 # define thread_count 12
-# define AAsamples 5
+# define AAsamples 4
 
 # define SPHERE 0
 # define PLANE 1
@@ -38,6 +38,8 @@
 # define ROT_DOWN 125
 # define ROT_DX 124
 # define ROT_SX 123
+# define NUMPAD_PLUS 69
+# define NUMPAD_MINUS 78
 
 /*
  * basic structures
@@ -218,6 +220,13 @@ typedef struct		s_thr_arg
 	t_scene		*scene;
 }					t_thr_arg;
 
+typedef	struct 		s_manip_data
+{
+	t_obj	*obj;
+	t_scene	*scene;
+}					t_manip_data;
+
+
 /*
  * math
  */
@@ -310,14 +319,22 @@ void	find_shadows(t_ray *ray, t_scene *scene);
 int 	keyboard_input(int keycode, void *param);
 int 	mouse_input(int button, int x, int y, void *param);
 int 	idle(void *param);
-void    terminal_info();
+void    main_info();
 int     terminal_input(void *param);
 
 /*
- * input_manager
+ * input_utils
  */
 
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
 void    transform_camera(t_cam *cam, int key);
+void    sphere_manip(t_scene *scene, t_obj *obj);
+
+/*
+ * sphere_mod
+ */
+
+int    sphere_case_input(int key, void   *param);
+
 #endif

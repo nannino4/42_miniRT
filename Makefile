@@ -9,6 +9,8 @@ SRCS	= srcs/main.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \
+		  srcs/math/ft_vectors_2.c \
+		  srcs/math/ft_vectors_3.c \
 		  srcs/read_rt/append_to_list.c \
 		  srcs/read_rt/append_to_list_2.c \
 		  srcs/read_rt/create_elem.c \
@@ -21,6 +23,7 @@ SRCS	= srcs/main.c \
 		  srcs/inputs/input_manager.c \
 		  srcs/inputs/input_utils.c \
 		  srcs/inputs/transform_camera.c \
+		  srcs/object_manipulation/sphere_mod.c\
 
 OBJS	= $(SRCS:.c=.o)
 

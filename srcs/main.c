@@ -58,6 +58,7 @@ void	manage_scene(t_scene *scene)
 	mlx_mouse_hook(scene->win, mouse_input, scene);
     //mlx_loop_hook(scene->mlx, idle, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
+	main_info();
 	mlx_loop(scene->mlx);
 }
 

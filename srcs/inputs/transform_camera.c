@@ -17,20 +17,22 @@ void	transform_camera(t_cam *cam, int key)
 {
 	if (key == MOVE_FORWARD)
 		move_camera(cam, cam->direction);
-	if (key == MOVE_BACK)
+	else if (key == MOVE_BACK)
 		move_camera(cam, v_scalar_mul(cam->direction, -1));
-	if (key == MOVE_DOWN)
+	else if (key == MOVE_UP)
+		move_camera(cam, cam->up);
+	else if (key == MOVE_DOWN)
 		move_camera(cam, v_scalar_mul(cam->up, -1));
-	if (key == MOVE_DX)
+	else if (key == MOVE_DX)
 		move_camera(cam, cam->dx);
-	if (key == MOVE_SX)
+	else if (key == MOVE_SX)
 		move_camera(cam, v_scalar_mul(cam->dx, -1));
-	if (key == ROT_UP)
+	else if (key == ROT_UP)
 		rot_camera(cam, cam->dx);
-	if (key == ROT_DOWN)
+	else if (key == ROT_DOWN)
 		rot_camera(cam, v_scalar_mul(cam->dx, -1));
-	if (key == ROT_DX)
+	else if (key == ROT_DX)
 		rot_camera(cam, v_scalar_mul(cam->up, -1));
-	if (key == ROT_SX)
+	else
 		rot_camera(cam, cam->up);
 }

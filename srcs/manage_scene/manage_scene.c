@@ -89,5 +89,4 @@ void	create_img(t_scene *scene)
 		pthread_join(thread_id[i], NULL);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 	mlx_destroy_image(scene->mlx, scene->img.img);
-	terminal_info();
 }

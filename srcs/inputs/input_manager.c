@@ -24,7 +24,6 @@ int	keyboard_input(int key, void *param)
 int	mouse_input(int button, int x, int y, void *param)
 {
     t_scene *scene;
-    char    *line;
     t_ray   ray;
 
     scene = (t_scene*)param;
@@ -36,15 +35,15 @@ int	mouse_input(int button, int x, int y, void *param)
         if(ray.intersection.distance < MAX_DISTANCE)
         {
             if(ray.intersection.intersected_obj->id == SPHERE)
-                sphere_manip(scene);
-            else if(ray.intersection.intersected_obj->id == PLANE)
-                plane_manip();
-            else if(ray.intersection.intersected_obj->id == CYLINDER)
-                cylinder_manip();
-            else if(ray.intersection.intersected_obj->id == TRIANGLE)
-                triangle_manip();
-            else if(ray.intersection.intersected_obj->id == SQUARE)
-                square_manip();
+                sphere_manip(scene, ray.intersection.intersected_obj);
+            //else if(ray.intersection.intersected_obj->id == PLANE)
+            //    plane_manip();
+            //else if(ray.intersection.intersected_obj->id == CYLINDER)
+            //    cylinder_manip();
+            //else if(ray.intersection.intersected_obj->id == TRIANGLE)
+            //    triangle_manip();
+            //else if(ray.intersection.intersected_obj->id == SQUARE)
+            //    square_manip();
         }
         else
             printf("No object where clicked\n");
@@ -72,7 +71,7 @@ int     terminal_input(void *param)
     return 1;
 }
 
-void	terminal_info(void)
+void	main_info(void)
 {
     system("clear");
     printf(BCYN"CAMERA MOVEMENT :\n\tW - Move Up\n\t");
