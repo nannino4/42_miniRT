@@ -15,23 +15,23 @@ void	rot_camera(t_cam *cam, t_v axis)
 
 void	transform_camera(t_cam *cam, int key)
 {
-	if (key == MOVE_FORWARD)
+	if (key == PG_UP_KEY)
 		move_camera(cam, cam->direction);
-	else if (key == MOVE_BACK)
+	else if (key == PG_DOWN_KEY)
 		move_camera(cam, v_scalar_mul(cam->direction, -1));
-	else if (key == MOVE_UP)
+	else if (key == W_KEY)
 		move_camera(cam, cam->up);
-	else if (key == MOVE_DOWN)
+	else if (key == S_KEY)
 		move_camera(cam, v_scalar_mul(cam->up, -1));
-	else if (key == MOVE_DX)
+	else if (key == D_KEY)
 		move_camera(cam, cam->dx);
-	else if (key == MOVE_SX)
+	else if (key == A_KEY)
 		move_camera(cam, v_scalar_mul(cam->dx, -1));
-	else if (key == ROT_UP)
+	else if (key == ARROW_UP_KEY)
 		rot_camera(cam, cam->dx);
-	else if (key == ROT_DOWN)
+	else if (key == ARROW_DOWN_KEY)
 		rot_camera(cam, v_scalar_mul(cam->dx, -1));
-	else if (key == ROT_DX)
+	else if (key == ARROW_DX_KEY)
 		rot_camera(cam, v_scalar_mul(cam->up, -1));
 	else
 		rot_camera(cam, cam->up);

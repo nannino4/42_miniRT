@@ -4,14 +4,14 @@
 int	exit_func(void *param)
 {
 	if (param == NULL)
-		printf("EXITING\n");
+		printf(BRED"EXITING\n"reset);
 	exit(0);
 	return (0);
 }
 
 void	light_wheel(t_scene *scene)
 {
-    if(scene->selected_light->next !=NULL || scene->selected_light->prev != NULL)
+    if(scene->selected_light->next != NULL || scene->selected_light->prev != NULL)
     {
         if(scene->selected_light->next != NULL)
         {
@@ -35,17 +35,17 @@ void	camera_wheel(t_scene *scene)
     {
         if(scene->cam->next != NULL)
         {
-            printf("Switching Camera\n");
+            printf(YEL"Switching Camera\n"reset);
             scene->cam = scene->cam->next;
         }
         else
         {
-            printf("Reached last camera. Rewinding...\n");
+            printf(YEL"Reached last camera. Rewinding...\n"reset);
             while(scene->cam->prev != NULL)
                 scene->cam = scene->cam->prev;
         }
         create_img(scene);
     }
     else
-        printf("Only one camera exists in the scene\n");
+        printf(YEL"Only one camera exists in the scene\n"reset);
 }

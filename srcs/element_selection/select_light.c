@@ -1,23 +1,23 @@
 #include "header.h"
 
-void	move_ligth(t_light *light, t_v axis)
+void	move_light(t_light *light, t_v axis)
 {
 	light->origin = v_sum(light->origin, v_scalar_mul(axis, MOVE_EPSILON));
 }
 
 void    transform_light(t_scene *scene, t_light *light, int key)
 {
-    if (key == MOVE_FORWARD)
+    if (key == PG_UP_KEY)
 		move_light(light, scene->cam->direction);
-	else if (key == MOVE_BACK)
+	else if (key == PG_DOWN_KEY)
 		move_light(light, v_scalar_mul(scene->cam->direction, -1));
-	else if (key == MOVE_UP)
+	else if (key == W_KEY)
 		move_light(light, scene->cam->up);
-	else if (key == MOVE_DOWN)
+	else if (key == S_KEY)
 		move_light(light, v_scalar_mul(scene->cam->up, -1));
-	else if (key == MOVE_DX)
+	else if (key == D_KEY)
 		move_light(light, scene->cam->dx);
-	else if (key == MOVE_SX)
+	else if (key == A_KEY)
 		move_light(light, v_scalar_mul(scene->cam->dx, -1));
 	else if (key == NUMPAD_PLUS)
     {
@@ -33,7 +33,7 @@ void    transform_light(t_scene *scene, t_light *light, int key)
     }
 }
 
-void    light_case_input(int key, void *param)
+int light_case_input(int key, void *param)
 {
     t_scene *scene;
 
@@ -46,14 +46,15 @@ void    light_case_input(int key, void *param)
         mlx_key_hook(scene->win, keyboard_input, scene);
         main_info();
     }
-    else if (key = L)
+    else if (key == L_KEY)
         light_wheel(scene);
-	else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || \
-			key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX)
+	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == W_KEY || \
+			key == S_KEY || key == D_KEY || key == A_KEY)
 	{
 		transform_light(scene, scene->selected_light, key);
 		create_img(scene);
 	}
+    return (1);
 }
 
 void    select_light(t_scene *scene)
@@ -61,7 +62,7 @@ void    select_light(t_scene *scene)
     scene->selected_light = scene->light;
     mlx_key_hook(scene->win, light_case_input, scene);
     system("clear");
-    printf(BCYN"SPHERE :\n\tW - Move Up\n\t");
+    printf(BCYN"LIGHT :\n\tW - Move Up\n\t");
     printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
     printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
     printf("+ (NumPad) - Increase Brightness\n\t- (NumPad) - Decrease Brightness");

@@ -6,18 +6,18 @@ int keyboard_input(int key, void *param)
 
 	scene = (t_scene *)param;
 	printf("key pressed : %d\n", key);
-	if (key == 53)
+	if (key == ESC_KEY)
 		exit_func(NULL);
-	else if (key == 8)
+	else if (key == C_KEY)
 		camera_wheel(scene);
-	else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || \
-			key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || \
-			key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == ARROW_DX_KEY || \
+			key == ARROW_DOWN_KEY || key == ARROW_UP_KEY || key == A_KEY || \
+			key == S_KEY || key == D_KEY || key == ARROW_SX_KEY || key == W_KEY)
 	{
 		transform_camera(scene->cam, key);
 		create_img(scene);
 	}
-    else if (key = L)
+    else if (key == L_KEY)
         select_light(scene);
 	return (key);
 }
@@ -47,7 +47,7 @@ int	mouse_input(int button, int x, int y, void *param)
             //    select_square();
         }
         else
-            printf("No object where clicked\n");
+            printf(YEL"No object where clicked\n"reset);
     }
 
     // printi info su oggetto selezionato e istruzioni per interagirci
