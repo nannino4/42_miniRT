@@ -2,6 +2,7 @@
 # define HEADER_H
 
 # include "mlx.h"
+# include "keycodes.h"
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -17,6 +18,7 @@
 # define EPSILON 0.00000005
 # define MOVE_EPSILON 1
 # define ROT_EPSILON 0.1
+# define DIAMETER_DELTA 1
 # define MAX_W 1920
 # define MAX_H 1080
 # define thread_count 12
@@ -27,19 +29,6 @@
 # define SQUARE 2
 # define CYLINDER 3
 # define TRIANGLE 4
-
-# define MOVE_FORWARD 116
-# define MOVE_BACK 121
-# define MOVE_UP 13
-# define MOVE_DOWN 1
-# define MOVE_DX 2
-# define MOVE_SX 0
-# define ROT_UP 126
-# define ROT_DOWN 125
-# define ROT_DX 124
-# define ROT_SX 123
-# define NUMPAD_PLUS 69
-# define NUMPAD_MINUS 78
 
 /*
  * basic structures
@@ -143,6 +132,7 @@ typedef struct		s_scene
 	t_light		*light;
 	t_cam		*cam;
 	t_obj		*obj;
+	t_obj		*selected_obj;
 }					t_scene;
 
 /*
@@ -219,13 +209,6 @@ typedef struct		s_thr_arg
 	double		x_end;
 	t_scene		*scene;
 }					t_thr_arg;
-
-typedef	struct 		s_manip_data
-{
-	t_obj	*obj;
-	t_scene	*scene;
-}					t_manip_data;
-
 
 /*
  * math
@@ -320,7 +303,6 @@ int 	keyboard_input(int keycode, void *param);
 int 	mouse_input(int button, int x, int y, void *param);
 int 	idle(void *param);
 void    main_info();
-int     terminal_input(void *param);
 
 /*
  * input_utils
@@ -329,12 +311,12 @@ int     terminal_input(void *param);
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
 void    transform_camera(t_cam *cam, int key);
-void    sphere_manip(t_scene *scene, t_obj *obj);
 
 /*
  * sphere_mod
  */
 
-int    sphere_case_input(int key, void   *param);
+int		sphere_case_input(int key, void   *param);
+void	select_sphere(t_scene *scene, t_obj *obj);
 
 #endif

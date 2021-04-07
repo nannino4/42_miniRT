@@ -10,6 +10,7 @@ void	init_scene(t_scene *scene)
 	scene->light = 0;
 	scene->cam = 0;
 	scene->obj = 0;
+	scene->selected_obj = 0;
 }
 
 void	add_element_to_scene(char **line, t_scene *scene)

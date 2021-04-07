@@ -7,13 +7,13 @@ int	keyboard_input(int key, void *param)
 
 	scene = (t_scene*)param;
 	printf("key pressed : %d\n", key);
-	if (key == 53)
+	if (key == ESC_KEY)
 		exit_func(NULL);
-	else if (key == 8)
+	else if (key == C_KEY)
 		camera_wheel(scene);
-	else if (key == MOVE_FORWARD || key == MOVE_BACK || key == MOVE_UP || \
-			key == MOVE_DOWN || key == MOVE_DX || key == MOVE_SX || \
-			key == ROT_UP || key == ROT_DOWN || key == ROT_DX || key == ROT_SX)
+	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == ARROW_DX_KEY || \
+			key == ARROW_DOWN_KEY || key == ARROW_UP_KEY || key == A_KEY || \
+			key == S_KEY || key == D_KEY || key == ARROW_SX_KEY || key == W_KEY)
 	{
 		transform_camera(scene->cam, key);
 		create_img(scene);
@@ -35,7 +35,7 @@ int	mouse_input(int button, int x, int y, void *param)
         if(ray.intersection.distance < MAX_DISTANCE)
         {
             if(ray.intersection.intersected_obj->id == SPHERE)
-                sphere_manip(scene, ray.intersection.intersected_obj);
+                select_sphere(scene, ray.intersection.intersected_obj);
             //else if(ray.intersection.intersected_obj->id == PLANE)
             //    plane_manip();
             //else if(ray.intersection.intersected_obj->id == CYLINDER)
@@ -46,28 +46,10 @@ int	mouse_input(int button, int x, int y, void *param)
             //    square_manip();
         }
         else
-            printf("No object where clicked\n");
+            printf(YEL"No object where clicked\n"reset);
     }
 
     // printi info su oggetto selezionato e istruzioni per interagirci
-    return 1;
-}
-int     terminal_input(void *param)
-{
-    t_scene *scene;
-    char    *temp="A.";
-    char    *line;
-
-    scene = (t_scene*)param;
-    usleep(100000);
-    if(get_next_line(0, &line) == 1)
-    {
-        //printf("%s", line);
-        write(1, temp, 2);
-	    mlx_loop_hook(scene->mlx, NULL, scene);
-    }
-    // controllo oggetto selezionato
-    // gnl legge input da terminale e lo usa in base all'oggetto selezionato
     return 1;
 }
 
