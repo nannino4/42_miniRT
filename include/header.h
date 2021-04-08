@@ -17,7 +17,7 @@
 # define EPSILON 0.00000005
 # define MAX_W 1920
 # define MAX_H 1080
-# define thread_count 12
+# define thread_count 1
 
 # define SPHERE 0
 # define PLANE 1

@@ -1,5 +1,30 @@
 #include "header.h"
 
+t_obj	*select_obj(t_scene *scene, int x, int y)
+{
+	double	min_distance;
+	t_obj	*obj_list;
+	t_obj	*intersected_obj;
+    t_ray   ray;
+
+	intersected_obj = 0;
+	min_distance = MAX_DISTANCE;
+	obj_list = scene->obj;
+    create_ray(scene, &ray, x, y);
+	while (obj_list)
+	{
+		ray.intersection.distance = MAX_DISTANCE;
+		intersect_obj(obj_list, ray);
+		if (ray.intersection.distance < min_distance)
+		{
+			min_distance = ray.intersection.distance;
+			intersected_obj = obj_list;
+		}
+		obj_list = obj_list->next;
+	}
+    return (intersected_obj);
+}
+
 int     exit_func(void *param)
 {
     if(param == NULL)

@@ -56,7 +56,6 @@ void	manage_scene(t_scene *scene)
 	create_img(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
-	mlx_loop_hook(scene->mlx, idle, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
 	mlx_loop(scene->mlx);
 }

@@ -11,29 +11,20 @@ int     keyboard_input(int keycode, void *param)
         exit_func(NULL);
     else if(keycode == 8)
         camera_wheel(scene);
-    return keycode;
+    return (keycode);
 }
+
 int     mouse_input(int button, int x, int y, void *param)
 {
     t_scene *scene;
 
     scene = (t_scene*)param;
-    x = x + 1 - 1;
-    y = y + 1 - 1;
     printf("pressed mouse button : %d at %d,%d\n", button, x, y);
-    //if(button == 1)
-    //else if (button == 3)
-    //{
-    //}
-    return 1;
-}
-int     idle(void *param)
-{
-    t_scene *scene;
-
-    scene = (t_scene*)param;
-
-    return 1;
+    if (button == 1)
+    {
+        select_object(scene, x, y);
+    }
+    return (1);
 }
 
 void    terminal_info()
