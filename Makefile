@@ -1,19 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/13 13:12:36 by gcefalo           #+#    #+#              #
-#    Updated: 2021/03/08 18:03:03 by gcefalo          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME	= miniRT
 
 SRCS	= srcs/main.c \
 		  srcs/utils/ft_color.c \
+		  srcs/utils/ft_color_2.c \
 		  srcs/utils/ft_strncmp.c \
 		  srcs/utils/get_next_line.c \
 		  srcs/utils/get_next_line_utils.c \
@@ -39,26 +28,25 @@ SRCS	= srcs/main.c \
 		  srcs/element_selection/select_light.c\
 		  srcs/element_selection/select_triangle.c\
 		  srcs/element_selection/select_square.c\
+		  srcs/element_selection/select_cylinder.c\
+		  srcs/element_selection/select_plane.c\
 
 OBJS	= $(SRCS:.c=.o)
 
-CFLAGS	= -Wall -Wextra -Werror -I ./mlx -I ./include
+CFLAGS	= -Wall -Wextra -Werror -I /usr/local/include -I ./include
 
-LFLAGS	= libmlx.dylib -L ./mlx -framework Metal -framework AppKit
+LFLAGS	= -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 
 %.o :		%.c
 			gcc -c -g $(CFLAGS) $< -o $@
 
 $(NAME):	$(OBJS)
-			make -C mlx
-			mv mlx/libmlx.dylib .
 			gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 all:		$(NAME)
 
 clean:
 			rm -f $(OBJS)
-			rm -f libmlx.dylib
 
 fclean:		clean
 			rm -f $(NAME)
