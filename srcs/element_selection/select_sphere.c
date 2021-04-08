@@ -1,26 +1,26 @@
 #include "header.h"
 
-void    sphere_translation(void *param, t_v direction)
+void	sphere_translation(void *param, t_v direction)
 {
-    t_sph   *sphere;
+	t_sph	*sphere;
 
-    sphere = (t_sph*)param;
-    sphere->c = v_sum(sphere->c, v_scalar_mul(direction, MOVE_EPSILON));
+	sphere = (t_sph*)param;
+	sphere->c = v_sum(sphere->c, v_scalar_mul(direction, MOVE_EPSILON));
 }
 
 void	sphere_diameter_mod(void *param, double delta)
 {
-    t_sph   *sphere;
+	t_sph	*sphere;
 
-    sphere = (t_sph*)param;
+	sphere = (t_sph*)param;
 	sphere->d += delta;
-    if (sphere->d < 0)
-        sphere->d = 0;
+	if (sphere->d < 0)
+		sphere->d = 0;
 }
 
-void    sphere_mod_key(int key, t_obj *obj, t_scene *scene)
+void	sphere_mod_key(int key, t_obj *obj, t_scene *scene)
 {
-    if (key == PG_UP_KEY)
+	if (key == PG_UP_KEY)
 		sphere_translation(obj->obj, scene->cam->direction);
 	else if (key == PG_DOWN_KEY)
 		sphere_translation(obj->obj, v_scalar_mul(scene->cam->direction, -1));
@@ -38,7 +38,7 @@ void    sphere_mod_key(int key, t_obj *obj, t_scene *scene)
 		sphere_diameter_mod(obj->obj, -DIAMETER_DELTA);
 }
 
-int    sphere_case_input(int key, void   *param)
+int	sphere_case_input(int key, void *param)
 {
 	t_scene	*scene;
 
@@ -46,34 +46,34 @@ int    sphere_case_input(int key, void   *param)
 	printf("key pressed : %d\n", key);
 	if (key == 53)
 		exit_func(NULL);
-    else if (key == 12)
-    {
-        mlx_key_hook(scene->win, keyboard_input, scene);
-        main_info();
-    }
-    else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == W_KEY || \
+	else if (key == 12)
+	{
+		mlx_key_hook(scene->win, keyboard_input, scene);
+		main_info();
+	}
+	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == W_KEY || \
 			key == S_KEY || key == D_KEY || key == A_KEY || \
 			key == NUMPAD_MINUS || key == NUMPAD_PLUS)
-        {
-            sphere_mod_key(key, scene->selected_obj, scene);
-            create_img(scene);
-        }
-    else
-        printf(YEL "Invalid key pressed...\n" reset);
-    return 1;
+	{
+		sphere_mod_key(key, scene->selected_obj, scene);
+		create_img(scene);
+	}
+	else
+		printf(YEL "Invalid key pressed...\n" reset);
+	return (1);
 }
 
-void    select_sphere(t_scene *scene, t_obj *obj)
+void	select_sphere(t_scene *scene, t_obj *obj)
 {
-    scene->selected_obj = obj;
-    mlx_key_hook(scene->win, sphere_case_input, scene);
-    system("clear");
-    printf(BCYN"SPHERE :\n\tW - Move Up\n\t");
-    printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-    printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
-    printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
-    printf(BBLU"\n\nQ - Exit this mode\n");
-    printf("Press ESC or click the close button on the window to exit\n"reset);
-    printf(UGRN"\n----------------------------------------------------------");
-    printf("----------------\n\n"reset);
+	scene->selected_obj = obj;
+	mlx_key_hook(scene->win, sphere_case_input, scene);
+	system("clear");
+	printf(BCYN"SPHERE :\n\tW - Move Up\n\t");
+	printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
+	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
+	printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
+	printf(BBLU"\n\nQ - Exit this mode\n");
+	printf("Press ESC or click the close button on the window to exit\n"reset);
+	printf(UGRN"\n----------------------------------------------------------");
+	printf("----------------\n\n"reset);
 }
