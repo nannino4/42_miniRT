@@ -37,9 +37,8 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 		final.b += ray.intersection.obj_color.b * ray.light_color.b / 255;
 		final.g += ray.intersection.obj_color.g * ray.light_color.g / 255;
 	}
-	final.r /= AA_SAMPLES;
-	final.g /= AA_SAMPLES;
-	final.b /= AA_SAMPLES;
+	final = divide_color(final, AA_SAMPLES);
+	reflection_color = divide_color(reflection_color, AA_SAMPLES);
 	mix_colors(&final, reflection_color);
 	return (create_trgb(0, final.r, final.g, final.b));
 }

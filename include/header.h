@@ -25,7 +25,7 @@
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
-# define AA_SAMPLES 1
+# define AA_SAMPLES 4
 # define THREAD_N 12
 
 # define SPHERE 0
@@ -261,6 +261,8 @@ t_color		from_trgb_to_color(int trgb);
 int			illuminate(t_ray ray);
 void		mix_colors(t_color *color_1, t_color color_2);
 t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
+t_color	divide_color(t_color color, int x);
+void	sum_color(t_color *color_1, t_color color_2);
 
 /*
  * read_rt
