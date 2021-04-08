@@ -1,5 +1,17 @@
 #include "header.h"
 
+double	random_n()
+{
+	double	num;
+
+	num = rand() / (double)RAND_MAX;
+	if (num < 0.2)
+		num = 0.2;
+	else if(num > 0.8)
+		num = 0.8;
+	return (num);
+}
+
 void	create_screen(t_scene *scene)
 {
 	scene->screen.p0 = v_sum(scene->cam->origin, scene->cam->direction);
@@ -29,7 +41,7 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 	i = AA_SAMPLES;
 	while(i--)
 	{
-		create_ray(scene, &ray, x + (float)rand() / (float)RAND_MAX, y + (float)rand() / (float)RAND_MAX);
+		create_ray(scene, &ray, x + random_n(), y + random_n());
 		find_intersection(&ray, scene);
 		if (ray.intersection.distance < MAX_DISTANCE)
 			find_shadows(&ray, scene, &reflection_color);
