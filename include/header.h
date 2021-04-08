@@ -16,14 +16,17 @@
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
-# define EPSILON 0.00000005
+# define EPSILON 0.0000000005
 # define MOVE_EPSILON 1
 # define ROT_EPSILON 0.1
 # define BRIGHTNESS_DELTA 0.1
 # define DIAMETER_DELTA 1
+# define POW_EXP 20
+# define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
 # define AA_SAMPLES 1
+# define THREAD_N 12
 
 # define SPHERE 0
 # define PLANE 1
@@ -256,7 +259,8 @@ t_color		get_light_color(t_color color, double brightness);
 int			create_trgb(int t, int r, int g, int b);
 t_color		from_trgb_to_color(int trgb);
 int			illuminate(t_ray ray);
-void		mix_colors(t_ray *ray, t_color color);
+void		mix_colors(t_color *color_1, t_color color_2);
+t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
 
 /*
  * read_rt
@@ -296,7 +300,7 @@ void	set_camera_orientation(t_cam *cam);
 void	create_img(t_scene *scene);
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
 void	find_intersection(t_ray *ray, t_scene *scene);
-void	find_shadows(t_ray *ray, t_scene *scene);
+void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color);
 
 /*
  * input_manager

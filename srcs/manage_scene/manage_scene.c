@@ -21,18 +21,18 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 {
     t_ray	ray;
 	t_color	final;
+	t_color	reflection_color;
 	int		i;
 
+	reflection_color = from_trgb_to_color(0);
+	final = from_trgb_to_color(0);
 	i = AA_SAMPLES;
-	final.r = 0;
-	final.g = 0;
-	final.b = 0;
 	while(i--)
 	{
 		create_ray(scene, &ray, x + (float)rand() / (float)RAND_MAX, y + (float)rand() / (float)RAND_MAX);
 		find_intersection(&ray, scene);
 		if (ray.intersection.distance < MAX_DISTANCE)
-			find_shadows(&ray, scene);
+			find_shadows(&ray, scene, &reflection_color);
 		final.r += ray.intersection.obj_color.r * ray.light_color.r / 255;
 		final.b += ray.intersection.obj_color.b * ray.light_color.b / 255;
 		final.g += ray.intersection.obj_color.g * ray.light_color.g / 255;
@@ -40,6 +40,7 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 	final.r /= AA_SAMPLES;
 	final.g /= AA_SAMPLES;
 	final.b /= AA_SAMPLES;
+	mix_colors(&final, reflection_color);
 	return (create_trgb(0, final.r, final.g, final.b));
 }
 
@@ -68,8 +69,8 @@ void	*render_thread(void *arguments)
 
 void	create_img(t_scene *scene)
 {
-	pthread_t	thread_id[12];
-	t_thr_arg	args[12];
+	pthread_t	thread_id[THREAD_N];
+	t_thr_arg	args[THREAD_N];
 	int			i;
 
 	create_screen(scene);
@@ -77,10 +78,10 @@ void	create_img(t_scene *scene)
 	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bpp,
 			&scene->img.line_l, &scene->img.endian);
 	i = 0;
-	while (i < 12)
+	while (i < THREAD_N)
 	{
-		args[i].x_start = i * scene->w / 12;
-		args[i].x_end = (i + 1) * scene->w / 12;
+		args[i].x_start = i * scene->w / THREAD_N;
+		args[i].x_end = (i + 1) * scene->w / THREAD_N;
 		args[i].scene = scene;
 		pthread_create(&thread_id[i], NULL, render_thread, &args[i]);
 		i++;

@@ -33,7 +33,7 @@ void	find_shadows_2(t_ray *shadow, t_scene *scene, t_light *light_list)
 	}	
 }
 
-void	find_shadows(t_ray *ray, t_scene *scene)
+void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color)
 {
 	t_light		*light_list;
 	t_ray		shadow;
@@ -49,10 +49,12 @@ void	find_shadows(t_ray *ray, t_scene *scene)
 				* fabs(v_dot_prod(shadow.direction, ray->intersection.norm)));
 		shadow.intersection.distance = MAX_DISTANCE;
 		find_shadows_2(&shadow, scene, light_list);
-		mix_colors(ray, shadow.light_color);
+		mix_colors(&ray->light_color, shadow.light_color);
+		if (shadow.light_color.r || shadow.light_color.g || shadow.light_color.b)
+			mix_colors(reflection_color, find_reflection(ray, shadow, light_list));
 		light_list = light_list->next;
 	}
-	mix_colors(ray, get_light_color(scene->amb_l.color,
+	mix_colors(&ray->light_color, get_light_color(scene->amb_l.color,
 				scene->amb_l.brightness));
 }
 
