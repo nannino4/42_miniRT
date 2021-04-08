@@ -308,7 +308,6 @@ void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color);
 
 int 	keyboard_input(int keycode, void *param);
 int 	mouse_input(int button, int x, int y, void *param);
-int 	idle(void *param);
 void    main_info();
 
 /*
@@ -328,5 +327,7 @@ void    select_sphere(t_scene *scene, t_obj *obj);
 void    select_light(t_scene *scene);
 void    select_triangle(t_scene *scene, t_obj *obj);
 void    select_square(t_scene *scene, t_obj *obj);
+void    select_cylinder(t_scene *scene, t_obj *obj);
+void    select_plane(t_scene *scene, t_obj *obj);
 
 #endif

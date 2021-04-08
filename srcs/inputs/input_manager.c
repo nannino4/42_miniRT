@@ -37,10 +37,10 @@ int	mouse_input(int button, int x, int y, void *param)
         {
             if(ray.intersection.intersected_obj->id == SPHERE)
                 select_sphere(scene, ray.intersection.intersected_obj);
-            //else if(ray.intersection.intersected_obj->id == PLANE)
-            //    select_plane();
-            //else if(ray.intersection.intersected_obj->id == CYLINDER)
-            //    select_cylinder();
+            else if(ray.intersection.intersected_obj->id == PLANE)
+                select_plane(scene, ray.intersection.intersected_obj);
+            else if(ray.intersection.intersected_obj->id == CYLINDER)
+                select_cylinder(scene, ray.intersection.intersected_obj);
             else if(ray.intersection.intersected_obj->id == TRIANGLE)
                 select_triangle(scene, ray.intersection.intersected_obj);
             else if(ray.intersection.intersected_obj->id == SQUARE)
@@ -57,12 +57,13 @@ int	mouse_input(int button, int x, int y, void *param)
 void	main_info(void)
 {
     system("clear");
-    printf(BCYN"CAMERA MOVEMENT :\n\tW - Move Up\n\t");
+    printf(BCYN"CAMERA :\n\tW - Move Up\n\t");
     printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
     printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n");
-    printf("CAMERA ROTATION\n\t◀- - Rotate Left\n\t");
+    printf("\n\t◀- - Rotate Left\n\t");
     printf("-▶ - Rotate Right\n\t⬇ - Rotate down\n\t");
     printf("⬆ - Rotate Up\n\n\tC - Cycle cameras\n\tL - Cycle Lights\n\n");
-    printf(BBLU"Press ESC or click the close button on the window to exit\n"reset);
-    printf("Enter any commands through the terminal ...\n");
+    printf(BBLU"Press ESC or click the close button on the view window to exit\n"reset);
+    printf(UGRN"\n----------------------------------------------------------");
+    printf("----------------\n\n"reset);
 }

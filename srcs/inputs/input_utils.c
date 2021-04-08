@@ -1,5 +1,4 @@
 #include "header.h"
-#include "ANSI-color-codes.h"
 
 int	exit_func(void *param)
 {
@@ -15,18 +14,18 @@ void	light_wheel(t_scene *scene)
     {
         if(scene->selected_light->next != NULL)
         {
-            printf("Switching selected Light\n");
+            printf(YEL"Switching to the next Light\n"reset);
             scene->selected_light = scene->selected_light->next;
         }
         else
         {
-            printf("Reached last Light. Rewinding...\n");
+            printf(YEL"Reached last Light. Rewinding...\n"reset);
             while(scene->selected_light->prev != NULL)
                 scene->selected_light = scene->selected_light->prev;
         }
     }
     else
-        printf("Only one Light exists in the scene\n");
+        printf(YEL"Only one Light exists in the scene\n"reset);
 }
 
 void	camera_wheel(t_scene *scene)
@@ -35,7 +34,7 @@ void	camera_wheel(t_scene *scene)
     {
         if(scene->cam->next != NULL)
         {
-            printf(YEL"Switching Camera\n"reset);
+            printf(YEL"Switching to the next Camera\n"reset);
             scene->cam = scene->cam->next;
         }
         else
