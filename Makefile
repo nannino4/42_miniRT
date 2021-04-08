@@ -21,6 +21,8 @@ SRCS	= srcs/main.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \
+		  srcs/math/ft_vectors_2.c \
+		  srcs/math/ft_vectors_3.c \
 		  srcs/read_rt/append_to_list.c \
 		  srcs/read_rt/append_to_list_2.c \
 		  srcs/read_rt/create_elem.c \
@@ -32,6 +34,11 @@ SRCS	= srcs/main.c \
 		  srcs/manage_scene/manage_scene.c \
 		  srcs/inputs/input_manager.c \
 		  srcs/inputs/input_utils.c \
+		  srcs/inputs/transform_camera.c \
+		  srcs/element_selection/select_sphere.c\
+		  srcs/element_selection/select_light.c\
+		  srcs/element_selection/select_triangle.c\
+		  srcs/element_selection/select_square.c\
 
 OBJS	= $(SRCS:.c=.o)
 

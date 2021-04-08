@@ -2,6 +2,7 @@
 # define HEADER_H
 
 # include "mlx.h"
+# include "keycodes.h"
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -11,13 +12,18 @@
 # include <fcntl.h>
 # include <float.h>
 # include <pthread.h>
+# include "ANSI-color-codes.h"
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
 # define EPSILON 0.00000005
+# define MOVE_EPSILON 1
+# define ROT_EPSILON 0.1
+# define BRIGHTNESS_DELTA 0.1
+# define DIAMETER_DELTA 1
 # define MAX_W 1920
 # define MAX_H 1080
-# define thread_count 1
+# define AA_SAMPLES 1
 
 # define SPHERE 0
 # define PLANE 1
@@ -46,12 +52,20 @@ typedef struct		s_color
 	int	b;
 }					t_color;
 
+typedef struct		s_obj
+{
+	int				id;
+	void			*obj;
+	struct s_obj	*next;
+}					t_obj;
+
 typedef struct		s_inters
 {
 	double	distance;
 	t_color	obj_color;
 	t_v		norm;
 	t_p		hit_point;
+	t_obj	*intersected_obj;
 }					t_inters;
 
 typedef struct		s_amb_l
@@ -72,6 +86,8 @@ typedef struct		s_cam
 {
 	t_p				origin;
 	t_v				direction;
+	t_v				up;
+	t_v				dx;
 	int				fov;
 	struct s_cam	*next;
 	struct s_cam	*prev;
@@ -83,14 +99,8 @@ typedef struct		s_light
 	t_color			color;
 	t_p				origin;
 	struct s_light	*next;
+	struct s_light	*prev;
 }					t_light;
-
-typedef struct		s_obj
-{
-	int				id;
-	void			*obj;
-	struct s_obj	*next;
-}					t_obj;
 
 typedef struct		s_image
 {
@@ -109,8 +119,6 @@ typedef struct		s_screen
 	t_p		p4;
 	t_p		p0;
 	t_v		n;
-	t_v		up;
-	t_v		dx;
 	double	theta;
 }					t_screen;
 
@@ -124,8 +132,10 @@ typedef struct		s_scene
 	t_screen	screen;
 	t_amb_l		amb_l;
 	t_light		*light;
+	t_light		*selected_light;
 	t_cam		*cam;
 	t_obj		*obj;
+	t_obj		*selected_obj;
 }					t_scene;
 
 /*
@@ -218,6 +228,7 @@ double	v_norm(t_v v);
 t_v		v_normalize(t_v v);
 t_v		v_cross_prod(t_v v1, t_v v2);
 t_p		project_p_to_plane(t_p p, t_p p0, t_v n);
+t_v     rotate_vector(t_v vector, t_v axis, double a);
 void    intercept_sphere(t_sph *sphere, t_ray *ray);
 void    intercept_plane(t_plane *plane, t_ray *ray);
 void    intercept_square(t_square *square, t_ray *ray);
@@ -276,6 +287,7 @@ void	append_cyl(t_scene *scene, t_cyl *cyl);
 void	append_triangle(t_scene *scene, t_triangle *triangle);
 void	set_square_orientation(t_square *square);
 void	set_cylinder_orientation(t_cyl *cylinder);
+void	set_camera_orientation(t_cam *cam);
 
 /*
  * manage_scene
@@ -293,12 +305,24 @@ void	find_shadows(t_ray *ray, t_scene *scene);
 int 	keyboard_input(int keycode, void *param);
 int 	mouse_input(int button, int x, int y, void *param);
 int 	idle(void *param);
-void    terminal_info();
+void    main_info();
 
 /*
- * input_manager
+ * input_utils
  */
 
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
+void	light_wheel(t_scene *scene);
+void    transform_camera(t_cam *cam, int key);
+
+/*
+ * element_selection
+ */
+
+void    select_sphere(t_scene *scene, t_obj *obj);
+void    select_light(t_scene *scene);
+void    select_triangle(t_scene *scene, t_obj *obj);
+void    select_square(t_scene *scene, t_obj *obj);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 15:04:39 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/03/08 17:58:22 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/06 16:57:16 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	append_sph(t_scene *scene, t_sph *sph)
 	while (element->next)
 		element = element->next;
 	element->id = SPHERE;
-	element->obj = (void*)sph;
+	element->obj = (void *)sph;
 }
 
 void	append_plane(t_scene *scene, t_plane *plane)
@@ -33,7 +33,7 @@ void	append_plane(t_scene *scene, t_plane *plane)
 	while (element->next)
 		element = element->next;
 	element->id = PLANE;
-	element->obj = (void*)plane;
+	element->obj = (void *)plane;
 }
 
 void	append_square(t_scene *scene, t_square *square)
@@ -45,7 +45,7 @@ void	append_square(t_scene *scene, t_square *square)
 	while (element->next)
 		element = element->next;
 	element->id = SQUARE;
-	element->obj = (void*)square;
+	element->obj = (void *)square;
 }
 
 void	append_cyl(t_scene *scene, t_cyl *cyl)
@@ -57,7 +57,7 @@ void	append_cyl(t_scene *scene, t_cyl *cyl)
 	while (element->next)
 		element = element->next;
 	element->id = CYLINDER;
-	element->obj = (void*)cyl;
+	element->obj = (void *)cyl;
 }
 
 void	append_triangle(t_scene *scene, t_triangle *triangle)
@@ -69,5 +69,5 @@ void	append_triangle(t_scene *scene, t_triangle *triangle)
 	while (element->next)
 		element = element->next;
 	element->id = TRIANGLE;
-	element->obj = (void*)triangle;
+	element->obj = (void *)triangle;
 }

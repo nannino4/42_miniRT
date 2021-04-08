@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_elem.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/06 16:58:03 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/06 16:59:20 by gcefalo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 void	create_res(char **line, t_scene *scene)
@@ -30,16 +42,12 @@ void	create_amb_l(char **line, t_scene *scene)
 	}
 }
 
-
 void	create_cam(char **line, t_scene *scene)
 {
 	t_cam	*cam;
 
 	(*line)++;
-	if ((cam = malloc(sizeof(t_cam))) == 0)
-	{
-		//TODO error: "allocazione di t_cam fallita"
-	}
+	cam = malloc(sizeof(t_cam));
 	skip_spaces(line);
 	cam->origin = read_p(line);
 	skip_spaces(line);
@@ -47,6 +55,7 @@ void	create_cam(char **line, t_scene *scene)
 	skip_spaces(line);
 	cam->fov = read_int(line);
 	cam->next = 0;
+	set_camera_orientation(cam);
 	if (**line || cam->fov < 0)
 	{
 		//TODO error: "camera format is incorrect"
@@ -59,10 +68,7 @@ void	create_light(char **line, t_scene *scene)
 	t_light		*light;
 
 	(*line)++;
-	if ((light = malloc(sizeof(t_light))) == 0)
-	{
-		//TODO error: "allocazione di t_light fallita"
-	}
+	light = malloc(sizeof(t_light));
 	skip_spaces(line);
 	light->origin = read_p(line);
 	skip_spaces(line);

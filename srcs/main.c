@@ -8,8 +8,10 @@ void	init_scene(t_scene *scene)
 	scene->win = 0;
 	scene->amb_l.brightness = 0;
 	scene->light = 0;
+	scene->selected_light = 0;
 	scene->cam = 0;
 	scene->obj = 0;
+	scene->selected_obj = 0;
 }
 
 void	add_element_to_scene(char **line, t_scene *scene)
@@ -57,14 +59,16 @@ void	manage_scene(t_scene *scene)
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
+	main_info();
 	mlx_loop(scene->mlx);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_scene		scene;
 
 	init_scene(&scene);
+	srand(time(0));
 	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
 	{
 		//TODO --save
@@ -73,10 +77,8 @@ int		main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-		if (!(scene.win = mlx_new_window(scene.mlx, scene.w, scene.h, "JohnnyBoy's miniRT")))
-		{
-			//TODO error: "couldn't create window or image"
-		}
+		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
+				"JohnnyBoy's miniRT");
 		manage_scene(&scene);
 	}
 	else
