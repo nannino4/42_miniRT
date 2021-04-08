@@ -34,15 +34,15 @@ int	illuminate(t_ray ray)
 	return (create_trgb(0, final_color.r, final_color.g, final_color.b));
 }
 
-void	mix_colors(t_ray *ray, t_color color)
+void	mix_colors(t_color *color_1, t_color color_2)
 {
-	ray->light_color.r = ray->light_color.r + color.r;
-	ray->light_color.g = ray->light_color.g + color.g;
-	ray->light_color.b = ray->light_color.b + color.b;
-	if (ray->light_color.r > 255)
-		ray->light_color.r = 255;
-	if (ray->light_color.g > 255)
-		ray->light_color.g = 255;
-	if (ray->light_color.b > 255)
-		ray->light_color.b = 255;
+	color_1->r = color_1->r + color_2.r;
+	color_1->g = color_1->g + color_2.g;
+	color_1->b = color_1->b + color_2.b;
+	if (color_1->r > 255)
+		color_1->r = 255;
+	if (color_1->g > 255)
+		color_1->g = 255;
+	if (color_1->b > 255)
+		color_1->b = 255;
 }
