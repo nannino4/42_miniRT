@@ -74,4 +74,6 @@ void    select_sphere(t_scene *scene, t_obj *obj)
     printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
     printf(BBLU"\n\nQ - Exit this mode\n");
     printf("Press ESC or click the close button on the window to exit\n"reset);
+    printf(UGRN"\n----------------------------------------------------------");
+    printf("----------------\n\n"reset);
 }

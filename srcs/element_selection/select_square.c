@@ -13,8 +13,7 @@ void	rot_square(void *param, t_v axis)
     t_square *square;
 
     square = (t_square *)param;
-	square->n = v_normalize(rotate_vector(square->n, axis,
-				ROT_EPSILON));
+	square->n = v_normalize(rotate_vector(square->n, axis, ROT_EPSILON));
 	square->up = v_normalize(rotate_vector(square->up, axis, ROT_EPSILON));
 	square->dx = v_normalize(rotate_vector(square->dx, axis, ROT_EPSILON));
 }
@@ -89,11 +88,12 @@ void    select_square(t_scene *scene, t_obj *obj)
     system("clear");
     printf(BCYN"SQUARE :\n\tW - Move Up\n\t");
     printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-    printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n");
-    printf("◀- - Rotate Left\n\t");
-    printf("-▶ - Rotate Right\n\t⬇ - Rotate down\n\t");
-    printf("⬆ - Rotate Up\n\n");
-    printf("+ (NumPad) - Increase Lenght\n\t- (NumPad) - Decrease Lenght");
-    printf(BBLU"\nQ - Exit this mode\n");
+    printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards");
+    printf("\n\n\t◀- - Rotate Left\n\t-▶ - Rotate Right");
+    printf("\n\t⬇ - Rotate down\n\t⬆ - Rotate Up\n\n");
+    printf("\t+ (NumPad) - Increase Lenght\n\t- (NumPad) - Decrease Lenght");
+    printf(BBLU"\n\nQ - Exit this mode\n");
     printf("Press ESC or click the close button on the window to exit\n"reset);
+    printf(UGRN"\n----------------------------------------------------------");
+    printf("----------------\n\n"reset);
 }

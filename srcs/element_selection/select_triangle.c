@@ -59,4 +59,6 @@ void    select_triangle(t_scene *scene, t_obj *obj)
     printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n");
     printf(BBLU"\nQ - Exit this mode\n");
     printf("Press ESC or click the close button on the window to exit\n"reset);
+    printf(UGRN"\n----------------------------------------------------------");
+    printf("----------------\n\n"reset);
 }
