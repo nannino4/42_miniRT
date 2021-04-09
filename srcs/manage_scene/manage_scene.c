@@ -1,14 +1,12 @@
 #include "header.h"
 
-double	random_n()
+double	random_n(void)
 {
 	double	num;
 
-	num = rand() / (double)RAND_MAX;
-	if (num < 0.2)
-		num = 0.2;
-	else if(num > 0.8)
-		num = 0.8;
+	num = (double)rand() / (double)RAND_MAX;
+	if (num > 0.3 && num < 0.7)
+		return(random_n());
 	return (num);
 }
 
@@ -35,13 +33,15 @@ int	get_pixel_color(t_scene *scene, double x, double y)
 	t_color	final;
 	t_color	reflection_color;
 	int		i;
+	double	dltx[4] = {0.3, 0.3, 0.7, 0.7};
+	double	dlty[4] = {0.3, 0.7, 0.3, 0.7};
 
 	reflection_color = from_trgb_to_color(0);
 	final = from_trgb_to_color(0);
 	i = AA_SAMPLES;
 	while(i--)
 	{
-		create_ray(scene, &ray, x + random_n(), y + random_n());
+		create_ray(scene, &ray, x + dltx[i], y + dlty[i]);
 		find_intersection(&ray, scene);
 		if (ray.intersection.distance < MAX_DISTANCE)
 			find_shadows(&ray, scene, &reflection_color);

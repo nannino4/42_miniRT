@@ -25,7 +25,7 @@
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
-# define AA_SAMPLES 1
+# define AA_SAMPLES 4 // DON'T CHANGE. HARDCODED
 # define THREAD_N 12
 
 # define SPHERE 0
@@ -320,6 +320,7 @@ void    main_info();
 int     exit_func(void *param);
 void	camera_wheel(t_scene *scene);
 void	light_wheel(t_scene *scene);
+void	rot_camera(t_cam *cam, t_v axis);
 void    transform_camera(t_cam *cam, int key);
 
 /*
