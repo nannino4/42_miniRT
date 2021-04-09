@@ -12,6 +12,19 @@
 
 #include "header.h"
 
+void	skip_spaces(char **line)
+{
+	if (**line == ' ')
+	{
+		while (**line == ' ')
+			(*line)++;
+	}
+	else
+	{
+		//TODO error: "no space"
+	}
+}
+
 t_p	read_p(char **line)
 {
 	t_p		p;
