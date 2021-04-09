@@ -268,6 +268,7 @@ void	sum_color(t_color *color_1, t_color color_2);
  * read_rt
  */
 
+void	add_element_to_scene(char **line, t_scene *scene);
 void	skip_spaces(char **line);
 int		read_int(char **line);
 double	read_double(char **line);

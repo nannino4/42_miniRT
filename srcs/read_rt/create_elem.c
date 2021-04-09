@@ -12,6 +12,26 @@
 
 #include "header.h"
 
+void	max_res(t_scene *scene)
+{
+	int		screen_res[2];
+	double	reduction;
+
+	mlx_get_screen_size(scene->mlx, &screen_res[0], &screen_res[1]);
+	if (scene->w > (unsigned int)screen_res[0])
+	{
+		reduction = (double)scene->w / (double)screen_res[0];
+		scene->w = (unsigned int)screen_res[0];
+		scene->h /= reduction;
+	}
+	if (scene->h > (unsigned int)screen_res[1])
+	{
+		reduction = (double)scene->h / (double)screen_res[1];
+		scene->h = (unsigned int)screen_res[1];
+		scene->w /= reduction;
+	}
+}
+
 void	create_res(char **line, t_scene *scene)
 {
 	(*line)++;
@@ -23,6 +43,7 @@ void	create_res(char **line, t_scene *scene)
 		scene->w = MAX_W;
 	if (scene->h > MAX_H)
 		scene->h = MAX_H;
+	max_res(scene);
 	if (**line || scene->w < 0 || scene->h < 0)
 	{
 		//TODO error: "resolution format is incorrect"

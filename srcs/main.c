@@ -14,32 +14,6 @@ void	init_scene(t_scene *scene)
 	scene->selected_obj = 0;
 }
 
-void	add_element_to_scene(char **line, t_scene *scene)
-{
-	if (ft_strncmp(*line, "R", 1) == 0)
-		create_res(line, scene);
-	else if (ft_strncmp(*line, "A", 1) == 0)
-		create_amb_l(line, scene);
-	else if (ft_strncmp(*line, "pl", 2) == 0)
-		create_plane(line, scene);
-	else if (ft_strncmp(*line, "sp", 2) == 0)
-		create_sph(line, scene);
-	else if (ft_strncmp(*line, "sq", 2) == 0)
-		create_square(line, scene);
-	else if (ft_strncmp(*line, "cy", 2) == 0)
-		create_cyl(line, scene);
-	else if (ft_strncmp(*line, "tr", 2) == 0)
-		create_triangle(line, scene);
-	else if (ft_strncmp(*line, "c", 1) == 0)
-		create_cam(line, scene);
-	else if (ft_strncmp(*line, "l", 1) == 0)
-		create_light(line, scene);
-	else
-	{
-		//TODO error: "unrecognized element"
-	}
-}
-
 void	read_input(t_scene *scene, char *file)
 {
 	int			fd;
@@ -63,17 +37,33 @@ void	manage_scene(t_scene *scene)
 	mlx_loop(scene->mlx);
 }
 
+int		check_name(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	if (s[i - 1] != 't' || s[i - 2] != 'r' || s[i - 3] != '.')
+		return (0);
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_scene		scene;
 
 	init_scene(&scene);
 	srand(time(0));
-	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
+	if (argc == 3 && check_name(argv[1]) && ft_strncmp(argv[2], "--save", 7) == 0)
 	{
-		//TODO --save
+		read_input(&scene, argv[1]);
+		create_img(&scene);
+		save_image_to_bmp_file(scene.img.img);
+		printf(GRN"\tImage saved!\n\n");
+		return (2);
 	}
-	else if (argc == 2 && argv[1])
+	else if (argc == 2 && check_name(argv[1]))
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
@@ -85,5 +75,5 @@ int	main(int argc, char **argv)
 	{
 		//TODO error: "invalid input format"
 	}
-	return (0);
+	return (1);
 }
