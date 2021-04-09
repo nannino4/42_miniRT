@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	{
 		read_input(&scene, argv[1]);
 		create_img(&scene);
-		save_image_to_bmp_file(scene.img.img);
+		//save_image_to_bmp_file(scene.img.img);
 		printf(GRN"\tImage saved!\n\n");
 		return (2);
 	}

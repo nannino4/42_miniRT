@@ -67,7 +67,10 @@ double	read_double(char **line)
 			d = positive_atoi(line);
 			while ((int)d > 0)
 				d /= 10.;
-			i += d;
+			if (i > 0)
+				i += d;
+			else
+				i -= d;
 		}
 	}
 	return (i);

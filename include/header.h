@@ -21,11 +21,11 @@
 # define ROT_EPSILON 0.1
 # define BRIGHTNESS_DELTA 0.1
 # define DIAMETER_DELTA 1
-# define POW_EXP 20
+# define POW_EXP 40
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
-# define AA_SAMPLES 4
+# define AA_SAMPLES 1
 # define THREAD_N 12
 
 # define SPHERE 0
