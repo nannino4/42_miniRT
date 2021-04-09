@@ -54,12 +54,11 @@ int	main(int argc, char **argv)
 	t_scene		scene;
 
 	init_scene(&scene);
-	srand(time(0));
 	if (argc == 3 && check_name(argv[1]) && ft_strncmp(argv[2], "--save", 7) == 0)
 	{
 		read_input(&scene, argv[1]);
 		create_img(&scene);
-		save_image_to_bmp_file(scene.img.img);
+		//save_image_to_bmp_file(scene.img.img);
 		printf(GRN"\tImage saved!\n\n");
 		return (2);
 	}
