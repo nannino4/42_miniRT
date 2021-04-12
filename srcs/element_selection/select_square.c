@@ -77,7 +77,7 @@ int	square_case_input(int key, void *param)
 		create_img(scene);
 	}
 	else
-		printf(YEL "Invalid key pressed...\n" reset);
+		printf(YEL "Invalid key pressed...\n"RESET);
 	return (1);
 }
 
@@ -93,7 +93,7 @@ void	select_square(t_scene *scene, t_obj *obj)
 	printf("\n\t⬇ - Rotate down\n\t⬆ - Rotate Up\n\n");
 	printf("\t+ (NumPad) - Increase Lenght\n\t- (NumPad) - Decrease Lenght");
 	printf(BBLU"\n\nQ - Exit this mode\n");
-	printf("Press ESC or click the close button on the window to exit\n"reset);
+	printf("Press ESC or click the close button on the window to exit\n"RESET);
 	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"reset);
+	printf("----------------\n\n"RESET);
 }

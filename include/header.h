@@ -5,6 +5,8 @@
 # include "keycodes.h"
 # include <math.h>
 # include <stdlib.h>
+# include <string.h>
+# include <errno.h>
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -288,12 +290,12 @@ void	free_all(t_scene *scene);
  */
 
 void	add_element_to_scene(char **line, t_scene *scene);
-void	skip_spaces(char **line);
-int		read_int(char **line, int *minus);
-double	read_double(char **line);
-t_color	read_color(char **line);
-t_p		read_p(char **line);
-t_v		read_norm_v(char **line);
+void	skip_spaces(char **line, t_scene *scene);
+int		read_int(char **line, int *minus, t_scene *scene);
+double	read_double(char **line, t_scene *scene);
+t_color	read_color(char **line, t_scene *scene);
+t_p		read_p(char **line, t_scene *scene);
+t_v		read_norm_v(char **line, t_scene *scene);
 void	create_res(char **line, t_scene *scene);
 void	create_amb_l(char **line, t_scene *scene);
 void	create_cam(char **line, t_scene *scene);

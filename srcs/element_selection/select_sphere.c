@@ -59,7 +59,7 @@ int	sphere_case_input(int key, void *param)
 		create_img(scene);
 	}
 	else
-		printf(YEL "Invalid key pressed...\n" reset);
+		printf(YEL "Invalid key pressed...\n" RESET);
 	return (1);
 }
 
@@ -73,7 +73,7 @@ void	select_sphere(t_scene *scene, t_obj *obj)
 	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
 	printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
 	printf(BBLU"\n\nQ - Exit this mode\n");
-	printf("Press ESC or click the close button on the window to exit\n"reset);
+	printf("Press ESC or click the close button on the window to exit\n"RESET);
 	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"reset);
+	printf("----------------\n\n"RESET);
 }

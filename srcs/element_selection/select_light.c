@@ -56,7 +56,7 @@ int	light_case_input(int key, void *param)
 		create_img(scene);
 	}
 	else
-		printf(YEL "Invalid key pressed...\n" reset);
+		printf(YEL "Invalid key pressed...\n"RESET);
 	return (1);
 }
 
@@ -70,7 +70,7 @@ void	select_light(t_scene *scene)
 	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
 	printf("+(NumPad) - Increase Brightness\n\t-(NumPad) - Decrease Brightness");
 	printf("\n\n\tL - Select next light"BBLU"\n\nQ - Exit selection");
-	printf("\nPress ESC or click the close button on the window to exit\n"reset);
+	printf("\nPress ESC or click the close button on the window to exit\n"RESET);
 	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"reset);
+	printf("----------------\n\n"RESET);
 }

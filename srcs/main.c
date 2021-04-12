@@ -23,6 +23,11 @@ void	read_input(t_scene *scene, char *file)
 	char		*line;
 
 	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		printf(RED"Error : %s\n"RESET, strerror(errno));
+		exit_func(scene);
+	}
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (*line)
@@ -35,7 +40,7 @@ void	manage_scene(t_scene *scene)
 	if (scene->save)
 	{
 		create_img_threaded(scene);
-		printf(BGRN"Image Saved at program binary location !\n"reset);
+		printf(BGRN"Image Saved at program binary location !\n"RESET);
 	}
 	else
 		scene->threading(scene);
@@ -57,8 +62,11 @@ int		check_name(char *s)
 	while (s[i])
 		i++;
 	if (s[i - 1] != 't' || s[i - 2] != 'r' || s[i - 3] != '.')
-		return (0);
-	return (1);
+	{
+		printf(RED"Error : Scene file estension is invalid\n"RESET);
+		return (1);
+	}
+	return (0);
 }
 
 int	check_flags(int argc, char **argv, t_scene *scene)
@@ -73,6 +81,8 @@ int	check_flags(int argc, char **argv, t_scene *scene)
 			scene->aa_func = &pixel_with_aa;
 		else if (!ft_strncmp(argv[argc - 1], "--threaded", 11))
 			scene->threading = &create_img_threaded;
+		else
+			return (0);
 		argc--;
 	}
 	return (1);
@@ -83,8 +93,10 @@ int	main(int argc, char **argv)
 	t_scene		scene;
 
 	init_scene(&scene);
-	if (check_flags(argc, argv, &scene) && check_name(argv[1]))
+	if (check_flags(argc, argv, &scene))
 	{
+		if(check_name(argv[1]))
+			exit_func(&scene);
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
 		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
@@ -93,7 +105,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		//TODO error: "invalid input format"
+		printf(RED"Error : Invalid arguments\n"RESET);
+		exit_func(&scene);
 	}
 	return (0);
 }

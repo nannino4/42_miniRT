@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_read.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/27 16:57:31 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/06 17:04:09 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.h"
 
 int	positive_atoi(char **line)
@@ -26,7 +14,7 @@ int	positive_atoi(char **line)
 	return (n);
 }
 
-int	read_int(char **line, int *minus)
+int	read_int(char **line, int *minus, t_scene *scene)
 {
 	int		n;
 
@@ -43,14 +31,15 @@ int	read_int(char **line, int *minus)
 		n = positive_atoi(line);
 	else
 	{
-		//TODO error: "the element has a wrong format"
+		printf(RED"Error : Invalid number formating\n"RESET);
+		exit_func(scene);
 	}
 	if (*minus)
 		n *= -1;
 	return (n);
 }
 
-double	read_double(char **line)
+double	read_double(char **line, t_scene *scene)
 {
 	double	i;
 	double	d;
@@ -58,7 +47,7 @@ double	read_double(char **line)
 
 	i = 0.;
 	d = 0.;
-	i = read_int(line, &minus);
+	i = read_int(line, &minus, scene);
 	if (**line == '.')
 	{
 		(*line)++;
@@ -76,28 +65,31 @@ double	read_double(char **line)
 	return (i);
 }
 
-t_color	read_color(char **line)
+t_color	read_color(char **line, t_scene *scene)
 {
 	t_color	color;
 	int		minus;
 
 	color.t = 0;
-	color.r = read_int(line, &minus);
+	color.r = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
-		//TODO error: "wrong format for color"
+		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		exit_func(scene);
 	}
 	(*line)++;
-	color.g = read_int(line, &minus);
+	color.g = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
-		//TODO error: "wrong format for color"
+		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		exit_func(scene);
 	}
 	(*line)++;
-	color.b = read_int(line, &minus);
+	color.b = read_int(line, &minus, scene);
 	if (color.r < 0 || color.g < 0 || color.b < 0)
 	{
-		//TODO error: "color format is incorrect"
+		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		exit_func(scene);
 	}
 	return (color);
 }
@@ -124,6 +116,7 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_light(line, scene);
 	else
 	{
-		//TODO error: "unrecognized element"
+		printf(RED"Error : Unrecognized scene element in the .rt file\n"RESET);
+		exit_func(scene);
 	}
 }
