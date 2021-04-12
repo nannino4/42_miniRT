@@ -60,7 +60,7 @@ int	plane_case_input(int key, void *param)
 		create_img(scene);
 	}
 	else
-		printf(YEL "Invalid key pressed...\n"RESET);
+		printf(YEL "Invalid key pressed...\n" RESET);
 	return (1);
 }
 
@@ -69,13 +69,20 @@ void	select_plane(t_scene *scene, t_obj *obj)
 	scene->selected_obj = obj;
 	mlx_key_hook(scene->win, plane_case_input, scene);
 	system("clear");
-	printf(BCYN"PLANE :\n\tW - Move Up\n\t");
-	printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards");
-	printf("\n\n\t◀- - Rotate Left\n\t-▶ - Rotate Right");
-	printf("\n\t⬇ - Rotate down\n\t⬆ - Rotate Up\n");
-	printf(BBLU"\nQ - Exit this mode\n");
-	printf("Press ESC or click the close button on the window to exit\n"RESET);
-	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"RESET);
+	printf(\
+    BMAG"PLANE SELECTED :\n\n"\
+    BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
+    BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
+    BBLU"\tW"HBLU"\tMove Up\n"\
+    BBLU"\tS"HBLU"\tMove Down\n"\
+    BBLU"\tA"HBLU"\tMove Left\n"\
+    BBLU"\tD"HBLU"\tMove Right\n\n"\
+    BBLU"\t◀-"HBLU"\tRotate Left\n"\
+    BBLU"\t-▶"HBLU"\tRotate Right\n"\
+    BBLU"\t⬇"HBLU"\tRotate down\n"\
+    BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
+	BHYEL"\tQ"YEL"\tExit this mode\n\n"\
+    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
+    UGRN"\n----------------------------------------------------------"\
+    "----------------\n\n"RESET);
 }

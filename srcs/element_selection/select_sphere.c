@@ -68,12 +68,18 @@ void	select_sphere(t_scene *scene, t_obj *obj)
 	scene->selected_obj = obj;
 	mlx_key_hook(scene->win, sphere_case_input, scene);
 	system("clear");
-	printf(BCYN"SPHERE :\n\tW - Move Up\n\t");
-	printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n\n\t");
-	printf("+ (NumPad) - Increase Diameter\n\t- (NumPad) - Decrease Diameter");
-	printf(BBLU"\n\nQ - Exit this mode\n");
-	printf("Press ESC or click the close button on the window to exit\n"RESET);
-	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"RESET);
+	printf(\
+    BMAG"SPHERE SELECTED :\n\n"\
+    BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
+    BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
+    BBLU"\tW"HBLU"\tMove Up\n"\
+    BBLU"\tS"HBLU"\tMove Down\n"\
+    BBLU"\tA"HBLU"\tMove Left\n"\
+    BBLU"\tD"HBLU"\tMove Right\n\n"\
+	BBLU"+ (NumPad)"HBLU"\tIncrease Diameter\n"\
+	BBLU"- (NumPad)"HBLU"\tDecrease Diameter\n\n"\
+	BHYEL"\tQ"YEL"\tExit this mode\n\n"\
+    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
+    UGRN"\n----------------------------------------------------------"\
+    "----------------\n\n"RESET);
 }
