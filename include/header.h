@@ -255,6 +255,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
 void        my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
+void	save_image_to_bmp_file(t_scene *scene);
 t_color		get_light_color(t_color color, double brightness);
 int			create_trgb(int t, int r, int g, int b);
 t_color		from_trgb_to_color(int trgb);
