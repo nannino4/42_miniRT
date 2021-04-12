@@ -14,9 +14,9 @@
 
 void	skip_spaces(char **line)
 {
-	if (**line == ' ')
+	if (**line == ' ' || (**line >= 9 && **line <= 13))
 	{
-		while (**line == ' ')
+		while (**line == ' ' || (**line >= 9 && **line <= 13))
 			(*line)++;
 	}
 	else

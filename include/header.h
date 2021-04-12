@@ -21,7 +21,7 @@
 # define ROT_EPSILON 0.1
 # define BRIGHTNESS_DELTA 0.1
 # define DIAMETER_DELTA 1
-# define POW_EXP 20
+# define POW_EXP 40
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
@@ -270,7 +270,7 @@ void	sum_color(t_color *color_1, t_color color_2);
 
 void	add_element_to_scene(char **line, t_scene *scene);
 void	skip_spaces(char **line);
-int		read_int(char **line);
+int		read_int(char **line, int *minus);
 double	read_double(char **line);
 t_color	read_color(char **line);
 t_p		read_p(char **line);
