@@ -264,6 +264,7 @@ void		mix_colors(t_color *color_1, t_color color_2);
 t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
 t_color	divide_color(t_color color, int x);
 void	sum_color(t_color *color_1, t_color color_2);
+void	free_all(t_scene *scene);
 
 /*
  * read_rt
@@ -318,7 +319,7 @@ void    main_info();
  * input_utils
  */
 
-int     exit_func(void *param);
+int     exit_func(void *param, t_scene *scene);
 void	camera_wheel(t_scene *scene);
 void	light_wheel(t_scene *scene);
 void	rot_camera(t_cam *cam, t_v axis);

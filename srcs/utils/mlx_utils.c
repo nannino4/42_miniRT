@@ -1,5 +1,5 @@
 #include "header.h"
-
+/*
 void	write_file(unsigned char header[], unsigned char *buf,
 					unsigned int size)
 {
@@ -64,7 +64,7 @@ void	save_image_to_bmp_file(t_scene *scene)
 	write_file(header, buf, imagesize);
 	free(buf);
 }
-
+*/
 void	my_mlx_pixel_put(t_image *img, int x, int y, int trgb)
 {
 	char	*dst;
