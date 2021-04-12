@@ -269,7 +269,7 @@ void	sum_color(t_color *color_1, t_color color_2);
  */
 
 void	skip_spaces(char **line);
-int		read_int(char **line);
+int		read_int(char **line, int *minus);
 double	read_double(char **line);
 t_color	read_color(char **line);
 t_p		read_p(char **line);

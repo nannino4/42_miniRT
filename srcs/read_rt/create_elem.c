@@ -14,11 +14,13 @@
 
 void	create_res(char **line, t_scene *scene)
 {
+	int		minus;
+
 	(*line)++;
 	skip_spaces(line);
-	scene->w = read_int(line);
+	scene->w = read_int(line, &minus);
 	skip_spaces(line);
-	scene->h = read_int(line);
+	scene->h = read_int(line, &minus);
 	if (scene->w > MAX_W)
 		scene->w = MAX_W;
 	if (scene->h > MAX_H)
@@ -45,6 +47,7 @@ void	create_amb_l(char **line, t_scene *scene)
 void	create_cam(char **line, t_scene *scene)
 {
 	t_cam	*cam;
+	int		minus;
 
 	(*line)++;
 	cam = malloc(sizeof(t_cam));
@@ -53,7 +56,7 @@ void	create_cam(char **line, t_scene *scene)
 	skip_spaces(line);
 	cam->direction = read_norm_v(line);
 	skip_spaces(line);
-	cam->fov = read_int(line);
+	cam->fov = read_int(line, &minus);
 	cam->next = 0;
 	set_camera_orientation(cam);
 	if (**line || cam->fov < 0)
