@@ -124,6 +124,19 @@ typedef struct		s_screen
 	double	theta;
 }					t_screen;
 
+typedef struct s_bmp
+{
+	unsigned char	header[54];
+	unsigned char	*buf;
+	unsigned int	width_in_bytes;
+	unsigned int	imagesize;
+	unsigned int	filesize;
+	unsigned int	offset;
+	unsigned int	header_size;
+	unsigned int	planes_n;
+	unsigned int	bpp;
+}					t_bmp;
+
 typedef struct		s_scene
 {
 	int			w;
@@ -142,6 +155,13 @@ typedef struct		s_scene
 	t_obj		*obj;
 	t_obj		*selected_obj;
 }					t_scene;
+
+typedef struct		s_thr_arg
+{
+	double		x_start;
+	double		x_end;
+	t_scene		*scene;
+}					t_thr_arg;
 
 /*
  * geometrical objects
@@ -211,13 +231,6 @@ typedef struct		s_triangle
 	t_color	color;
 }					t_triangle;
 
-typedef struct		s_thr_arg
-{
-	double		x_start;
-	double		x_end;
-	t_scene		*scene;
-}					t_thr_arg;
-
 /*
  * math
  */
@@ -256,7 +269,10 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
+void		ft_bzero(void *s, size_t n);
 void        my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
+void	save_image_to_bmp_file(t_scene *scene);
 t_color		get_light_color(t_color color, double brightness);
 int			create_trgb(int t, int r, int g, int b);
 t_color		from_trgb_to_color(int trgb);
@@ -265,6 +281,7 @@ void		mix_colors(t_color *color_1, t_color color_2);
 t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
 t_color	divide_color(t_color color, int x);
 void	sum_color(t_color *color_1, t_color color_2);
+void	free_all(t_scene *scene);
 
 /*
  * read_rt
@@ -322,7 +339,7 @@ void    main_info();
  * input_utils
  */
 
-int     exit_func(void *param);
+int     exit_func(void *param, t_scene *scene);
 void	camera_wheel(t_scene *scene);
 void	light_wheel(t_scene *scene);
 void	rot_camera(t_cam *cam, t_v axis);

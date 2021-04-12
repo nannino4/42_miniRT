@@ -7,7 +7,7 @@ int keyboard_input(int key, void *param)
 	scene = (t_scene *)param;
 	printf("key pressed : %d\n", key);
 	if (key == ESC_KEY)
-		exit_func(NULL);
+		exit_func(NULL, scene);
 	else if (key == C_KEY)
 		camera_wheel(scene);
 	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == ARROW_DX_KEY || \

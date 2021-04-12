@@ -45,7 +45,7 @@ int	sphere_case_input(int key, void *param)
 	scene = (t_scene*)param;
 	printf("key pressed : %d\n", key);
 	if (key == 53)
-		exit_func(NULL);
+		exit_func(NULL, scene);
 	else if (key == 12)
 	{
 		mlx_key_hook(scene->win, keyboard_input, scene);

@@ -7,6 +7,8 @@ SRCS	= srcs/main.c \
 		  srcs/utils/get_next_line.c \
 		  srcs/utils/get_next_line_utils.c \
 		  srcs/utils/mlx_utils.c \
+		  srcs/utils/ft_memcpy.c \
+		  srcs/utils/ft_bzero.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \

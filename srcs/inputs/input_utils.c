@@ -1,10 +1,11 @@
 #include "header.h"
 
-int	exit_func(void *param)
+int	exit_func(void *param, t_scene *scene)
 {
 	if (param == NULL)
 		printf(BRED"EXITING\n"reset);
 	exit(0);
+    free_all(scene);  
 	return (0);
 }
 
