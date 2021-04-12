@@ -21,6 +21,7 @@ SRCS	= srcs/main.c \
 		  srcs/read_rt/ft_read_2.c \
 		  srcs/manage_scene/get_pixel_color.c \
 		  srcs/manage_scene/manage_scene.c \
+		  srcs/manage_scene/aa_sampling.c \
 		  srcs/inputs/input_manager.c \
 		  srcs/inputs/input_utils.c \
 		  srcs/inputs/transform_camera.c \

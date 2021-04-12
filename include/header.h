@@ -25,7 +25,6 @@
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
-# define AA_SAMPLES 4 // DON'T CHANGE. HARDCODED
 # define THREAD_N 12
 
 # define SPHERE 0
@@ -131,6 +130,9 @@ typedef struct		s_scene
 	int			h;
 	void		*mlx;
 	void		*win;
+	int			save;
+	void		(*aa_func)(struct s_scene*, int, int, t_color*);
+	void		(*threading)(struct s_scene*);
 	t_image		img;
 	t_screen	screen;
 	t_amb_l		amb_l;
@@ -301,9 +303,12 @@ void	set_camera_orientation(t_cam *cam);
  */
 
 void	create_img(t_scene *scene);
+void	create_img_threaded(t_scene *scene);
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
 void	find_intersection(t_ray *ray, t_scene *scene);
 void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color);
+void    pixel_with_aa(t_scene *scene, int x, int y, t_color *final);
+void    pixel_no_aa(t_scene *scene, int x, int y, t_color *final);
 
 /*
  * input_manager
