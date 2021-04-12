@@ -9,6 +9,7 @@ SRCS	= srcs/main.c \
 		  srcs/utils/mlx_utils.c \
 		  srcs/utils/ft_memcpy.c \
 		  srcs/utils/ft_bzero.c \
+		  srcs/utils/free.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \

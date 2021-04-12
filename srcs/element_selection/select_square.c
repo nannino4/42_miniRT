@@ -62,7 +62,7 @@ int	square_case_input(int key, void *param)
 
 	scene = (t_scene*)param;
 	if (key == ESC_KEY)
-		exit_func(NULL, scene);
+		exit_func(scene);
 	else if (key == Q_KEY)
 	{
 		mlx_key_hook(scene->win, keyboard_input, scene);

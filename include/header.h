@@ -339,7 +339,7 @@ void    main_info();
  * input_utils
  */
 
-int     exit_func(void *param, t_scene *scene);
+int     exit_func(t_scene *scene);
 void	camera_wheel(t_scene *scene);
 void	light_wheel(t_scene *scene);
 void	rot_camera(t_cam *cam, t_v axis);

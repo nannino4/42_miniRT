@@ -71,8 +71,7 @@ void	create_img_threaded(t_scene *scene)
 	while (i-- > 0)
 		pthread_join(thread_id[i], NULL);
 	if (scene->save)
-	//	save_image_to_bmp_file(scene->img.img);
-		printf(REDHB"TODO_IMAGE_SAVE\n"reset);
+		save_image_to_bmp_file(scene);
 	else
 		mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 	mlx_destroy_image(scene->mlx, scene->img.img);

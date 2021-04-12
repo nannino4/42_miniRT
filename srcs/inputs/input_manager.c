@@ -5,9 +5,8 @@ int keyboard_input(int key, void *param)
 	t_scene	*scene;
 
 	scene = (t_scene *)param;
-	printf("key pressed : %d\n", key);
 	if (key == ESC_KEY)
-		exit_func(NULL, scene);
+		exit_func(scene);
 	else if (key == C_KEY)
 		camera_wheel(scene);
 	else if (key == PG_UP_KEY || key == PG_DOWN_KEY || key == ARROW_DX_KEY || \
@@ -19,6 +18,8 @@ int keyboard_input(int key, void *param)
 	}
     else if (key == L_KEY)
         select_light(scene);
+	else
+		printf(YEL "Invalid key pressed...\n" reset);
 	return (key);
 }
 
@@ -49,7 +50,6 @@ int	mouse_input(int button, int x, int y, void *param)
     t_ray   ray;
 
     scene = (t_scene *)param;
-    printf("pressed mouse button : %d at %d,%d\n", button, x, y);
     if(button == 1)
     {
         create_ray(scene, &ray, (double)x + 0.5, (double)y + 0.5);
