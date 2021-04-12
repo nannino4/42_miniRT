@@ -35,7 +35,7 @@ void	manage_scene(t_scene *scene)
 	if (scene->save)
 	{
 		create_img_threaded(scene);
-		printf(BGRN"Image Saved at program binary location !\n"reset);
+		printf(BGRN"Image Saved at program binary location !\n"RESET);
 	}
 	else
 		scene->threading(scene);

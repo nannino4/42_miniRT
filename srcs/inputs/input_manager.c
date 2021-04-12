@@ -19,7 +19,7 @@ int keyboard_input(int key, void *param)
     else if (key == L_KEY)
         select_light(scene);
 	else
-		printf(YEL "Invalid key pressed...\n" reset);
+		printf(YEL "Invalid key pressed...\n" RESET);
 	return (key);
 }
 
@@ -40,7 +40,7 @@ int mouse_input_2(int button, int x, int y, t_scene *scene)
         create_img(scene);
     }
     else if (button != 1)
-        printf(YEL"Invalid mouse click\n"reset);
+        printf(YEL"Invalid mouse click\n"RESET);
     return (1);
 }
 
@@ -68,7 +68,7 @@ int	mouse_input(int button, int x, int y, void *param)
                 select_square(scene, ray.intersection.intersected_obj);
         }
         else
-            printf(YEL"No object where clicked\n"reset);
+            printf(YEL"No object where clicked\n"RESET);
     }
     return (mouse_input_2(button, x, y, scene));
 }
@@ -76,13 +76,21 @@ int	mouse_input(int button, int x, int y, void *param)
 void	main_info(void)
 {
     system("clear");
-    printf(BCYN"CAMERA :\n\tW - Move Up\n\t");
-    printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-    printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards\n");
-    printf("\n\t◀- - Rotate Left\n\t");
-    printf("-▶ - Rotate Right\n\t⬇ - Rotate down\n\t");
-    printf("⬆ - Rotate Up\n\n\tC - Cycle cameras\n\tL - Cycle Lights\n\n");
-    printf(BBLU"Press ESC or click the close button on the view window to exit\n"reset);
-    printf(UGRN"\n----------------------------------------------------------");
-    printf("----------------\n\n"reset);
+    printf(\
+    BMAG"CAMERA SELECTED :\n\n"\
+    BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
+    BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
+    BBLU"\tW"HBLU"\tMove Up\n"\
+    BBLU"\tS"HBLU"\tMove Down\n"\
+    BBLU"\tA"HBLU"\tMove Left\n"\
+    BBLU"\tD"HBLU"\tMove Right\n\n"\
+    BBLU"\t◀-"HBLU"\tRotate Left\n"\
+    BBLU"\t-▶"HBLU"\tRotate Right\n"\
+    BBLU"\t⬇"HBLU"\tRotate down\n"\
+    BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
+    BCYN"\tC"HCYN"\tCycle cameras\n"\
+    BCYN"\tL"HCYN"\tCycle Lights\n\n"\
+    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
+    UGRN"\n----------------------------------------------------------"\
+    "----------------\n\n"RESET);
 }
