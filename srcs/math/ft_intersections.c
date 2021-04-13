@@ -54,27 +54,35 @@ void	intercept_plane(t_plane *plane, t_ray *ray)
 	}
 }
 
+t_triangle from_sq_to_tr(t_color color, t_p p1, t_p p2, t_p p3)
+{
+	t_triangle	triangle;
+
+	triangle.color = color;
+	triangle.p1 = p1;
+	triangle.p2 = p2;
+	triangle.p3 = p3;
+	return (triangle);
+}
+
 void	intercept_square(t_square *square, t_ray *ray)
 {
-	t_triangle	triangle_1;
-	t_triangle	triangle_2;
+	t_triangle		triangle_1;
+	t_triangle		triangle_2;
+	t_triangle		triangle_3;
+	t_triangle		triangle_4;
+	t_square_points	p;
 
-	triangle_1.color = square->color;
-	triangle_1.p1 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / 2.)), v_scalar_mul(square->dx, square->l / -2.));
-	triangle_1.p2 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / 2.)), v_scalar_mul(square->dx, square->l / 2.));
-	triangle_1.p3 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / -2.)), v_scalar_mul(square->dx, square->l / -2.));
-	triangle_2.color = square->color;
-	triangle_2.p1 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / -2.)), v_scalar_mul(square->dx, square->l / 2.));
-	triangle_2.p2 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / 2.)), v_scalar_mul(square->dx, square->l / 2.));
-	triangle_2.p3 = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
-					 / -2.)), v_scalar_mul(square->dx, square->l / -2.));
+	p = get_square_points(square);
+	triangle_1 = from_sq_to_tr(square->color, p.up_sx, p.up_dx, p.down_sx);
+	triangle_2 = from_sq_to_tr(square->color, p.down_dx, p.up_dx, p.down_sx);
+	triangle_3 = from_sq_to_tr(square->color, p.up_sx, p.down_dx, p.up_dx);
+	triangle_4 = from_sq_to_tr(square->color, p.down_dx,\
+			v_scalar_mul(v_sum(p.up_sx, p.up_dx), 0.5), p.down_sx);
 	intercept_triangle(&triangle_1, ray);
 	intercept_triangle(&triangle_2, ray);
+	intercept_triangle(&triangle_3, ray);
+	intercept_triangle(&triangle_4, ray);
 }
 
 void	intercept_cylinder(t_cyl *cyl, t_ray *ray)

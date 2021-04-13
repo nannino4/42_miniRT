@@ -67,38 +67,38 @@ double	read_double(char **line, t_scene *scene)
 
 t_color	read_color(char **line, t_scene *scene)
 {
-	t_color	color;
+	t_color	c;
 	int		minus;
 
-	color.t = 0;
-	color.r = read_int(line, &minus, scene);
+	c.t = 0;
+	c.r = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
 		printf(RED"Error : Wrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
 	(*line)++;
-	color.g = read_int(line, &minus, scene);
+	c.g = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
 		printf(RED"Error : Wrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
 	(*line)++;
-	color.b = read_int(line, &minus, scene);
-	if (color.r < 0 || color.g < 0 || color.b < 0)
+	c.b = read_int(line, &minus, scene);
+	if (c.r < 0 || c.g < 0 || c.b < 0 || c.r > 255 || c.g > 255 || c.b > 255)
 	{
 		printf(RED"Error : Wrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
-	return (color);
+	return (c);
 }
 
 void	add_element_to_scene(char **line, t_scene *scene)
 {
-	if (ft_strncmp(*line, "R", 1) == 0)
+	if (ft_strncmp(*line, "R", 1) == 0 && (scene->w == -1 && scene->h == -1))
 		create_res(line, scene);
-	else if (ft_strncmp(*line, "A", 1) == 0)
+	else if (ft_strncmp(*line, "A", 1) == 0 && scene->amb_l.brightness == -1)
 		create_amb_l(line, scene);
 	else if (ft_strncmp(*line, "pl", 2) == 0)
 		create_plane(line, scene);
@@ -116,7 +116,7 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_light(line, scene);
 	else if (ft_strncmp(*line, "#", 1) != 0)
 	{
-		printf(RED"Error : Unrecognized scene element in the .rt file\n"RESET);
+		printf(RED"Error : the format of the .rt file is not correct\n"RESET);
 		exit_func(scene);
 	}
 }

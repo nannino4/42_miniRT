@@ -85,9 +85,9 @@ void	create_cam(char **line, t_scene *scene)
 		printf(RED"Error : Garbage Text after the Camera values\n"RESET);
 		exit_func(scene);
 	}
-	else if (cam->fov < 0)
+	else if (cam->fov < 0 || cam->fov > 179)
 	{
-		printf(RED"Error : Invalid Camera FOV value \n"RESET);
+		printf(RED"Error : Invalid Camera FOV value\n"RESET);
 		exit_func(scene);
 	}
 	append_cam(scene, cam);

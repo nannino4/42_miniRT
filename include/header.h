@@ -193,6 +193,14 @@ typedef struct		s_square
 	t_color		color;
 }					t_square;
 
+typedef struct s_square_points
+{
+	t_p	up_sx;
+	t_p	up_dx;
+	t_p	down_sx;
+	t_p	down_dx;
+}					t_square_points;
+
 typedef struct		s_inters_cy
 {
 	double		dir_up;
@@ -257,6 +265,7 @@ void    intercept_triangle(t_triangle *triangle, t_ray *ray);
 void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere);
 int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder);
 t_inters_cy	set_cylinder_variables(t_cyl *cyl, t_ray *ray);
+t_square_points	get_square_points(t_square *square);
 
 /*
  * utils

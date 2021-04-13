@@ -22,6 +22,21 @@ void	sphere_intercepted(t_ray *ray, double distance, t_sph *sphere)
 				sphere->c));
 }
 
+t_square_points	get_square_points(t_square *square)
+{
+	t_square_points	points;
+
+	points.up_sx = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
+					 / 2.)), v_scalar_mul(square->dx, square->l / -2.));
+	points.up_dx = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
+					 / 2.)), v_scalar_mul(square->dx, square->l / 2.));
+	points.down_sx = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
+					 / -2.)), v_scalar_mul(square->dx, square->l / -2.));
+	points.down_dx = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
+					 / -2.)), v_scalar_mul(square->dx, square->l / 2.));
+	return (points);
+}
+
 int	cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)
 {
 	double	t;

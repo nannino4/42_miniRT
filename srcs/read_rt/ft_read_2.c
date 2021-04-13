@@ -55,5 +55,10 @@ t_v	read_norm_v(char **line, t_scene *scene)
 	}
 	(*line)++;
 	v.z = read_double(line, scene);
+	if (is_equal(v.x, 0.) && is_equal(v.y, 0.) && is_equal(v.z, 0.))
+	{
+		printf(RED"Error : Versor value cannot be (0, 0, 0)\n"RESET);
+		exit_func(scene);
+	}
 	return (v_normalize(v));
 }

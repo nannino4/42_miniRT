@@ -54,8 +54,9 @@ void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color)
 			sum_color(reflection_color, find_reflection(ray, shadow, light_list));
 		light_list = light_list->next;
 	}
-	mix_colors(&ray->light_color, get_light_color(scene->amb_l.color,
-				scene->amb_l.brightness));
+	if (scene->amb_l.brightness > 0)
+		mix_colors(&ray->light_color, get_light_color(scene->amb_l.color,
+					scene->amb_l.brightness));
 }
 
 void	find_intersection(t_ray *ray, t_scene *scene)

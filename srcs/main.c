@@ -2,14 +2,14 @@
 
 void	init_scene(t_scene *scene)
 {
-	scene->w = 0;
-	scene->h = 0;
+	scene->w = -1;
+	scene->h = -1;
 	scene->mlx = 0;
 	scene->win = 0;
 	scene->threading = &create_img;
 	scene->aa_func = &pixel_no_aa;
 	scene->save = 0;
-	scene->amb_l.brightness = 0;
+	scene->amb_l.brightness = -1;
 	scene->light = 0;
 	scene->selected_light = 0;
 	scene->cam = 0;
@@ -46,7 +46,7 @@ void	manage_scene(t_scene *scene)
 		scene->threading(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
-	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
+	mlx_hook(scene->win, 17, 1L<<2, exit_func, scene);
 	if(!scene->save)
 	{
 		main_info();
