@@ -14,7 +14,8 @@ void	create_sph(char **line, t_scene *scene)
 	sph->color = read_color(line, scene);
 	if (**line)
 	{
-		//TODO error: "shpere format is incorrect"
+		printf(RED"Error : Garbage Text after the Sphere values\n"RESET);
+		exit_func(scene);
 	}
 	append_sph(scene, sph);
 }
@@ -33,7 +34,8 @@ void	create_plane(char **line, t_scene *scene)
 	plane->color = read_color(line, scene);
 	if (**line)
 	{
-		//TODO error: "plane format is incorrect"
+		printf(RED"Error : Garbage Text after the Plane values\n"RESET);
+		exit_func(scene);
 	}
 	append_plane(scene, plane);
 }
@@ -55,7 +57,8 @@ void	create_square(char **line, t_scene *scene)
 	set_square_orientation(square);
 	if (**line)
 	{
-		//TODO error: "square format is incorrect"
+		printf(RED"Error : Garbage Text after the Square values\n"RESET);
+		exit_func(scene);
 	}
 	append_square(scene, square);
 }
@@ -79,7 +82,8 @@ void	create_cyl(char **line, t_scene *scene)
 	set_cylinder_orientation(cyl);
 	if (**line)
 	{
-		//TODO error: "cyl format is incorrect"
+		printf(RED"Error : Garbage Text after the Cylinder values\n"RESET);
+		exit_func(scene);
 	}
 	append_cyl(scene, cyl);
 }
@@ -100,7 +104,8 @@ void	create_triangle(char **line, t_scene *scene)
 	triangle->color = read_color(line, scene);
 	if (**line)
 	{
-		//TODO error: "triangle format is incorrect"
+		printf(RED"Error : Garbage Text after the Triangle values\n"RESET);
+		exit_func(scene);
 	}
 	append_triangle(scene, triangle);
 }

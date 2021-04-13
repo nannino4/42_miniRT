@@ -75,6 +75,8 @@ void	select_light(t_scene *scene)
     BBLU"\tD"HBLU"\tMove Right\n\n"\
 	BBLU"+ (NumPad)"HBLU"\tIncrease Brightness\n"\
 	BBLU"- (NumPad)"HBLU"\tDecrease Brightness\n\n"\
+    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
+    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
 	BHYEL"\tQ"YEL"\tExit selection\n\n"\
     YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
     UGRN"\n----------------------------------------------------------"\

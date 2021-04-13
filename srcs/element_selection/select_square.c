@@ -101,6 +101,8 @@ void	select_square(t_scene *scene, t_obj *obj)
     BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
 	BBLU"+ (NumPad)"HBLU"\tIncrease Lenght\n"\
 	BBLU"- (NumPad)"HBLU"\tDecrease Lenght\n\n"\
+    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
+    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
 	BHYEL"\tQ"YEL"\tExit this mode\n\n"\
     YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
     UGRN"\n----------------------------------------------------------"\

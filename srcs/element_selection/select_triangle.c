@@ -63,6 +63,8 @@ void	select_triangle(t_scene *scene, t_obj *obj)
     BBLU"\tS"HBLU"\tMove Down\n"\
     BBLU"\tA"HBLU"\tMove Left\n"\
     BBLU"\tD"HBLU"\tMove Right\n\n"\
+    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
+    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
 	BHYEL"\tQ"YEL"\tExit this mode\n\n"\
     YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
     UGRN"\n----------------------------------------------------------"\

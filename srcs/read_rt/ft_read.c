@@ -114,7 +114,7 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_cam(line, scene);
 	else if (ft_strncmp(*line, "l", 1) == 0)
 		create_light(line, scene);
-	else
+	else if (ft_strncmp(*line, "#", 1) != 0)
 	{
 		printf(RED"Error : Unrecognized scene element in the .rt file\n"RESET);
 		exit_func(scene);

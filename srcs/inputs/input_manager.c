@@ -87,10 +87,13 @@ void	main_info(void)
     BBLU"\t◀-"HBLU"\tRotate Left\n"\
     BBLU"\t-▶"HBLU"\tRotate Right\n"\
     BBLU"\t⬇"HBLU"\tRotate down\n"\
-    BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
+    BBLU"\t⬆"HBLU"\tRotate Up\n"\
+    BBLU"\t\tOR\n"
+    BBLU"\tRMB"HBLU"\tRight Click in the direction the camera should turn\n\n"\
     BCYN"\tC"HCYN"\tCycle cameras\n"\
-    BCYN"\tL"HCYN"\tCycle Lights\n\n"\
-    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
-    UGRN"\n----------------------------------------------------------"\
-    "----------------\n\n"RESET);
+    BCYN"\tL"HCYN"\tCycle Lights\n\t"\
+    BCYN"LMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n\n"\
+    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to"\
+    " exit\n"UGRN"\n---------------------------------------------------------"\
+    "-----------------\n\n"RESET);
 }

@@ -111,6 +111,8 @@ void	select_cylinder(t_scene *scene, t_obj *obj)
 	BBLU"- (NumPad)"HBLU"\tDecrease Height\n\n"\
 	BBLU"\tX"HBLU"\tIncrease Diameter\n"\
 	BBLU"\tZ"HBLU"\tDecrease Diameter\n\n"\
+    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
+    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
 	BHYEL"\tQ"YEL"\tExit selection\n\n"\
     YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
     UGRN"\n----------------------------------------------------------"\
