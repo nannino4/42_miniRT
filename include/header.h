@@ -5,6 +5,8 @@
 # include "keycodes.h"
 # include <math.h>
 # include <stdlib.h>
+# include <string.h>
+# include <errno.h>
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/uio.h>
@@ -21,11 +23,10 @@
 # define ROT_EPSILON 0.1
 # define BRIGHTNESS_DELTA 0.1
 # define DIAMETER_DELTA 1
-# define POW_EXP 20
+# define POW_EXP 40
 # define MIN_RATIO 0.
 # define MAX_W 1920
 # define MAX_H 1080
-# define AA_SAMPLES 1
 # define THREAD_N 12
 
 # define SPHERE 0
@@ -125,12 +126,28 @@ typedef struct		s_screen
 	double	theta;
 }					t_screen;
 
+typedef struct s_bmp
+{
+	unsigned char	header[54];
+	unsigned char	*buf;
+	unsigned int	width_in_bytes;
+	unsigned int	imagesize;
+	unsigned int	filesize;
+	unsigned int	offset;
+	unsigned int	header_size;
+	unsigned int	planes_n;
+	unsigned int	bpp;
+}					t_bmp;
+
 typedef struct		s_scene
 {
 	int			w;
 	int			h;
 	void		*mlx;
 	void		*win;
+	int			save;
+	void		(*aa_func)(struct s_scene*, int, int, t_color*);
+	void		(*threading)(struct s_scene*);
 	t_image		img;
 	t_screen	screen;
 	t_amb_l		amb_l;
@@ -140,6 +157,13 @@ typedef struct		s_scene
 	t_obj		*obj;
 	t_obj		*selected_obj;
 }					t_scene;
+
+typedef struct		s_thr_arg
+{
+	double		x_start;
+	double		x_end;
+	t_scene		*scene;
+}					t_thr_arg;
 
 /*
  * geometrical objects
@@ -209,13 +233,6 @@ typedef struct		s_triangle
 	t_color	color;
 }					t_triangle;
 
-typedef struct		s_thr_arg
-{
-	double		x_start;
-	double		x_end;
-	t_scene		*scene;
-}					t_thr_arg;
-
 /*
  * math
  */
@@ -254,7 +271,10 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 int			find_ch(char const *s, char c);
 char		*ft_strdup(const char *s1);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
+void		ft_bzero(void *s, size_t n);
 void        my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
+void	save_image_to_bmp_file(t_scene *scene);
 t_color		get_light_color(t_color color, double brightness);
 int			create_trgb(int t, int r, int g, int b);
 t_color		from_trgb_to_color(int trgb);
@@ -263,17 +283,19 @@ void		mix_colors(t_color *color_1, t_color color_2);
 t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
 t_color	divide_color(t_color color, int x);
 void	sum_color(t_color *color_1, t_color color_2);
+void	free_all(t_scene *scene);
 
 /*
  * read_rt
  */
 
-void	skip_spaces(char **line);
-int		read_int(char **line);
-double	read_double(char **line);
-t_color	read_color(char **line);
-t_p		read_p(char **line);
-t_v		read_norm_v(char **line);
+void	add_element_to_scene(char **line, t_scene *scene);
+void	skip_spaces(char **line, t_scene *scene);
+int		read_int(char **line, int *minus, t_scene *scene);
+double	read_double(char **line, t_scene *scene);
+t_color	read_color(char **line, t_scene *scene);
+t_p		read_p(char **line, t_scene *scene);
+t_v		read_norm_v(char **line, t_scene *scene);
 void	create_res(char **line, t_scene *scene);
 void	create_amb_l(char **line, t_scene *scene);
 void	create_cam(char **line, t_scene *scene);
@@ -300,9 +322,12 @@ void	set_camera_orientation(t_cam *cam);
  */
 
 void	create_img(t_scene *scene);
+void	create_img_threaded(t_scene *scene);
 void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
 void	find_intersection(t_ray *ray, t_scene *scene);
 void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color);
+void    pixel_with_aa(t_scene *scene, int x, int y, t_color *final);
+void    pixel_no_aa(t_scene *scene, int x, int y, t_color *final);
 
 /*
  * input_manager
@@ -316,9 +341,10 @@ void    main_info();
  * input_utils
  */
 
-int     exit_func(void *param);
+int     exit_func(t_scene *scene);
 void	camera_wheel(t_scene *scene);
 void	light_wheel(t_scene *scene);
+void	rot_camera(t_cam *cam, t_v axis);
 void    transform_camera(t_cam *cam, int key);
 
 /*

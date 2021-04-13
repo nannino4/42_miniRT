@@ -1,17 +1,5 @@
 #include "header.h"
 
-double	random_n()
-{
-	double	num;
-
-	num = rand() / (double)RAND_MAX;
-	if (num < 0.2)
-		num = 0.2;
-	else if(num > 0.8)
-		num = 0.8;
-	return (num);
-}
-
 void	create_screen(t_scene *scene)
 {
 	scene->screen.p0 = v_sum(scene->cam->origin, scene->cam->direction);
@@ -31,27 +19,10 @@ void	create_screen(t_scene *scene)
 
 int	get_pixel_color(t_scene *scene, double x, double y)
 {
-    t_ray	ray;
 	t_color	final;
-	t_color	reflection_color;
-	int		i;
 
-	reflection_color = from_trgb_to_color(0);
 	final = from_trgb_to_color(0);
-	i = AA_SAMPLES;
-	while(i--)
-	{
-		create_ray(scene, &ray, x + random_n(), y + random_n());
-		find_intersection(&ray, scene);
-		if (ray.intersection.distance < MAX_DISTANCE)
-			find_shadows(&ray, scene, &reflection_color);
-		final.r += ray.intersection.obj_color.r * ray.light_color.r / 255;
-		final.b += ray.intersection.obj_color.b * ray.light_color.b / 255;
-		final.g += ray.intersection.obj_color.g * ray.light_color.g / 255;
-	}
-	final = divide_color(final, AA_SAMPLES);
-	reflection_color = divide_color(reflection_color, AA_SAMPLES);
-	mix_colors(&final, reflection_color);
+	scene->aa_func(scene, x, y, &final);
 	return (create_trgb(0, final.r, final.g, final.b));
 }
 
@@ -78,7 +49,7 @@ void	*render_thread(void *arguments)
 	return (0);
 }
 
-void	create_img(t_scene *scene)
+void	create_img_threaded(t_scene *scene)
 {
 	pthread_t	thread_id[THREAD_N];
 	t_thr_arg	args[THREAD_N];
@@ -99,6 +70,34 @@ void	create_img(t_scene *scene)
 	}
 	while (i-- > 0)
 		pthread_join(thread_id[i], NULL);
+	if (scene->save)
+		save_image_to_bmp_file(scene);
+	else
+		mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
+	mlx_destroy_image(scene->mlx, scene->img.img);
+}
+
+void	create_img(t_scene *scene)
+{
+	create_screen(scene);
+	scene->img.img = mlx_new_image(scene->mlx, scene->w, scene->h);
+	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bpp,
+			&scene->img.line_l, &scene->img.endian);
+	double		y;
+	double		x;
+
+	y = 0;
+	while (y < scene->h)
+	{
+		x = 0;
+		while (x < scene->w)
+		{
+			my_mlx_pixel_put(&scene->img, x, y,
+					get_pixel_color(scene, x, y));
+			x++;
+		}
+		y++;
+	}
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 	mlx_destroy_image(scene->mlx, scene->img.img);
 }

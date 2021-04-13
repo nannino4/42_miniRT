@@ -70,7 +70,7 @@ int	cylinder_case_input(int key, void *param)
 
 	scene = (t_scene*)param;
 	if (key == ESC_KEY)
-		exit_func(NULL);
+		exit_func(scene);
 	else if (key == Q_KEY)
 	{
 		mlx_key_hook(scene->win, keyboard_input, scene);
@@ -86,7 +86,7 @@ int	cylinder_case_input(int key, void *param)
 		create_img(scene);
 	}
 	else
-		printf(YEL "Invalid key pressed...\n" reset);
+		printf(YEL "Invalid key pressed...\n" RESET);
 	return (1);
 }
 
@@ -95,15 +95,26 @@ void	select_cylinder(t_scene *scene, t_obj *obj)
 	scene->selected_obj = obj;
 	mlx_key_hook(scene->win, cylinder_case_input, scene);
 	system("clear");
-	printf(BCYN"CYLINDER :\n\tW - Move Up\n\t");
-	printf("S - Move Down\n\tA - Move Left\n\tD - Move Right\n\t");
-	printf("⇞(Pg Up) - Move Forwards\n\t⇟(Pg Down) - Move Backwards");
-	printf("\n\n\t◀- - Rotate Left\n\t-▶ - Rotate Right");
-	printf("\n\t⬇ - Rotate down\n\t⬆ - Rotate Up\n\n");
-	printf("\t+ (NumPad) - Increase Height\n\t- (NumPad) - Decrease Height");
-	printf("\n\tX - Increase Diameter\n\tZ - Decrease Diameter");
-	printf(BBLU"\n\nQ - Exit this mode\n");
-	printf("Press ESC or click the close button on the window to exit\n"reset);
-	printf(UGRN"\n----------------------------------------------------------");
-	printf("----------------\n\n"reset);
+	printf(\
+    BMAG"CYLINDER SELECTED :\n\n"\
+    BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
+    BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
+    BBLU"\tW"HBLU"\tMove Up\n"\
+    BBLU"\tS"HBLU"\tMove Down\n"\
+    BBLU"\tA"HBLU"\tMove Left\n"\
+    BBLU"\tD"HBLU"\tMove Right\n\n"\
+    BBLU"\t◀-"HBLU"\tRotate Left\n"\
+    BBLU"\t-▶"HBLU"\tRotate Right\n"\
+    BBLU"\t⬇"HBLU"\tRotate down\n"\
+    BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
+	BBLU"+ (NumPad)"HBLU"\tIncrease Height\n"\
+	BBLU"- (NumPad)"HBLU"\tDecrease Height\n\n"\
+	BBLU"\tX"HBLU"\tIncrease Diameter\n"\
+	BBLU"\tZ"HBLU"\tDecrease Diameter\n\n"\
+    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
+    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
+	BHYEL"\tQ"YEL"\tExit selection\n\n"\
+    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
+    UGRN"\n----------------------------------------------------------"\
+    "----------------\n\n"RESET);
 }

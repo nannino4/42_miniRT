@@ -6,6 +6,9 @@ void	init_scene(t_scene *scene)
 	scene->h = 0;
 	scene->mlx = 0;
 	scene->win = 0;
+	scene->threading = &create_img;
+	scene->aa_func = &pixel_no_aa;
+	scene->save = 0;
 	scene->amb_l.brightness = 0;
 	scene->light = 0;
 	scene->selected_light = 0;
@@ -14,38 +17,17 @@ void	init_scene(t_scene *scene)
 	scene->selected_obj = 0;
 }
 
-void	add_element_to_scene(char **line, t_scene *scene)
-{
-	if (ft_strncmp(*line, "R", 1) == 0)
-		create_res(line, scene);
-	else if (ft_strncmp(*line, "A", 1) == 0)
-		create_amb_l(line, scene);
-	else if (ft_strncmp(*line, "pl", 2) == 0)
-		create_plane(line, scene);
-	else if (ft_strncmp(*line, "sp", 2) == 0)
-		create_sph(line, scene);
-	else if (ft_strncmp(*line, "sq", 2) == 0)
-		create_square(line, scene);
-	else if (ft_strncmp(*line, "cy", 2) == 0)
-		create_cyl(line, scene);
-	else if (ft_strncmp(*line, "tr", 2) == 0)
-		create_triangle(line, scene);
-	else if (ft_strncmp(*line, "c", 1) == 0)
-		create_cam(line, scene);
-	else if (ft_strncmp(*line, "l", 1) == 0)
-		create_light(line, scene);
-	else
-	{
-		//TODO error: "unrecognized element"
-	}
-}
-
 void	read_input(t_scene *scene, char *file)
 {
 	int			fd;
 	char		*line;
 
 	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		printf(RED"Error : %s\n"RESET, strerror(errno));
+		exit_func(scene);
+	}
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (*line)
@@ -55,12 +37,55 @@ void	read_input(t_scene *scene, char *file)
 
 void	manage_scene(t_scene *scene)
 {
-	create_img(scene);
+	if (scene->save)
+	{
+		create_img_threaded(scene);
+		printf(BGRN"Image Saved at program binary location !\n"RESET);
+	}
+	else
+		scene->threading(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
 	mlx_hook(scene->win, 17, 1L<<2, exit_func, NULL);
-	main_info();
-	mlx_loop(scene->mlx);
+	if(!scene->save)
+	{
+		main_info();
+		mlx_loop(scene->mlx);
+	}
+}
+
+int		check_name(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	if (s[i - 1] != 't' || s[i - 2] != 'r' || s[i - 3] != '.')
+	{
+		printf(RED"Error : Scene file estension is invalid\n"RESET);
+		return (1);
+	}
+	return (0);
+}
+
+int	check_flags(int argc, char **argv, t_scene *scene)
+{
+	if (argc < 2)
+		return (0);
+	while (argc > 2)
+	{
+		if (!ft_strncmp(argv[argc - 1], "--save", 7))
+			scene->save = 1;
+		else if (!ft_strncmp(argv[argc - 1], "--aa", 5))
+			scene->aa_func = &pixel_with_aa;
+		else if (!ft_strncmp(argv[argc - 1], "--threaded", 11))
+			scene->threading = &create_img_threaded;
+		else
+			return (0);
+		argc--;
+	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -68,22 +93,20 @@ int	main(int argc, char **argv)
 	t_scene		scene;
 
 	init_scene(&scene);
-	srand(time(0));
-	if (argc == 3 && argv[1] && ft_strncmp(argv[2], "--save", 7) == 0)
+	if (check_flags(argc, argv, &scene))
 	{
-		//TODO --save
-	}
-	else if (argc == 2 && argv[1])
-	{
+		if(check_name(argv[1]))
+			exit_func(&scene);
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
 		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
-				"JohnnyBoy's miniRT");
+				"miniRT");
 		manage_scene(&scene);
 	}
 	else
 	{
-		//TODO error: "invalid input format"
+		printf(RED"Error : Invalid arguments\n"RESET);
+		exit_func(&scene);
 	}
 	return (0);
 }
