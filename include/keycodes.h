@@ -1,5 +1,5 @@
-#ifndef KEYCODES
-# define KEYCODES
+#ifndef KEYCODES_H
+# define KEYCODES_H
 
 # define PG_DOWN_KEY 121
 # define PG_UP_KEY 116

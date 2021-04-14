@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/14 15:02:03 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/14 15:11:55 by gcefalo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
 void	init_scene(t_scene *scene)
@@ -52,44 +64,39 @@ void	manage_scene(t_scene *scene)
 		scene->threading(scene);
 	mlx_key_hook(scene->win, keyboard_input, scene);
 	mlx_mouse_hook(scene->win, mouse_input, scene);
-	mlx_hook(scene->win, 17, 1L<<2, exit_func, scene);
-	if(!scene->save)
+	mlx_hook(scene->win, 17, 1L << 2, exit_func, scene);
+	if (!scene->save)
 	{
 		main_info();
 		mlx_loop(scene->mlx);
 	}
 }
 
-int		check_name(char *s)
+int	check_flags(int argc, char **s, t_scene *scene)
 {
-	int i;
+	int	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	if (s[i - 1] != 't' || s[i - 2] != 'r' || s[i - 3] != '.')
-	{
-		printf(RED"Error : Scene file estension is invalid\n"RESET);
-		return (1);
-	}
-	return (0);
-}
-
-int	check_flags(int argc, char **argv, t_scene *scene)
-{
 	if (argc < 2)
 		return (0);
 	while (argc > 2)
 	{
-		if (!ft_strncmp(argv[argc - 1], "--save", 7))
+		if (!ft_strncmp(s[argc - 1], "--save", 7))
 			scene->save = 1;
-		else if (!ft_strncmp(argv[argc - 1], "--aa", 5))
+		else if (!ft_strncmp(s[argc - 1], "--aa", 5))
 			scene->aa_func = &pixel_with_aa;
-		else if (!ft_strncmp(argv[argc - 1], "--threaded", 11))
+		else if (!ft_strncmp(s[argc - 1], "--threaded", 11))
 			scene->threading = &create_img_threaded;
 		else
 			return (0);
 		argc--;
+	}
+	i = 0;
+	while (s[1][i])
+		i++;
+	if (i < 4 || s[1][i - 1] != 't' || s[1][i - 2] != 'r' || s[1][i - 3] != '.')
+	{
+		printf(RED"Error : Scene file name is invalid\n"RESET);
+		return (0);
 	}
 	return (1);
 }
@@ -101,8 +108,6 @@ int	main(int argc, char **argv)
 	init_scene(&scene);
 	if (check_flags(argc, argv, &scene))
 	{
-		if(check_name(argv[1]))
-			exit_func(&scene);
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
 		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,

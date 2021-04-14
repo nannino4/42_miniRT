@@ -6,15 +6,15 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/11 15:45:47 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/01/13 14:29:57 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/14 15:49:17 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void		*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	while (i < n)

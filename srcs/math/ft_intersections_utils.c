@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 16:21:14 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/06 16:23:21 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/14 15:46:15 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ t_square_points	get_square_points(t_square *square)
 	points.down_dx = v_sum(v_sum(square->c, v_scalar_mul(square->up, square->l \
 					 / -2.)), v_scalar_mul(square->dx, square->l / 2.));
 	return (points);
+}
+
+t_triangle	from_sq_to_tr(t_color color, t_p p1, t_p p2, t_p p3)
+{
+	t_triangle	triangle;
+
+	triangle.color = color;
+	triangle.p1 = p1;
+	triangle.p2 = p2;
+	triangle.p3 = p3;
+	return (triangle);
 }
 
 int	cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder)

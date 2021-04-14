@@ -68,19 +68,22 @@ void	select_sphere(t_scene *scene, t_obj *obj)
 	mlx_key_hook(scene->win, sphere_case_input, scene);
 	system("clear");
 	printf(\
-    BMAG"SPHERE SELECTED :\n\n"\
-    BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
-    BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
-    BBLU"\tW"HBLU"\tMove Up\n"\
-    BBLU"\tS"HBLU"\tMove Down\n"\
-    BBLU"\tA"HBLU"\tMove Left\n"\
-    BBLU"\tD"HBLU"\tMove Right\n\n"\
-	BBLU"+ (NumPad)"HBLU"\tIncrease Diameter\n"\
-	BBLU"- (NumPad)"HBLU"\tDecrease Diameter\n\n"\
-    BCYN"\tLMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n"\
-    BCYN"\tRMB"HCYN"\tRight Click in the direction the camera should turn\n\n"\
-	BHYEL"\tQ"YEL"\tExit this mode\n\n"\
-    YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to exit\n"\
-    UGRN"\n----------------------------------------------------------"\
-    "----------------\n\n"RESET);
+			BMAG"SPHERE SELECTED :\n\n"\
+			BBLU"⇞(Pg Up)"HBLU"\tMove Forwards\n"\
+			BBLU"⇟(Pg Down)"HBLU"\tMove Backwards\n\n"\
+			BBLU"\tW"HBLU"\tMove Up\n"\
+			BBLU"\tS"HBLU"\tMove Down\n"\
+			BBLU"\tA"HBLU"\tMove Left\n"\
+			BBLU"\tD"HBLU"\tMove Right\n\n"\
+			BBLU"+ (NumPad)"HBLU"\tIncrease Diameter\n"\
+			BBLU"- (NumPad)"HBLU"\tDecrease Diameter\n\n"\
+			BCYN"\tLMB"HCYN"\tLeft Click any object to enter \
+			it's manipulation mode\n"\
+			BCYN"\tRMB"HCYN"\tRight Click in the direction the \
+			camera should turn\n\n"\
+			BHYEL"\tQ"YEL"\tExit this mode\n\n"\
+			YEL"Press "BHYEL"ESC"YEL" or click the close button on \
+			the view window to exit\n"\
+			UGRN"\n----------------------------------------------------------"\
+			"----------------\n\n"RESET);
 }

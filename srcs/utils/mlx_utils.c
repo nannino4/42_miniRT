@@ -3,7 +3,7 @@
 void	write_file(unsigned char header[], unsigned char *buf,
 					unsigned int size)
 {
-	int fd;
+	int	fd;
 
 	fd = open("./screenshot.bmp", O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
 	write(fd, header, 54);
@@ -25,22 +25,22 @@ void	set_pixels(unsigned char *buf, t_scene *scene, int width_in_bytes)
 		--tmp;
 		while (++j < scene->w)
 		{
-			buf[tmp * width_in_bytes + j * 3 + 0] =
-				(*((unsigned int*)(scene->img.addr + (i * scene->img.line_l +
-				j * (scene->img.bpp / 8))))) & 0xff;
-			buf[tmp * width_in_bytes + j * 3 + 1] =
-				((*((unsigned int*)(scene->img.addr + (i * scene->img.line_l +
-				j * (scene->img.bpp / 8))))) >> 8) & 0xff;
-			buf[tmp * width_in_bytes + j * 3 + 2] =
-				((*((unsigned int*)(scene->img.addr + (i * scene->img.line_l +
-				j * (scene->img.bpp / 8))))) >> 16) & 0xff;
+			buf[tmp * width_in_bytes + j * 3 + 0] = \
+				(*((unsigned int *)(scene->img.addr + (i * scene->img.line_l \
+				 + j * (scene->img.bpp / 8))))) & 0xff;
+			buf[tmp * width_in_bytes + j * 3 + 1] = \
+				((*((unsigned int *)(scene->img.addr + (i * scene->img.line_l \
+				 + j * (scene->img.bpp / 8))))) >> 8) & 0xff;
+			buf[tmp * width_in_bytes + j * 3 + 2] = \
+				((*((unsigned int *)(scene->img.addr + (i * scene->img.line_l \
+				 + j * (scene->img.bpp / 8))))) >> 16) & 0xff;
 		}
 	}
 }
 
 void	save_image_to_bmp_file(t_scene *scene)
 {
-	t_bmp data;
+	t_bmp	data;
 
 	data.width_in_bytes = ((scene->w * 24 + 31) / 32) * 4;
 	data.imagesize = data.width_in_bytes * scene->h;

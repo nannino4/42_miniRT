@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/14 16:02:13 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/14 16:12:43 by gcefalo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef HEADER_H
 # define HEADER_H
 
 # include "mlx.h"
 # include "keycodes.h"
+# include "colors.h"
 # include <math.h>
 # include <stdlib.h>
 # include <string.h>
@@ -14,7 +27,6 @@
 # include <fcntl.h>
 # include <float.h>
 # include <pthread.h>
-# include "ANSI-color-codes.h"
 
 # define BUFFER_SIZE 10
 # define MAX_DISTANCE DBL_MAX
@@ -37,7 +49,7 @@
  * basic structures
  */
 
-typedef struct		s_p
+typedef struct s_p
 {
 	double	x;
 	double	y;
@@ -46,7 +58,7 @@ typedef struct		s_p
 
 typedef t_p			t_v;
 
-typedef struct		s_color
+typedef struct s_color
 {
 	int	t;
 	int	r;
@@ -54,14 +66,14 @@ typedef struct		s_color
 	int	b;
 }					t_color;
 
-typedef struct		s_obj
+typedef struct s_obj
 {
 	int				id;
 	void			*obj;
 	struct s_obj	*next;
 }					t_obj;
 
-typedef struct		s_inters
+typedef struct s_inters
 {
 	double	distance;
 	t_color	obj_color;
@@ -70,13 +82,13 @@ typedef struct		s_inters
 	t_obj	*intersected_obj;
 }					t_inters;
 
-typedef struct		s_amb_l
+typedef struct s_amb_l
 {
 	double	brightness;
 	t_color	color;
 }					t_amb_l;
 
-typedef struct		s_ray
+typedef struct s_ray
 {
 	t_p			origin;
 	t_v			direction;
@@ -84,7 +96,7 @@ typedef struct		s_ray
 	t_color		light_color;
 }					t_ray;
 
-typedef struct		s_cam
+typedef struct s_cam
 {
 	t_p				origin;
 	t_v				direction;
@@ -95,7 +107,7 @@ typedef struct		s_cam
 	struct s_cam	*prev;
 }					t_cam;
 
-typedef struct		s_light
+typedef struct s_light
 {
 	double			brightness;
 	t_color			color;
@@ -104,7 +116,7 @@ typedef struct		s_light
 	struct s_light	*prev;
 }					t_light;
 
-typedef struct		s_image
+typedef struct s_image
 {
 	void	*img;
 	char	*addr;
@@ -113,7 +125,7 @@ typedef struct		s_image
 	int		endian;
 }					t_image;
 
-typedef struct		s_screen
+typedef struct s_screen
 {
 	t_p		p1;
 	t_p		p2;
@@ -123,6 +135,12 @@ typedef struct		s_screen
 	t_v		n;
 	double	theta;
 }					t_screen;
+
+typedef struct s_sampling_points
+{
+	double	dx[4];
+	double	dy[4];
+}	t_sampling_points;
 
 typedef struct s_bmp
 {
@@ -137,15 +155,15 @@ typedef struct s_bmp
 	unsigned int	bpp;
 }					t_bmp;
 
-typedef struct		s_scene
+typedef struct s_scene
 {
 	int			w;
 	int			h;
 	void		*mlx;
 	void		*win;
 	int			save;
-	void		(*aa_func)(struct s_scene*, int, int, t_color*);
-	void		(*threading)(struct s_scene*);
+	void		(*aa_func)(struct s_scene *scene, int x, int y, t_color *c);
+	void		(*threading)(struct s_scene *scene);
 	t_image		img;
 	t_screen	screen;
 	t_amb_l		amb_l;
@@ -156,7 +174,7 @@ typedef struct		s_scene
 	t_obj		*selected_obj;
 }					t_scene;
 
-typedef struct		s_thr_arg
+typedef struct s_thr_arg
 {
 	double		x_start;
 	double		x_end;
@@ -167,21 +185,21 @@ typedef struct		s_thr_arg
  * geometrical objects
  */
 
-typedef struct		s_sph
+typedef struct s_sph
 {
 	t_p			c;
 	double		d;
 	t_color		color;
 }					t_sph;
 
-typedef struct		s_plane
+typedef struct s_plane
 {
 	t_p			p0;
 	t_v			n;
 	t_color		color;
 }					t_plane;
 
-typedef struct		s_square
+typedef struct s_square
 {
 	t_p			c;
 	t_v			n;
@@ -199,7 +217,7 @@ typedef struct s_square_points
 	t_p	down_dx;
 }					t_square_points;
 
-typedef struct		s_inters_cy
+typedef struct s_inters_cy
 {
 	double		dir_up;
 	double		dir_dx;
@@ -207,7 +225,7 @@ typedef struct		s_inters_cy
 	double		p0_dx;
 }					t_inters_cy;
 
-typedef struct		s_cyl
+typedef struct s_cyl
 {
 	t_p			c;
 	t_v			n;
@@ -220,7 +238,7 @@ typedef struct		s_cyl
 	t_color		color;
 }					t_cyl;
 
-typedef struct		s_inters_tr
+typedef struct s_inters_tr
 {
 	t_v		a;
 	t_v		e1;
@@ -231,7 +249,7 @@ typedef struct		s_inters_tr
 	double	det;
 }					t_inters_tr;
 
-typedef struct		s_triangle
+typedef struct s_triangle
 {
 	t_p		p1;
 	t_p		p2;
@@ -243,126 +261,129 @@ typedef struct		s_triangle
  * math
  */
 
-int		is_equal(double x, double y);
-int		is_greater(double x, double y);
-t_v		create_v(double x, double y, double z);
-t_v		v_sum(t_v v1, t_v v2);
-t_v		v_sub(t_v v1, t_v v2);
-t_v		v_scalar_mul(t_v v, double a);
-double	v_dot_prod(t_v v1, t_v v2);
-double	v_norm(t_v v);
-t_v		v_normalize(t_v v);
-t_v		v_cross_prod(t_v v1, t_v v2);
-t_p		project_p_to_plane(t_p p, t_p p0, t_v n);
-t_v     rotate_vector(t_v vector, t_v axis, double a);
-void    intercept_sphere(t_sph *sphere, t_ray *ray);
-void    intercept_plane(t_plane *plane, t_ray *ray);
-void    intercept_square(t_square *square, t_ray *ray);
-void    intercept_cylinder(t_cyl *cylinder, t_ray *ray);
-void    intercept_triangle(t_triangle *triangle, t_ray *ray);
-void    sphere_intercepted(t_ray *ray, double distance, t_sph *sphere);
-int     cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder);
-t_inters_cy	set_cylinder_variables(t_cyl *cyl, t_ray *ray);
+int				is_equal(double x, double y);
+int				is_greater(double x, double y);
+t_v				create_v(double x, double y, double z);
+t_v				v_sum(t_v v1, t_v v2);
+t_v				v_sub(t_v v1, t_v v2);
+t_v				v_scalar_mul(t_v v, double a);
+double			v_dot_prod(t_v v1, t_v v2);
+double			v_norm(t_v v);
+t_v				v_normalize(t_v v);
+t_v				v_cross_prod(t_v v1, t_v v2);
+t_p				project_p_to_plane(t_p p, t_p p0, t_v n);
+t_v				rotate_vector(t_v vector, t_v axis, double a);
+void			intercept_sphere(t_sph *sphere, t_ray *ray);
+void			intercept_plane(t_plane *plane, t_ray *ray);
+void			intercept_square(t_square *square, t_ray *ray);
+void			intercept_cylinder(t_cyl *cylinder, t_ray *ray);
+void			intercept_triangle(t_triangle *triangle, t_ray *ray);
+void			sphere_intercepted(t_ray *ray, double distance, t_sph *sphere);
+int				cylinder_intercepted(t_ray *ray, double t1, t_cyl *cylinder);
+t_inters_cy		set_cylinder_variables(t_cyl *cyl, t_ray *ray);
 t_square_points	get_square_points(t_square *square);
+t_triangle		from_sq_to_tr(t_color color, t_p p1, t_p p2, t_p p3);
 
 /*
  * utils
  */
 
-int			ft_strncmp(const char *s1, const char *s2, int n);
-int			get_next_line(int fd, char **line);
-size_t		ft_strlen(const char *s);
-size_t		ft_strlcpy(char *dst, const char *src, size_t size);
-size_t		ft_strlcat(char *dst, const char *src, size_t size);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strjoin(char const *s1, char const *s2);
-int			find_ch(char const *s, char c);
-char		*ft_strdup(const char *s1);
-void		*ft_memcpy(void *dest, const void *src, size_t n);
-void		ft_bzero(void *s, size_t n);
-void        my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
-void	save_image_to_bmp_file(t_scene *scene);
-t_color		get_light_color(t_color color, double brightness);
-int			create_trgb(int t, int r, int g, int b);
-t_color		from_trgb_to_color(int trgb);
-int			illuminate(t_ray ray);
-void		mix_colors(t_color *color_1, t_color color_2);
-t_color	find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
-t_color	divide_color(t_color color, int x);
-void	sum_color(t_color *color_1, t_color color_2);
-void	free_all(t_scene *scene);
+int				ft_strncmp(const char *s1, const char *s2, int n);
+int				get_next_line(int fd, char **line);
+size_t			ft_strlen(const char *s);
+size_t			ft_strlcpy(char *dst, const char *src, size_t size);
+size_t			ft_strlcat(char *dst, const char *src, size_t size);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_strjoin(char const *s1, char const *s2);
+int				find_ch(char const *s, char c);
+char			*ft_strdup(const char *s1);
+void			*ft_memcpy(void *dest, const void *src, size_t n);
+void			ft_bzero(void *s, size_t n);
+void			my_mlx_pixel_put(t_image *img, int x, int y, int trgb);
+void			save_image_to_bmp_file(t_scene *scene);
+t_color			get_light_color(t_color color, double brightness);
+int				create_trgb(int t, int r, int g, int b);
+t_color			from_trgb_to_color(int trgb);
+int				illuminate(t_ray ray);
+void			mix_colors(t_color *color_1, t_color color_2);
+t_color			find_reflection(t_ray *ray, t_ray shadow, t_light *light_list);
+t_color			divide_color(t_color color, int x);
+void			sum_color(t_color *color_1, t_color color_2);
+void			free_all(t_scene *scene);
 
 /*
  * read_rt
  */
 
-void	add_element_to_scene(char **line, t_scene *scene);
-void	skip_spaces(char **line, t_scene *scene);
-int		read_int(char **line, int *minus, t_scene *scene);
-double	read_double(char **line, t_scene *scene);
-t_color	read_color(char **line, t_scene *scene);
-t_p		read_p(char **line, t_scene *scene);
-t_v		read_norm_v(char **line, t_scene *scene);
-void	create_res(char **line, t_scene *scene);
-void	create_amb_l(char **line, t_scene *scene);
-void	create_cam(char **line, t_scene *scene);
-void	create_light(char **line, t_scene *scene);
-void	create_sph(char **line, t_scene *scene);
-void	create_plane(char **line, t_scene *scene);
-void	create_square(char **line, t_scene *scene);
-void	create_cyl(char **line, t_scene *scene);
-void	create_triangle(char **line, t_scene *scene);
-void	append_cam(t_scene *scene, t_cam *cam);
-void	append_light(t_scene *scene, t_light *light);
-void	create_obj(t_scene *scene);
-void	append_sph(t_scene *scene, t_sph *sph);
-void	append_plane(t_scene *scene, t_plane *plane);
-void	append_square(t_scene *scene, t_square *square);
-void	append_cyl(t_scene *scene, t_cyl *cyl);
-void	append_triangle(t_scene *scene, t_triangle *triangle);
-void	set_square_orientation(t_square *square);
-void	set_cylinder_orientation(t_cyl *cylinder);
-void	set_camera_orientation(t_cam *cam);
+void			add_element_to_scene(char **line, t_scene *scene);
+void			skip_spaces(char **line, t_scene *scene);
+int				read_int(char **line, int *minus, t_scene *scene);
+double			read_double(char **line, t_scene *scene);
+t_color			read_color(char **line, t_scene *scene);
+t_p				read_p(char **line, t_scene *scene);
+t_v				read_norm_v(char **line, t_scene *scene);
+void			create_res(char **line, t_scene *scene);
+void			create_amb_l(char **line, t_scene *scene);
+void			create_cam(char **line, t_scene *scene);
+void			create_light(char **line, t_scene *scene);
+void			create_sph(char **line, t_scene *scene);
+void			create_plane(char **line, t_scene *scene);
+void			create_square(char **line, t_scene *scene);
+void			create_cyl(char **line, t_scene *scene);
+void			create_triangle(char **line, t_scene *scene);
+void			append_cam(t_scene *scene, t_cam *cam);
+void			append_light(t_scene *scene, t_light *light);
+void			create_obj(t_scene *scene);
+void			append_sph(t_scene *scene, t_sph *sph);
+void			append_plane(t_scene *scene, t_plane *plane);
+void			append_square(t_scene *scene, t_square *square);
+void			append_cyl(t_scene *scene, t_cyl *cyl);
+void			append_triangle(t_scene *scene, t_triangle *triangle);
+void			set_square_orientation(t_square *square);
+void			set_cylinder_orientation(t_cyl *cylinder);
+void			set_camera_orientation(t_cam *cam);
 
 /*
  * manage_scene
  */
 
-void	create_img(t_scene *scene);
-void	create_img_threaded(t_scene *scene);
-void	create_ray(t_scene *scene, t_ray *ray, double x, double y);
-void	find_intersection(t_ray *ray, t_scene *scene);
-void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color);
-void    pixel_with_aa(t_scene *scene, int x, int y, t_color *final);
-void    pixel_no_aa(t_scene *scene, int x, int y, t_color *final);
+void			create_img(t_scene *scene);
+void			create_img_threaded(t_scene *scene);
+void			create_ray(t_scene *scene, t_ray *ray, double x, double y);
+void			find_intersection(t_ray *ray, t_scene *scene);
+void			find_shadows(t_ray *ray, t_scene *scene, t_color \
+		*reflection_color);
+void			pixel_with_aa(t_scene *scene, int x, int y, t_color *final);
+void			pixel_no_aa(t_scene *scene, int x, int y, t_color *final);
 
 /*
  * input_manager
  */
 
-int 	keyboard_input(int keycode, void *param);
-int 	mouse_input(int button, int x, int y, void *param);
-void    main_info();
+int				keyboard_input(int keycode, void *param);
+int				mouse_input(int button, int x, int y, void *param);
+void			main_info(void);
 
 /*
  * input_utils
  */
 
-int     exit_func(t_scene *scene);
-void	camera_wheel(t_scene *scene);
-void	light_wheel(t_scene *scene);
-void	rot_camera(t_cam *cam, t_v axis);
-void    transform_camera(t_cam *cam, int key);
+int				exit_func(t_scene *scene);
+void			camera_wheel(t_scene *scene);
+void			light_wheel(t_scene *scene);
+void			rot_camera(t_cam *cam, t_v axis);
+void			transform_camera(t_cam *cam, int key);
 
 /*
  * element_selection
  */
 
-void    select_sphere(t_scene *scene, t_obj *obj);
-void    select_light(t_scene *scene);
-void    select_triangle(t_scene *scene, t_obj *obj);
-void    select_square(t_scene *scene, t_obj *obj);
-void    select_cylinder(t_scene *scene, t_obj *obj);
-void    select_plane(t_scene *scene, t_obj *obj);
+void			select_sphere(t_scene *scene, t_obj *obj);
+void			select_light(t_scene *scene);
+void			select_triangle(t_scene *scene, t_obj *obj);
+void			select_square(t_scene *scene, t_obj *obj);
+void			select_cylinder(t_scene *scene, t_obj *obj);
+void			select_plane(t_scene *scene, t_obj *obj);
+void			move_square(void *param, t_v axis);
 
 #endif

@@ -50,8 +50,10 @@ void	find_shadows(t_ray *ray, t_scene *scene, t_color *reflection_color)
 		shadow.intersection.distance = MAX_DISTANCE;
 		find_shadows_2(&shadow, scene, light_list);
 		mix_colors(&ray->light_color, shadow.light_color);
-		if (shadow.light_color.r || shadow.light_color.g || shadow.light_color.b)
-			sum_color(reflection_color, find_reflection(ray, shadow, light_list));
+		if (shadow.light_color.r || shadow.light_color.g || \
+				shadow.light_color.b)
+			sum_color(reflection_color, \
+					find_reflection(ray, shadow, light_list));
 		light_list = light_list->next;
 	}
 	if (scene->amb_l.brightness > 0)

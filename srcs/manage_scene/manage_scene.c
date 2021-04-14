@@ -79,13 +79,13 @@ void	create_img_threaded(t_scene *scene)
 
 void	create_img(t_scene *scene)
 {
+	double		y;
+	double		x;
+
 	create_screen(scene);
 	scene->img.img = mlx_new_image(scene->mlx, scene->w, scene->h);
 	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bpp,
 			&scene->img.line_l, &scene->img.endian);
-	double		y;
-	double		x;
-
 	y = 0;
 	while (y < scene->h)
 	{

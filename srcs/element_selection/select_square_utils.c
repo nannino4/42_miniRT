@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bzero.c                                            :+:      :+:    :+:   */
+/*   select_square_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/11 15:40:02 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/14 15:48:14 by gcefalo          ###   ########.fr       */
+/*   Created: 2021/04/14 15:20:27 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/14 15:21:16 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	ft_bzero(void *s, size_t n)
+void	move_square(void *param, t_v axis)
 {
-	unsigned int		i;
+	t_square	*square;
 
-	i = 0;
-	while (i < n)
-	{
-		*(char *)(s + i) = 0;
-		i++;
-	}
+	square = (t_square *)param;
+	square->c = v_sum(square->c, v_scalar_mul(axis, MOVE_EPSILON));
 }

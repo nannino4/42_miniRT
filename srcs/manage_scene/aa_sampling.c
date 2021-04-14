@@ -1,18 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   aa_sampling.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/14 15:29:52 by gcefalo           #+#    #+#             */
+/*   Updated: 2021/04/14 15:37:27 by gcefalo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "header.h"
 
-void    pixel_with_aa(t_scene *scene, int x, int y, t_color *final)
+void	get_sampling_points(t_sampling_points *p)
 {
-    int     i;
-    t_ray	ray;
-	double	dltx[4] = {0.2, 0.2, 0.8, 0.8};
-	double	dlty[4] = {0.2, 0.8, 0.2, 0.8};
-	t_color	reflection_color;
+	p->dx[0] = 0.2;
+	p->dx[1] = 0.2;
+	p->dx[2] = 0.8;
+	p->dx[3] = 0.8;
+	p->dy[0] = 0.2;
+	p->dy[1] = 0.2;
+	p->dy[2] = 0.8;
+	p->dy[3] = 0.8;
+}
+
+void	pixel_with_aa(t_scene *scene, int x, int y, t_color *final)
+{
+	int					i;
+	t_ray				ray;
+	t_sampling_points	p;
+	t_color				reflection_color;
 
 	i = 4;
 	reflection_color = from_trgb_to_color(0);
 	while (i--)
 	{
-		create_ray(scene, &ray, x + dltx[i], y + dlty[i]);
+		create_ray(scene, &ray, x + p.dx[i], y + p.dy[i]);
 		find_intersection(&ray, scene);
 		if (ray.intersection.distance < MAX_DISTANCE)
 			find_shadows(&ray, scene, &reflection_color);
@@ -25,9 +48,9 @@ void    pixel_with_aa(t_scene *scene, int x, int y, t_color *final)
 	mix_colors(final, reflection_color);
 }
 
-void    pixel_no_aa(t_scene *scene, int x, int y, t_color *final)
+void	pixel_no_aa(t_scene *scene, int x, int y, t_color *final)
 {
-    t_ray	ray;
+	t_ray	ray;
 	t_color	reflection_color;
 
 	reflection_color = from_trgb_to_color(0);

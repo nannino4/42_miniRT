@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 16:21:21 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/06 16:23:19 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/14 15:46:49 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,6 @@ void	intercept_plane(t_plane *plane, t_ray *ray)
 	}
 }
 
-t_triangle from_sq_to_tr(t_color color, t_p p1, t_p p2, t_p p3)
-{
-	t_triangle	triangle;
-
-	triangle.color = color;
-	triangle.p1 = p1;
-	triangle.p2 = p2;
-	triangle.p3 = p3;
-	return (triangle);
-}
-
 void	intercept_square(t_square *square, t_ray *ray)
 {
 	t_triangle		triangle_1;
@@ -77,7 +66,7 @@ void	intercept_square(t_square *square, t_ray *ray)
 	triangle_1 = from_sq_to_tr(square->color, p.up_sx, p.up_dx, p.down_sx);
 	triangle_2 = from_sq_to_tr(square->color, p.down_dx, p.up_dx, p.down_sx);
 	triangle_3 = from_sq_to_tr(square->color, p.up_sx, p.down_dx, p.up_dx);
-	triangle_4 = from_sq_to_tr(square->color, p.down_dx,\
+	triangle_4 = from_sq_to_tr(square->color, p.down_dx, \
 			v_scalar_mul(v_sum(p.up_sx, p.up_dx), 0.5), p.down_sx);
 	intercept_triangle(&triangle_1, ray);
 	intercept_triangle(&triangle_2, ray);
