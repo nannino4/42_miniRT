@@ -19,8 +19,8 @@ void	get_sampling_points(t_sampling_points *p)
 	p->dx[2] = 0.8;
 	p->dx[3] = 0.8;
 	p->dy[0] = 0.2;
-	p->dy[1] = 0.2;
-	p->dy[2] = 0.8;
+	p->dy[1] = 0.8;
+	p->dy[2] = 0.2;
 	p->dy[3] = 0.8;
 }
 
@@ -33,6 +33,7 @@ void	pixel_with_aa(t_scene *scene, int x, int y, t_color *final)
 
 	i = 4;
 	reflection_color = from_trgb_to_color(0);
+	get_sampling_points(&p);
 	while (i--)
 	{
 		create_ray(scene, &ray, x + p.dx[i], y + p.dy[i]);

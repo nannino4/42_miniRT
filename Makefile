@@ -33,6 +33,7 @@ SRCS	= srcs/main.c \
 		  srcs/element_selection/select_light.c\
 		  srcs/element_selection/select_triangle.c\
 		  srcs/element_selection/select_square.c\
+		  srcs/element_selection/select_square_utils.c\
 		  srcs/element_selection/select_cylinder.c\
 		  srcs/element_selection/select_plane.c\
 
