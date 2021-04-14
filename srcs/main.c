@@ -21,6 +21,7 @@ void	read_input(t_scene *scene, char *file)
 {
 	int			fd;
 	char		*line;
+	char		*tmp;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -30,9 +31,14 @@ void	read_input(t_scene *scene, char *file)
 	}
 	while (get_next_line(fd, &line) > 0)
 	{
+		tmp = line;
 		if (*line)
 			add_element_to_scene(&line, scene);
+		if (tmp)
+			free(tmp);
 	}
+	if (line)
+		free(line);
 }
 
 void	manage_scene(t_scene *scene)
