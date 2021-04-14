@@ -38,7 +38,6 @@ int	light_case_input(int key, void *param)
 	t_scene	*scene;
 
 	scene = (t_scene *)param;
-	printf("key pressed : %d\n", key);
 	if (key == 53)
 		exit_func(scene);
 	else if (key == 12)

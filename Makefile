@@ -7,9 +7,9 @@ SRCS	= srcs/main.c \
 		  srcs/utils/get_next_line.c \
 		  srcs/utils/get_next_line_utils.c \
 		  srcs/utils/mlx_utils.c \
-		  srcs/utils/ft_memcpy.c \
-		  srcs/utils/ft_bzero.c \
 		  srcs/utils/free.c \
+		  srcs/utils/ft_bzero.c \
+		  srcs/utils/ft_memcpy.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \
@@ -37,23 +37,20 @@ SRCS	= srcs/main.c \
 
 OBJS	= $(SRCS:.c=.o)
 
-CFLAGS	= -Wall -Wextra -Werror -I ./mlx -I ./include
+CFLAGS	= -Wall -Wextra -Werror -I /usr/local/include -I ./include
 
-LFLAGS	= libmlx.dylib -L ./mlx -framework Metal -framework AppKit
+LFLAGS	= -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 
 %.o :		%.c
 			gcc -c -g $(CFLAGS) $< -o $@
 
 $(NAME):	$(OBJS)
-			make -C mlx
-			mv mlx/libmlx.dylib .
 			gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
 all:		$(NAME)
 
 clean:
 			rm -f $(OBJS)
-			rm -f libmlx.dylib
 
 fclean:		clean
 			rm -f $(NAME)
