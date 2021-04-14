@@ -1,5 +1,5 @@
 #include "header.h"
-/*
+
 void	max_res(t_scene *scene)
 {
 	int		screen_res[2];
@@ -19,7 +19,7 @@ void	max_res(t_scene *scene)
 		scene->w /= reduction;
 	}
 }
-*/
+
 void	create_res(char **line, t_scene *scene)
 {
 	int		minus;
@@ -29,11 +29,7 @@ void	create_res(char **line, t_scene *scene)
 	scene->w = read_int(line, &minus, scene);
 	skip_spaces(line, scene);
 	scene->h = read_int(line, &minus, scene);
-	if (scene->w > MAX_W)
-		scene->w = MAX_W;
-	if (scene->h > MAX_H)
-		scene->h = MAX_H;
-//	max_res(scene);
+	max_res(scene);
 	if (**line)
 	{
 		printf(RED"Error : Garbage Text after the Resolution\n"RESET);

@@ -25,8 +25,6 @@
 # define DIAMETER_DELTA 1
 # define POW_EXP 40
 # define MIN_RATIO 0.
-# define MAX_W 1920
-# define MAX_H 1080
 # define THREAD_N 12
 
 # define SPHERE 0

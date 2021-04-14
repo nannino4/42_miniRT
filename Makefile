@@ -1,4 +1,5 @@
-NAME	= miniRT
+NAME		= miniRT
+BONUS_NAME	= miniRT_bonus
 
 SRCS	= srcs/main.c \
 		  srcs/utils/ft_color.c \
@@ -7,9 +8,9 @@ SRCS	= srcs/main.c \
 		  srcs/utils/get_next_line.c \
 		  srcs/utils/get_next_line_utils.c \
 		  srcs/utils/mlx_utils.c \
-		  srcs/utils/free.c \
-		  srcs/utils/ft_bzero.c \
 		  srcs/utils/ft_memcpy.c \
+		  srcs/utils/ft_bzero.c \
+		  srcs/utils/free.c \
 		  srcs/math/ft_intersections.c \
 		  srcs/math/ft_intersections_utils.c \
 		  srcs/math/ft_vectors.c \
@@ -37,24 +38,37 @@ SRCS	= srcs/main.c \
 
 OBJS	= $(SRCS:.c=.o)
 
-CFLAGS	= -Wall -Wextra -Werror -I /usr/local/include -I ./include
+CFLAGS	= -Wall -Wextra -Werror -I ./mlx -I ./include
 
-LFLAGS	= -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
+LFLAGS	= libmlx.dylib -L ./mlx -framework Metal -framework AppKit
 
-%.o :		%.c
-			gcc -c -g $(CFLAGS) $< -o $@
+%.o :			%.c
+				gcc -c -g $(CFLAGS) $< -o $@
 
-$(NAME):	$(OBJS)
-			gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+$(NAME):		$(OBJS)
+				make -C mlx
+				mv mlx/libmlx.dylib .
+				gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
 
-all:		$(NAME)
+$(BONUS_NAME):	$(OBJS)
+				make -C mlx
+				mv mlx/libmlx.dylib .
+				gcc -g $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME
+
+all:			$(NAME)
+
+bonus:			$(BONUS_NAME)
 
 clean:
-			rm -f $(OBJS)
+				rm -f $(OBJS)
+				make clean -C mlx
 
-fclean:		clean
-			rm -f $(NAME)
+fclean:			clean
+				rm -f $(NAME)
+				rm -f $(BONUS_NAME)
+				rm -f libmlx.dylib
+				rm -f screenshot.bmp
 
-re:			fclean all
+re:				fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:			all clean fclean re
