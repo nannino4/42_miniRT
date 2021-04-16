@@ -83,7 +83,7 @@ int	cylinder_case_input(int key, void *param)
 			key == X_KEY || key == Z_KEY)
 	{
 		transform_cylinder(key, scene->selected_obj, scene->cam);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL "Invalid key pressed...\n" RESET);

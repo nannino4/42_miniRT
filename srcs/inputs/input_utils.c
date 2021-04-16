@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   input_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 15:28:42 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/14 15:29:30 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.h"
 
 int	exit_func(t_scene *scene)
@@ -56,7 +44,7 @@ void	camera_wheel(t_scene *scene)
 			while (scene->cam->prev != NULL)
 				scene->cam = scene->cam->prev;
 		}
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL"Only one camera exists in the scene\n"RESET);

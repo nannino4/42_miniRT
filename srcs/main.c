@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 15:02:03 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/16 16:02:31 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.h"
 
 void	init_scene(t_scene *scene)
@@ -55,6 +43,7 @@ void	read_input(t_scene *scene, char *file)
 
 void	manage_scene(t_scene *scene)
 {
+	printf(BYEL"Generating Scene...\n"RESET);
 	if (scene->save)
 	{
 		create_img_threaded(scene);

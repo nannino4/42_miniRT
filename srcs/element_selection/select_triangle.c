@@ -42,7 +42,7 @@ int	triangle_case_input(int key, void *param)
 			key == S_KEY || key == D_KEY || key == A_KEY)
 	{
 		transform_triangle(key, scene->selected_obj, scene);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL "Invalid key pressed...\n" RESET);

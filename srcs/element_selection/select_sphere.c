@@ -55,7 +55,7 @@ int	sphere_case_input(int key, void *param)
 			key == NUMPAD_MINUS || key == NUMPAD_PLUS)
 	{
 		sphere_mod_key(key, scene->selected_obj, scene);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL "Invalid key pressed...\n" RESET);

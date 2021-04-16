@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   input_manager.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 15:25:54 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/16 13:49:04 by gcefalo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.h"
 
 int	keyboard_input(int key, void *param)
@@ -26,7 +14,7 @@ int	keyboard_input(int key, void *param)
 			key == S_KEY || key == D_KEY || key == ARROW_SX_KEY || key == W_KEY)
 	{
 		transform_camera(scene->cam, key);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else if (key == L_KEY)
 		select_light(scene);
@@ -51,7 +39,7 @@ int	mouse_input_2(int button, int x, int y, t_scene *scene)
 				direction.y), v_scalar_mul(scene->cam->dx, direction.x)));
 		axis = v_normalize(v_cross_prod(scene->cam->direction, direction));
 		rot_camera(scene->cam, axis);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else if (button != 1)
 		printf(YEL"Invalid mouse click\n"RESET);
@@ -103,7 +91,7 @@ void	main_info(void)
 			BBLU"\t⬇"HBLU"\tRotate down\n"\
 			BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
 			BBLU"\t\tOR\n\n"\
-			"\t"UBLU"RMB\tRight Click in the direction the camera "
+			"\t"BBLU"RMB\tRight Click in the direction the camera "
 			"should turn"RESET"\n\n"\
 			BCYN"\tC"HCYN"\tCycle cameras\n"\
 			BCYN"\tL"HCYN"\tCycle Lights\n\t"\

@@ -52,7 +52,7 @@ int	light_case_input(int key, void *param)
 			 || key == NUMPAD_MINUS)
 	{
 		transform_light(scene, scene->selected_light, key);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL "Invalid key pressed...\n" RESET);
@@ -74,6 +74,7 @@ void	select_light(t_scene *scene)
 			BBLU"\tD"HBLU"\tMove Right\n\n"\
 			BBLU"+ (NumPad)"HBLU"\tIncrease Brightness\n"\
 			BBLU"- (NumPad)"HBLU"\tDecrease Brightness\n\n"\
+			BBLU"\tL"HBLU"\tCycle Lights\n\n"\
 			BCYN"\tLMB"HCYN"\tLeft Click any object to "\
 			"enter it's manipulation mode\n"\
 			BCYN"\tRMB"HCYN"\tRight Click in the direction "\

@@ -57,7 +57,7 @@ int	plane_case_input(int key, void *param)
 			key == S_KEY || key == D_KEY || key == ARROW_SX_KEY || key == W_KEY)
 	{
 		transform_plane(key, scene->selected_obj, scene->cam);
-		create_img(scene);
+		scene->threading(scene);
 	}
 	else
 		printf(YEL "Invalid key pressed...\n" RESET);
