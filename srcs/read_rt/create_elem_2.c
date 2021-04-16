@@ -12,9 +12,10 @@ void	create_sph(char **line, t_scene *scene)
 	sph->d = read_double(line, scene);
 	skip_spaces(line, scene);
 	sph->color = read_color(line, scene);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Sphere values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Sphere values\n"RESET);
 		exit_func(scene);
 	}
 	append_sph(scene, sph);
@@ -32,9 +33,10 @@ void	create_plane(char **line, t_scene *scene)
 	plane->n = read_norm_v(line, scene);
 	skip_spaces(line, scene);
 	plane->color = read_color(line, scene);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Plane values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Plane values\n"RESET);
 		exit_func(scene);
 	}
 	append_plane(scene, plane);
@@ -55,9 +57,10 @@ void	create_square(char **line, t_scene *scene)
 	skip_spaces(line, scene);
 	square->color = read_color(line, scene);
 	set_square_orientation(square);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Square values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Square values\n"RESET);
 		exit_func(scene);
 	}
 	append_square(scene, square);
@@ -80,9 +83,10 @@ void	create_cyl(char **line, t_scene *scene)
 	skip_spaces(line, scene);
 	cyl->color = read_color(line, scene);
 	set_cylinder_orientation(cyl);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Cylinder values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Cylinder values\n"RESET);
 		exit_func(scene);
 	}
 	append_cyl(scene, cyl);
@@ -102,9 +106,10 @@ void	create_triangle(char **line, t_scene *scene)
 	triangle->p3 = read_p(line, scene);
 	skip_spaces(line, scene);
 	triangle->color = read_color(line, scene);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Triangle values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Triangle values\n"RESET);
 		exit_func(scene);
 	}
 	append_triangle(scene, triangle);

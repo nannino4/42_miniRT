@@ -38,7 +38,7 @@ void	read_input(t_scene *scene, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		printf(RED"Error : %s\n"RESET, strerror(errno));
+		printf(RED"Error\n%s\n"RESET, strerror(errno));
 		exit_func(scene);
 	}
 	while (get_next_line(fd, &line) > 0)
@@ -95,7 +95,7 @@ int	check_flags(int argc, char **s, t_scene *scene)
 		i++;
 	if (i < 4 || s[1][i - 1] != 't' || s[1][i - 2] != 'r' || s[1][i - 3] != '.')
 	{
-		printf(RED"Error : Scene file name is invalid\n"RESET);
+		printf(RED"Error\nScene file name is invalid\n"RESET);
 		return (0);
 	}
 	return (1);
@@ -116,7 +116,7 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		printf(RED"Error : Invalid arguments\n"RESET);
+		printf(RED"Error\nInvalid arguments\n"RESET);
 		exit_func(&scene);
 	}
 	return (0);
