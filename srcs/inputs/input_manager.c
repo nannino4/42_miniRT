@@ -47,6 +47,8 @@ int	mouse_input_2(int button, int x, int y, t_scene *scene)
 		center = create_v((double)scene->w / 2.0, (double)scene->h / 2.0, 0);
 		click = create_v(x, (double)scene->h - y, 0);
 		direction = v_normalize(v_sub(click, center));
+		direction = v_normalize(v_sum(v_scalar_mul(scene->cam->up, \
+				direction.y), v_scalar_mul(scene->cam->dx, direction.x)));
 		axis = v_normalize(v_cross_prod(scene->cam->direction, direction));
 		rot_camera(scene->cam, axis);
 		create_img(scene);
