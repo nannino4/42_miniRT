@@ -30,14 +30,15 @@ void	create_res(char **line, t_scene *scene)
 	skip_spaces(line, scene);
 	scene->h = read_int(line, &minus, scene);
 	max_res(scene);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Resolution\n"RESET);
+		printf(RED"Error\nGarbage Text after the Resolution\n"RESET);
 		exit_func(scene);
 	}
 	else if (scene->w < 0 || scene->h < 0)
 	{
-		printf(RED"Error : Invalid Resolution values\n"RESET);
+		printf(RED"Error\nInvalid Resolution values\n"RESET);
 		exit_func(scene);
 	}
 }
@@ -49,14 +50,15 @@ void	create_amb_l(char **line, t_scene *scene)
 	scene->amb_l.brightness = read_double(line, scene);
 	skip_spaces(line, scene);
 	scene->amb_l.color = read_color(line, scene);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Ambient light\n"RESET);
+		printf(RED"Error\nGarbage Text after the Ambient light\n"RESET);
 		exit_func(scene);
 	}
 	else if (scene->amb_l.brightness < 0)
 	{
-		printf(RED"Error : Invalid Ambient light value \n"RESET);
+		printf(RED"Error\nInvalid Ambient light value \n"RESET);
 		exit_func(scene);
 	}
 }
@@ -76,14 +78,15 @@ void	create_cam(char **line, t_scene *scene)
 	cam->fov = read_int(line, &minus, scene);
 	cam->next = 0;
 	set_camera_orientation(cam);
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Camera values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Camera values\n"RESET);
 		exit_func(scene);
 	}
 	else if (cam->fov < 0 || cam->fov > 179)
 	{
-		printf(RED"Error : Invalid Camera FOV value\n"RESET);
+		printf(RED"Error\nInvalid Camera FOV value\n"RESET);
 		exit_func(scene);
 	}
 	append_cam(scene, cam);
@@ -102,14 +105,15 @@ void	create_light(char **line, t_scene *scene)
 	skip_spaces(line, scene);
 	light->color = read_color(line, scene);
 	light->next = 0;
+	skip_spaces(line, scene);
 	if (**line)
 	{
-		printf(RED"Error : Garbage Text after the Light values\n"RESET);
+		printf(RED"Error\nGarbage Text after the Light values\n"RESET);
 		exit_func(scene);
 	}
 	else if (light->brightness < 0 || light->brightness > 1)
 	{
-		printf(RED"Error : Invalid Light Brightness values\n"RESET);
+		printf(RED"Error\nInvalid Light Brightness values\n"RESET);
 		exit_func(scene);
 	}
 	append_light(scene, light);

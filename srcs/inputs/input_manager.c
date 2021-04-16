@@ -101,7 +101,7 @@ void	main_info(void)
 			BBLU"\t⬇"HBLU"\tRotate down\n"\
 			BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
 			BBLU"\t\tOR\n\n"\
-			"\t"UBLU"RMB\tRight Click in the direction the camera should turn"RESET"\n\n"\
+			"\t"BBLU"RMB\tRight Click in the direction the camera should turn"RESET"\n\n"\
 			BCYN"\tC"HCYN"\tCycle cameras\n"\
 			BCYN"\tL"HCYN"\tCycle Lights\n\t"\
 			BCYN"LMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n\n"\

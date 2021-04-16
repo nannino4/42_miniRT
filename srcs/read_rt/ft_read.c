@@ -31,7 +31,7 @@ int	read_int(char **line, int *minus, t_scene *scene)
 		n = positive_atoi(line);
 	else
 	{
-		printf(RED"Error : Invalid number formating\n"RESET);
+		printf(RED"Error\nInvalid number formating\n"RESET);
 		exit_func(scene);
 	}
 	if (*minus)
@@ -74,21 +74,21 @@ t_color	read_color(char **line, t_scene *scene)
 	c.r = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
-		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		printf(RED"Error\nWrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
 	(*line)++;
 	c.g = read_int(line, &minus, scene);
 	if (!(**line == ',' && *(*line + 1) >= '0' && *(*line + 1) <= '9'))
 	{
-		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		printf(RED"Error\nWrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
 	(*line)++;
 	c.b = read_int(line, &minus, scene);
 	if (c.r < 0 || c.g < 0 || c.b < 0 || c.r > 255 || c.g > 255 || c.b > 255)
 	{
-		printf(RED"Error : Wrong Color Formatting\n"RESET);
+		printf(RED"Error\nWrong Color Formatting\n"RESET);
 		exit_func(scene);
 	}
 	return (c);
@@ -116,7 +116,7 @@ void	add_element_to_scene(char **line, t_scene *scene)
 		create_light(line, scene);
 	else if (ft_strncmp(*line, "#", 1) != 0)
 	{
-		printf(RED"Error : the format of the .rt file is not correct\n"RESET);
+		printf(RED"Error\nthe format of the .rt file is not correct\n"RESET);
 		exit_func(scene);
 	}
 }
