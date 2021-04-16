@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:02:03 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/14 15:11:55 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/16 16:02:31 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,9 @@ int	main(int argc, char **argv)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
-		if (scene.w <= 0 || scene.h <= 0)
+		if (scene.w <= 0 || scene.h <= 0 || !scene.cam)
 		{
-			printf(RED"Error\nResolution is needed\n"RESET);
-			exit_func(&scene);
-		}
-		if (!scene.cam)
-		{
-			printf(RED"Error\nCamera is needed\n"RESET);
+			printf(RED"Error\nResolution and camera are needed\n"RESET);
 			exit_func(&scene);
 		}
 		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
