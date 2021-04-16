@@ -6,7 +6,7 @@
 /*   By: gcefalo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:25:54 by gcefalo           #+#    #+#             */
-/*   Updated: 2021/04/14 15:27:25 by gcefalo          ###   ########.fr       */
+/*   Updated: 2021/04/16 13:49:04 by gcefalo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,14 @@ void	main_info(void)
 			BBLU"\t⬇"HBLU"\tRotate down\n"\
 			BBLU"\t⬆"HBLU"\tRotate Up\n\n"\
 			BBLU"\t\tOR\n\n"\
-			"\t"UBLU"RMB\tRight Click in the direction the camera should turn"RESET"\n\n"\
+			"\t"UBLU"RMB\tRight Click in the direction the camera "
+			"should turn"RESET"\n\n"\
 			BCYN"\tC"HCYN"\tCycle cameras\n"\
 			BCYN"\tL"HCYN"\tCycle Lights\n\t"\
-			BCYN"LMB"HCYN"\tLeft Click any object to enter it's manipulation mode\n\n"\
-			YEL"Press "BHYEL"ESC"YEL" or click the close button on the view window to"\
-			" exit\n"UGRN"\n---------------------------------------------------------"\
+			BCYN"LMB"HCYN"\tLeft Click any object to enter it's "
+			"manipulation mode\n\n"\
+			YEL"Press "BHYEL"ESC"YEL" or click the close button on "
+			"the view window to"\
+			" exit\n"UGRN"\n-------------------------------------------------"\
 			"-----------------\n\n"RESET);
 }
