@@ -87,7 +87,7 @@ int	check_flags(int argc, char **s, t_scene *scene)
 		else if (!ft_strncmp(s[argc - 1], "--threaded", 11))
 			scene->threading = &create_img_threaded;
 		else
-			return (0);
+			return (-1);
 		argc--;
 	}
 	i = 0;
@@ -104,20 +104,30 @@ int	check_flags(int argc, char **s, t_scene *scene)
 int	main(int argc, char **argv)
 {
 	t_scene		scene;
+	int			tmp;
 
 	init_scene(&scene);
-	if (check_flags(argc, argv, &scene))
+	tmp = check_flags(argc, argv, &scene);
+	if (tmp)
 	{
 		scene.mlx = mlx_init();
 		read_input(&scene, argv[1]);
+		if (scene.w <= 0 || scene.h <= 0)
+		{
+			printf(RED"Error\nResolution is needed\n"RESET);
+			exit_func(&scene);
+		}
+		if (!scene.cam)
+		{
+			printf(RED"Error\nCamera is needed\n"RESET);
+			exit_func(&scene);
+		}
 		scene.win = mlx_new_window(scene.mlx, scene.w, scene.h,
 				"miniRT");
 		manage_scene(&scene);
 	}
-	else
-	{
+	else if (tmp == -1)
 		printf(RED"Error\nInvalid arguments\n"RESET);
-		exit_func(&scene);
-	}
+	exit_func(&scene);
 	return (0);
 }
