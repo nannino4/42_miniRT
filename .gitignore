@@ -1,7 +1,5 @@
 *.o
 .DS_Store
 miniRT
-mlx/*
 .vscode/*
-Makefile
 screenshot.bmp
