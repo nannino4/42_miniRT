@@ -72,7 +72,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str = (char *)malloc(sizeof(*str) * (len + 1));
 	if (!str)
 		return (0);
-	if (ft_strlen(s) <= start || start < 0)
+	if (ft_strlen(s) <= start)
 	{
 		ft_strlcpy(str, s, 1);
 		return (str);
